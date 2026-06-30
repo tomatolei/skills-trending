@@ -1,0 +1,12 @@
+{
+  "name": "github-skills-trending",
+  "version": "1.0.0",
+  "description": "GitHub Agent Skills 趋势追踪站 — 发现最热门的 AI Agent Skills",
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-skills.js",
+    "dev": "npx serve public"
+  },
+  "keywords": ["agent-skills", "claude-skills", "mcp", "ai-agents", "trending"],
+  "license": "MIT"
+}
