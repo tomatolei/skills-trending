@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="pageTitle">管理后台 — SkillTrends</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-surface: #161b22;
+  --bg-surface-2: #1c2128;
+  --border: #30363d;
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --accent-blue: #58a6ff;
+  --accent-purple: #a371f7;
+  --accent-gold: #e3b341;
+  --accent-green: #3fb950;
+  --accent-orange: #f78166;
+  --accent-red: #f85149;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px;
+  background: rgba(22,27,34,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 18px; font-weight: 700;
+  text-decoration: none; color: var(--text-primary);
+}
+.nav-logo-icon {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, #58a6ff, #a371f7);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 14px;
+}
+.nav-links { display: flex; align-items: center; gap: 24px; }
+.nav-link {
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  padding: 4px 0; transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link.active { color: var(--text-primary); border-bottom: 2px solid var(--accent-blue); }
+.lang-switch {
+  display: inline-flex; border: 1px solid var(--border);
+  border-radius: 6px; overflow: hidden; margin-left: 8px;
+}
+.lang-btn {
+  background: transparent; color: var(--text-secondary);
+  border: none; padding: 6px 12px; cursor: pointer;
+  font-size: 13px; font-family: inherit; transition: all 0.2s;
+}
+.lang-btn:hover { color: var(--text-primary); }
+.lang-btn.active { background: var(--accent-blue); color: #fff; }
+.lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 32px; }
+.page-header { margin-bottom: 32px; }
+.page-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.page-subtitle { color: var(--text-secondary); font-size: 14px; }
+
+.status-banner {
+  background: linear-gradient(135deg, rgba(88,166,255,0.1), rgba(163,113,247,0.1));
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.status-info { flex: 1; min-width: 200px; }
+.status-label { color: var(--text-muted); font-size: 12px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.status-value { font-size: 18px; font-weight: 600; }
+.status-value.fresh { color: var(--accent-green); }
+.status-value.stale { color: var(--accent-orange); }
+.status-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn {
+  border: none; padding: 10px 20px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary {
+  background: var(--accent-blue); color: #fff;
+}
+.btn-primary:hover { background: #4493f8; transform: translateY(-1px); }
+.btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; }
+.btn-secondary {
+  background: var(--bg-surface-2); color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--bg-surface); }
+
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px;
+}
+.stat-label { color: var(--text-muted); font-size: 12px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-value { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+.stat-value.gold { color: var(--accent-gold); }
+.stat-value.blue { color: var(--accent-blue); }
+.stat-value.purple { color: var(--accent-purple); }
+.stat-value.green { color: var(--accent-green); }
+.stat-sub { color: var(--text-muted); font-size: 12px; }
+
+.section {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; margin-bottom: 24px;
+}
+.section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+.progress-bar {
+  background: var(--bg-surface-2); border-radius: 4px; height: 8px;
+  overflow: hidden; margin-top: 8px;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  transition: width 0.3s;
+}
+
+.log-output {
+  background: #010409; border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 12px; line-height: 1.6;
+  color: var(--text-secondary);
+  max-height: 300px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-all;
+}
+.log-line { margin-bottom: 2px; }
+.log-line.info { color: var(--text-secondary); }
+.log-line.success { color: var(--accent-green); }
+.log-line.error { color: var(--accent-red); }
+.log-line.warn { color: var(--accent-orange); }
+.log-line .ts { color: var(--text-muted); margin-right: 8px; }
+
+.cat-list { display: grid; gap: 8px; }
+.cat-row {
+  display: grid; grid-template-columns: 180px 1fr 100px 100px;
+  gap: 16px; align-items: center;
+  padding: 12px; background: var(--bg-surface-2);
+  border-radius: 6px; font-size: 14px;
+}
+.cat-name { font-weight: 500; }
+.cat-stars { text-align: right; color: var(--accent-gold); font-weight: 600; }
+.cat-count { text-align: right; color: var(--text-muted); }
+
+.help-box {
+  background: rgba(88,166,255,0.08);
+  border: 1px solid rgba(88,166,255,0.3);
+  border-radius: 8px; padding: 16px; margin-top: 16px;
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.7;
+}
+.help-box strong { color: var(--accent-blue); }
+.help-box code {
+  background: var(--bg-primary); padding: 2px 6px; border-radius: 3px;
+  font-size: 12px; color: var(--accent-gold);
+}
+.spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">S</div>
+    <span>SkillTrends</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" data-i18n="navHome">首页</a>
+    <a href="ranking.html" class="nav-link" data-i18n="navRanking">排行榜</a>
+    <a href="admin.html" class="nav-link active" data-i18n="navAdmin">管理后台</a>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="zh" onclick="setLang('zh')">中</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title" data-i18n="pageTitle">数据管理后台</h1>
+    <p class="page-subtitle" data-i18n="pageSubtitle">查看数据状态、触发更新、管理 GitHub Actions 定时任务</p>
+  </div>
+
+  <!-- Status banner -->
+  <div class="status-banner">
+    <div class="status-info">
+      <div class="status-label" data-i18n="lastUpdate">最后更新</div>
+      <div class="status-value" id="lastUpdateTime">—</div>
+      <div class="status-label" style="margin-top: 12px;" data-i18n="dataStatus">数据状态</div>
+      <div class="status-value" id="dataStatus">—</div>
+    </div>
+    <div class="status-actions">
+      <button class="btn btn-primary" id="refreshBtn" onclick="refreshData()">
+        <span data-i18n="btnRefresh">立即更新数据</span>
+      </button>
+      <button class="btn btn-secondary" onclick="downloadData()">
+        <span data-i18n="btnDownload">下载数据 JSON</span>
+      </button>
+      <button class="btn btn-secondary" onclick="window.open('https://github.com/tomatolei/github-skills-trending/actions', '_blank')">
+        <span data-i18n="btnActions">GitHub Actions</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats overview -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label" data-i18n="totalSkills">总技能数</div>
+      <div class="stat-value blue" id="statSkills">—</div>
+      <div class="stat-sub" data-i18n="totalSkillsSub">repositories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label" data-i18n="totalStars">总星数</div>
+      <div class="stat-value gold" id="statStars">—</div>
+      <div class="stat-sub" data-i18n="totalStarsSub">GitHub stars</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label" data-i18n="totalForks">总 Forks</div>
+      <div class="stat-value purple" id="statForks">—</div>
+      <div class="stat-sub" data-i18n="totalForksSub">forks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label" data-i18n="totalCategories">分类数</div>
+      <div class="stat-value green" id="statCats">—</div>
+      <div class="stat-sub" data-i18n="totalCategoriesSub">categories</div>
+    </div>
+  </div>
+
+  <!-- Log output -->
+  <div class="section">
+    <div class="section-title" data-i18n="logTitle">更新日志</div>
+    <div class="log-output" id="logOutput">
+      <div class="log-line info"><span class="ts">[--:--:--]</span> <span data-i18n="logIdle">等待操作...</span></div>
+    </div>
+  </div>
+
+  <!-- Category breakdown -->
+  <div class="section">
+    <div class="section-title" data-i18n="catTitle">分类分布</div>
+    <div class="cat-list" id="catList">
+      <div class="log-line info" data-i18n="loading">加载中...</div>
+    </div>
+  </div>
+
+  <!-- Help section -->
+  <div class="section">
+    <div class="section-title" data-i18n="helpTitle">数据采集说明</div>
+    <div class="help-box">
+      <p><strong data-i18n="help1Title">方式 1: 浏览器端立即更新</strong></p>
+      <p data-i18n="help1Desc">点击上方"立即更新数据"按钮，从你的浏览器直接调用 GitHub API。适合快速验证，免费额度 <code>60 次/小时</code>，可能受速率限制。</p>
+
+      <p style="margin-top: 12px;"><strong data-i18n="help2Title">方式 2: GitHub Actions 定时任务（推荐）</strong></p>
+      <p data-i18n="help2Desc">代码已配置 <code>.github/workflows/fetch-skills.yml</code>，<code>UTC 0 点</code>自动跑一次。点击上方 "GitHub Actions" 按钮可手动触发 workflow，认证后可达 <code>5000 次/小时</code>。</p>
+
+      <p style="margin-top: 12px;"><strong data-i18n="help3Title">方式 3: 本地命令行</strong></p>
+      <p data-i18n="help3Desc">克隆代码后执行：<br><code>cd github-skills-trending && node scripts/fetch-skills.js</code><br>需要设置环境变量 <code>GITHUB_TOKEN</code> 以获得更高 API 额度。</p>
+
+      <p style="margin-top: 12px;"><strong data-i18n="help4Title">方式 4: Vercel/CloudStudio Cron</strong></p>
+      <p data-i18n="help4Desc">部署后可设置定时任务，每天 <code>0:00</code> 触发数据刷新接口。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// i18n
+var I18N = {
+  zh: {
+    pageTitle: '数据管理后台 — SkillTrends',
+    pageSubtitle: '查看数据状态、触发更新、管理 GitHub Actions 定时任务',
+    navHome: '首页', navRanking: '排行榜', navAdmin: '管理后台',
+    lastUpdate: '最后更新', dataStatus: '数据状态',
+    btnRefresh: '立即更新数据', btnDownload: '下载数据 JSON', btnActions: 'GitHub Actions',
+    totalSkills: '总技能数', totalStars: '总星数', totalForks: '总 Forks', totalCategories: '分类数',
+    totalSkillsSub: 'repositories', totalStarsSub: 'GitHub stars', totalForksSub: 'forks', totalCategoriesSub: 'categories',
+    logTitle: '更新日志', catTitle: '分类分布', helpTitle: '数据采集说明',
+    loading: '加载中...', logIdle: '等待操作...',
+    fresh: '✓ 数据新鲜', stale: '⚠ 数据已过时',
+    help1Title: '方式 1: 浏览器端立即更新',
+    help1Desc: '点击上方"立即更新数据"按钮，从你的浏览器直接调用 GitHub API。适合快速验证，免费额度 60 次/小时，可能受速率限制。',
+    help2Title: '方式 2: GitHub Actions 定时任务（推荐）',
+    help2Desc: '代码已配置 .github/workflows/fetch-skills.yml，UTC 0 点自动跑一次。点击上方 "GitHub Actions" 按钮可手动触发 workflow，认证后可达 5000 次/小时。',
+    help3Title: '方式 3: 本地命令行',
+    help3Desc: '克隆代码后执行：cd github-skills-trending && node scripts/fetch-skills.js。需要设置环境变量 GITHUB_TOKEN 以获得更高 API 额度。',
+    help4Title: '方式 4: Vercel/CloudStudio Cron',
+    help4Desc: '部署后可设置定时任务，每天 0:00 触发数据刷新接口。',
+    logStart: '开始更新数据...', logFetched: '已获取 {n} 个仓库', logDone: '数据更新完成！共 {n} 个仓库，{s} 颗星', logError: '更新失败: {msg}',
+  },
+  en: {
+    pageTitle: 'Data Admin — SkillTrends',
+    pageSubtitle: 'View data status, trigger updates, manage GitHub Actions schedules',
+    navHome: 'Home', navRanking: 'Ranking', navAdmin: 'Admin',
+    lastUpdate: 'Last Update', dataStatus: 'Data Status',
+    btnRefresh: 'Refresh Data Now', btnDownload: 'Download JSON', btnActions: 'GitHub Actions',
+    totalSkills: 'Total Skills', totalStars: 'Total Stars', totalForks: 'Total Forks', totalCategories: 'Categories',
+    totalSkillsSub: 'repositories', totalStarsSub: 'GitHub stars', totalForksSub: 'forks', totalCategoriesSub: 'categories',
+    logTitle: 'Update Log', catTitle: 'Category Breakdown', helpTitle: 'Data Collection Guide',
+    loading: 'Loading...', logIdle: 'Waiting for action...',
+    fresh: '✓ Data is fresh', stale: '⚠ Data is stale',
+    help1Title: 'Option 1: Refresh from Browser',
+    help1Desc: 'Click "Refresh Data Now" above to call GitHub API directly from your browser. Good for quick tests, free tier 60 req/hour, may hit rate limits.',
+    help2Title: 'Option 2: GitHub Actions Cron (Recommended)',
+    help2Desc: 'Code includes .github/workflows/fetch-skills.yml, runs daily at UTC 0:00. Click "GitHub Actions" above to manually trigger; authenticated tier reaches 5000 req/hour.',
+    help3Title: 'Option 3: Local CLI',
+    help3Desc: 'After cloning: cd github-skills-trending && node scripts/fetch-skills.js. Set GITHUB_TOKEN env var for higher rate limits.',
+    help4Title: 'Option 4: Vercel/CloudStudio Cron',
+    help4Desc: 'After deployment, configure scheduled task to trigger data refresh API daily at 0:00.',
+    logStart: 'Starting data update...', logFetched: 'Fetched {n} repositories', logDone: 'Update complete! {n} repos, {s} stars', logError: 'Update failed: {msg}',
+  }
+};
+
+var currentLang = localStorage.getItem('skilltrends_lang') || 'zh';
+var t = function(key) { return I18N[currentLang][key] || key; };
+var DATA = null;
+var SEARCH_QUERIES = [
+  { q: 'topic:claude-skills+stars:>50', label: 'Claude Skills' },
+  { q: 'topic:agent-skills+stars:>50', label: 'Agent Skills' },
+  { q: 'topic:mcp-server+stars:>50', label: 'MCP Servers' },
+  { q: 'topic:skills+stars:>50', label: 'Skills (GitHub Topic)' },
+  { q: 'awesome+claude+skills+in:readme+stars:>500', label: 'Awesome Claude Skills' },
+  { q: 'agent+skill+framework+stars:>500', label: 'Agent Skill Framework' },
+];
+var SEED_REPOS = [
+  'anthropics/skills', 'ComposioHQ/awesome-claude-skills', 'VoltAgent/awesome-agent-skills',
+  'vercel-labs/agent-skills', 'nextlevelbuilder/ui-ux-pro-max-skill', 'obra/superpowers',
+];
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('skilltrends_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (I18N[lang][key]) el.textContent = I18N[lang][key];
+  });
+  document.title = I18N[lang].pageTitle;
+  renderAll();
+}
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+function fmtTime(d) {
+  return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()) + ' ' +
+         pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds());
+}
+function fmtNum(n) {
+  if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'k';
+  return String(n);
+}
+
+function log(msg, level) {
+  level = level || 'info';
+  var out = document.getElementById('logOutput');
+  var line = document.createElement('div');
+  line.className = 'log-line ' + level;
+  var now = new Date();
+  line.innerHTML = '<span class="ts">[' + fmtTime(now) + ']</span> ' + esc(msg);
+  out.appendChild(line);
+  out.scrollTop = out.scrollHeight;
+}
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+async function fetchJson(url) {
+  var resp = await fetch(url);
+  if (resp.status === 403) {
+    var body = await resp.text();
+    throw new Error('GitHub API rate limit reached (403). ' + (currentLang==='zh' ? '请稍后再试或配置 GitHub Token。' : 'Try later or set GITHUB_TOKEN.'));
+  }
+  if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  return resp.json();
+}
+
+async function refreshData() {
+  var btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> ' + t('logStart');
+
+  try {
+    log(t('logStart'), 'info');
+    var seen = new Set();
+    var allRepos = [];
+
+    // Search phase
+    for (var i = 0; i < SEARCH_QUERIES.length; i++) {
+      var sq = SEARCH_QUERIES[i];
+      try {
+        log('[' + sq.label + '] ' + (currentLang==='zh'?'搜索中...':'Searching...'), 'info');
+        var data = await fetchJson('https://api.github.com/search/repositories?q=' + encodeURIComponent(sq.q) + '&sort=stars&order=desc&per_page=30');
+        var count = 0;
+        if (data.items) {
+          data.items.forEach(function(r) {
+            if (!seen.has(r.full_name)) {
+              seen.add(r.full_name);
+              allRepos.push(r);
+              count++;
+            }
+          });
+        }
+        log('[' + sq.label + '] ' + t('logFetched').replace('{n}', count) + ' (total ' + (data.total_count || 0) + ')', 'success');
+        await sleep(2000);
+      } catch (e) {
+        log('[' + sq.label + '] ' + e.message, 'error');
+      }
+    }
+
+    // Seed phase
+    for (var j = 0; j < SEED_REPOS.length; j++) {
+      var name = SEED_REPOS[j];
+      if (seen.has(name)) continue;
+      try {
+        var r = await fetchJson('https://api.github.com/repos/' + name);
+        if (r.id) {
+          seen.add(name);
+          allRepos.push(r);
+          log('[' + name + '] ' + t('logFetched').replace('{n}', 1), 'success');
+        }
+        await sleep(1500);
+      } catch (e) {
+        log('[' + name + '] ' + e.message, 'warn');
+      }
+    }
+
+    // Build output JSON
+    var skills = allRepos.map(function(r) {
+      return {
+        fullName: r.full_name,
+        name: r.name,
+        author: r.full_name.split('/')[0],
+        description: r.description || '',
+        url: r.html_url,
+        stars: r.stargazers_count || 0,
+        forks: r.forks_count || 0,
+        language: r.language,
+        license: r.license ? r.license.spdx_id : null,
+        topics: r.topics || [],
+        updatedAt: r.updated_at,
+        createdAt: r.created_at,
+        ageDays: Math.floor((Date.now() - new Date(r.created_at)) / 86400000),
+        starsPerDay: Math.round((r.stargazers_count || 0) / Math.max(1, Math.floor((Date.now() - new Date(r.created_at)) / 86400000))),
+        category: classifySkill(r)
+      };
+    });
+
+    var byCategory = {};
+    skills.forEach(function(s) {
+      byCategory[s.category] = (byCategory[s.category] || 0) + 1;
+    });
+
+    var totalStars = skills.reduce(function(a, s) { return a + s.stars; }, 0);
+    var totalForks = skills.reduce(function(a, s) { return a + s.forks; }, 0);
+
+    var output = {
+      meta: { updatedAt: new Date().toISOString(), version: '1.0', source: 'GitHub Search API', authenticated: false },
+      stats: { totalSkills: skills.length, totalStars: totalStars, totalForks: totalForks, totalCategories: Object.keys(byCategory).length },
+      categories: Object.keys(byCategory).map(function(k) {
+        var catSkills = skills.filter(function(s) { return s.category === k; });
+        return { name: k, count: catSkills.length, totalStars: catSkills.reduce(function(a, s) { return a + s.stars; }, 0) };
+      }).sort(function(a, b) { return b.count - a.count; }),
+      allSkills: skills,
+      mostStarred: skills.slice().sort(function(a, b) { return b.stars - a.stars; }).slice(0, 50),
+      mostDownloaded: skills.slice().sort(function(a, b) { return b.forks - a.forks; }).slice(0, 50),
+      risingFast: skills.filter(function(s) { return s.ageDays < 365; }).sort(function(a, b) { return b.starsPerDay - a.starsPerDay; }).slice(0, 50)
+    };
+
+    // Save to localStorage
+    localStorage.setItem('skilltrends_data', JSON.stringify(output));
+    log(t('logDone').replace('{n}', output.stats.totalSkills).replace('{s}', fmtNum(output.stats.totalStars)), 'success');
+
+    DATA = output;
+    renderAll();
+  } catch (e) {
+    log(t('logError').replace('{msg}', e.message), 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>' + t('btnRefresh') + '</span>';
+  }
+}
+
+function classifySkill(r) {
+  var topics = (r.topics || []).join(' ').toLowerCase();
+  var desc = (r.description || '').toLowerCase();
+  var lang = (r.language || '').toLowerCase();
+  if (topics.match(/art|design|ui|ux|figma/)) return 'Art & Design';
+  if (topics.match(/data|analytics|research/)) return 'Data & Analytics';
+  if (topics.match(/video|animation|media/)) return 'Video & Animation';
+  if (topics.match(/writing|content|copy/)) return 'Writing & Editing';
+  if (topics.match(/productivity|task|workflow/)) return 'Productivity';
+  if (topics.match(/test|qa|security/)) return 'Testing & Security';
+  if (topics.match(/awesome/) || desc.match(/awesome/)) return 'Awesome List';
+  if (lang === 'javascript' || lang === 'typescript' || lang === 'python' || topics.match(/dev|code|programming/)) return 'Coding & Dev';
+  return 'Other';
+}
+
+function loadData() {
+  // Try localStorage first (newer data)
+  var cached = localStorage.getItem('skilltrends_data');
+  if (cached) {
+    try {
+      DATA = JSON.parse(cached);
+      log((currentLang==='zh'?'已加载本地缓存数据: ':'Loaded cached data: ') + fmtTime(new Date(DATA.meta.updatedAt)), 'info');
+      renderAll();
+      return;
+    } catch (e) {}
+  }
+  // Fall back to server JSON
+  fetch('data/skills.json')
+    .then(function(r) { return r.json(); })
+    .then(function(d) { DATA = d; renderAll(); })
+    .catch(function(e) { log('Failed to load data: ' + e.message, 'error'); });
+}
+
+function renderAll() {
+  if (!DATA) return;
+  var stats = DATA.stats;
+
+  // Status banner
+  var lastUpdate = new Date(DATA.meta.updatedAt);
+  var ageHours = (Date.now() - lastUpdate.getTime()) / 3600000;
+  var statusEl = document.getElementById('dataStatus');
+  if (ageHours < 24) {
+    statusEl.textContent = t('fresh');
+    statusEl.className = 'status-value fresh';
+  } else {
+    statusEl.textContent = t('stale') + ' (' + ageHours.toFixed(0) + 'h)';
+    statusEl.className = 'status-value stale';
+  }
+  document.getElementById('lastUpdateTime').textContent = fmtTime(lastUpdate);
+
+  // Stats cards
+  document.getElementById('statSkills').textContent = fmtNum(stats.totalSkills);
+  document.getElementById('statStars').textContent = fmtNum(stats.totalStars);
+  document.getElementById('statForks').textContent = fmtNum(stats.totalForks);
+  document.getElementById('statCats').textContent = stats.totalCategories;
+
+  // Category list
+  var maxCount = Math.max.apply(null, DATA.categories.map(function(c) { return c.count; }));
+  var html = DATA.categories.map(function(c) {
+    var pct = (c.count / maxCount * 100).toFixed(1);
+    return '<div class="cat-row">' +
+      '<div class="cat-name">' + esc(c.name) + '</div>' +
+      '<div><div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div></div>' +
+      '<div class="cat-count">' + c.count + ' skills</div>' +
+      '<div class="cat-stars">' + fmtNum(c.totalStars) + ' ★</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('catList').innerHTML = html;
+}
+
+function downloadData() {
+  var json = DATA ? JSON.stringify(DATA, null, 2) : '{}';
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'skills-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Init
+loadData();
+</script>
+</body>
+</html>
