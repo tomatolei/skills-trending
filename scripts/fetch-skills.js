@@ -1,15 +1,12 @@
 /**
- * GitHub Agent Skills 数据采集脚本
+ * GitHub Agent Skills 数据采集脚本（免 Token 版）
  *
- * 用法: GITHUB_TOKEN=ghp_xxx node scripts/fetch-skills.js
- * 定时: GitHub Actions 每日 UTC 0:00 自动运行
+ * 无需 GITHUB_TOKEN 即可运行，使用 GitHub Search API 免认证额度。
+ * 认证后额度更高，数据更全。
  *
- * 采集流程:
- *   1. GitHub Search API → 按 topic 搜索 skill 仓库
- *   2. GraphQL API → 批量拉取 Stars/Forks/更新等详细数据
- *   3. npm Registry → 补充下载量（对有 npm 包的 Skill）
- *   4. 对比历史快照 → 计算增长率、上升速度
- *   5. 输出 data/skills.json + 当日快照 data/history/YYYY-MM-DD.json
+ * 用法:
+ *   node scripts/fetch-skills.js                # 免认证模式
+ *   GITHUB_TOKEN=ghp_xxx node scripts/fetch-skills.js  # 认证模式
  */
 
 import fs from "fs";
@@ -21,258 +18,177 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "data");
 const HISTORY_DIR = path.join(DATA_DIR, "history");
 
-const TOKEN = process.env.GITHUB_TOKEN;
-if (!TOKEN) {
-  console.error("❌ 请设置 GITHUB_TOKEN 环境变量");
-  process.exit(1);
-}
+const TOKEN = process.env.GITHUB_TOKEN || "";
 
 // ============================================================
 // 配置
 // ============================================================
 
-// 种子仓库列表 — 已知的热门 Skills 项目
+// 搜索策略 — 多维度搜索覆盖最大范围
+const SEARCH_QUERIES = [
+  { q: "topic:claude-skills", label: "Claude Skills" },
+  { q: "topic:agent-skills", label: "Agent Skills" },
+  { q: "topic:mcp-server", label: "MCP Server" },
+  { q: "topic:ai-agent+stars:>500", label: "AI Agent" },
+  { q: "claude skill in:name,description,readme+stars:>100", label: "Claude Skill (keyword)" },
+  { q: "agent skill in:name,description+stars:>200", label: "Agent Skill (keyword)" },
+  { q: "topic:awesome-claude", label: "Awesome Claude" },
+  { q: "topic:llm-agent+stars:>1000", label: "LLM Agent" },
+  { q: "topic:mcp+stars:>200", label: "MCP" },
+  { q: "topic:ai-tools+stars:>1000", label: "AI Tools" },
+];
+
+// 种子仓库 — 确保热门项目一定被收录
 const SEED_REPOS = [
   "anthropics/skills",
-  "Awesome-Skills/awesome-skills",
   "punkpeye/awesome-claude-skills",
-  "openclaw/openclaw",
   "modelcontextprotocol/servers",
-  "michaelliao/awesome-mcp-servers",
-  "punkpeye/awesome-mcp-servers",
-  "anthropics/claude-code",
-  "continuedev/continue",
   "cline/cline",
+  "continuedev/continue",
   "aider-ai/aider",
-  "composiohq/composio",
+  "browser-use/browser-use",
+  "mendableai/firecrawl",
   "langchain-ai/langgraph",
   "crewAIInc/crewAI",
   "microsoft/autogen",
-  "mendableai/firecrawl-mcp-server",
-  "browserbase/mcp-server-browserbase",
-  "exa-labs/exa-mcp-server",
-  "smithery-ai/smithery",
-  "skillsmarket/skills-registry",
-  "Agents-Builder/Agents-Builder",
-  "skills-ai/skills",
-  "agentsea/skillpacks",
-].map((fullName) => ({ fullName, tags: [] }));
-
-// 搜索话题 — 用于发现新仓库
-const SEARCH_TOPICS = [
-  "agent-skill",
-  "claude-skill",
-  "mcp-skill",
-  "ai-skill",
-  "agent-skills",
-  "ai-agent",
-  "mcp-server",
-  "claude-skills",
+  "VoltAgent/awesome-agent-skills",
 ];
 
 // ============================================================
 // GitHub API 封装
 // ============================================================
 
-async function graphql(query, variables = {}) {
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      Authorization: `bearer ${TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query, variables }),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`GraphQL ${res.status}: ${text}`);
-  }
-  const json = await res.json();
-  if (json.errors) throw new Error(JSON.stringify(json.errors, null, 2));
-  return json.data;
+function getHeaders() {
+  const headers = { "User-Agent": "SkillTrends-Bot/1.0", Accept: "application/vnd.github.v3+json" };
+  if (TOKEN) headers.Authorization = `token ${TOKEN}`;
+  return headers;
 }
 
-async function restAPI(endpoint) {
-  const res = await fetch(`https://api.github.com/${endpoint}`, {
-    headers: {
-      Authorization: `bearer ${TOKEN}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-  });
-  if (!res.ok) throw new Error(`REST ${res.status}: ${await res.text()}`);
+async function searchRepos(query, perPage = 100, page = 1) {
+  const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${perPage}&page=${page}`;
+  const res = await fetch(url, { headers: getHeaders() });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Search ${res.status}: ${text.slice(0, 200)}`);
+  }
+  return res.json();
+}
+
+async function getRepo(owner, repo) {
+  const url = `https://api.github.com/repos/${owner}/${repo}`;
+  const res = await fetch(url, { headers: getHeaders() });
+  if (!res.ok) throw new Error(`Repo ${res.status}`);
   return res.json();
 }
 
 // ============================================================
-// 1. 搜索发现新仓库
+// 1. 搜索发现仓库
 // ============================================================
 
-async function searchNewRepos() {
-  console.log("🔍 搜索新 Skill 仓库...");
+async function discoverRepos() {
+  console.log("🔍 搜索 GitHub 仓库...\n");
   const found = new Map();
 
-  for (const topic of SEARCH_TOPICS) {
+  for (const { q, label } of SEARCH_QUERIES) {
     try {
-      const data = await restAPI(
-        `search/repositories?q=topic:${topic}+stars:>50&sort=stars&order=desc&per_page=30`
-      );
+      process.stdout.write(`  [${label}] 搜索中... `);
+      const data = await searchRepos(q, 100);
+      const count = data.items?.length || 0;
+      console.log(`找到 ${count} 个 (总计 ${data.total_count})`);
+
       for (const repo of data.items || []) {
-        found.set(repo.full_name, {
-          fullName: repo.full_name,
-          url: repo.html_url,
-          description: repo.description,
-          tags: repo.topics || [],
-          language: repo.language,
-          stars: repo.stargazers_count,
-          forks: repo.forks_count,
-          createdAt: repo.created_at,
-          updatedAt: repo.updated_at,
-          pushedAt: repo.pushed_at,
-          openIssues: repo.open_issues_count,
-          license: repo.license?.spdx_id || null,
-        });
+        if (!found.has(repo.full_name)) {
+          found.set(repo.full_name, {
+            fullName: repo.full_name,
+            url: repo.html_url,
+            description: repo.description || "",
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+            watchers: repo.watchers_count,
+            openIssues: repo.open_issues_count,
+            language: repo.language,
+            topics: repo.topics || [],
+            createdAt: repo.created_at,
+            updatedAt: repo.updated_at,
+            pushedAt: repo.pushed_at,
+            license: repo.license?.spdx_id || null,
+            homepage: repo.homepage || null,
+            archived: repo.archived,
+          });
+        }
       }
-      await sleep(2000); // 遵守速率限制
+
+      // 免认证 10次/分钟，认证 30次/分钟，安全间隔
+      await sleep(TOKEN ? 2000 : 7000);
     } catch (e) {
-      console.warn(`  ⚠ 搜索 topic:${topic} 失败:`, e.message);
+      console.warn(`  ⚠ [${label}] 失败: ${e.message}`);
+      if (e.message.includes("403")) {
+        console.warn("  ⚠ 触发速率限制，等待 30 秒...");
+        await sleep(30000);
+      }
     }
   }
 
-  console.log(`  发现 ${found.size} 个仓库`);
+  console.log(`\n  📦 搜索阶段共发现 ${found.size} 个不重复仓库\n`);
   return found;
 }
 
 // ============================================================
-// 2. 批量 GraphQL 获取详细数据
+// 2. 补充种子仓库
 // ============================================================
 
-async function enrichWithGraphQL(repos) {
-  console.log("📊 批量获取详细数据...");
-  const repoNames = repos.map((r) => r.fullName);
-
-  // GraphQL 批量查询（每批最多 20 个）
-  const enriched = [];
-  for (let i = 0; i < repoNames.length; i += 20) {
-    const batch = repoNames.slice(i, i + 20);
-    const aliases = batch.map((name, idx) => {
-      const [owner, repo] = name.split("/");
-      return `
-        repo${idx}: repository(owner: "${owner}", name: "${repo}") {
-          nameWithOwner
-          stargazerCount
-          forkCount
-          createdAt
-          updatedAt
-          latestRelease { publishedAt tagName }
-          primaryLanguage { name }
-          licenseInfo { spdxId }
-          repositoryTopics(first: 10) { nodes { topic { name } } }
-        }`;
-    });
-
-    const query = `query { ${aliases.join("\n")} }`;
+async function addSeedRepos(repos) {
+  console.log("🌱 补充种子仓库...");
+  for (const fullName of SEED_REPOS) {
+    if (repos.has(fullName)) continue;
     try {
-      const data = await graphql(query);
-      const results = Object.values(data);
-      for (const r of results) {
-        if (!r) continue;
-        const repo = repos.find((x) => x.fullName === r.nameWithOwner);
-        if (repo) {
-          enriched.push({
-            ...repo,
-            stars: r.stargazerCount,
-            forks: r.forkCount,
-            createdAt: r.createdAt,
-            updatedAt: r.updatedAt,
-            latestRelease: r.latestRelease?.publishedAt || null,
-            primaryLanguage: r.primaryLanguage?.name || null,
-            license: r.licenseInfo?.spdxId || repo.license,
-            topics: r.repositoryTopics?.nodes?.map((n) => n.topic.name) || repo.tags,
-          });
-        }
-      }
+      const [owner, repo] = fullName.split("/");
+      const data = await getRepo(owner, repo);
+      repos.set(fullName, {
+        fullName: data.full_name,
+        url: data.html_url,
+        description: data.description || "",
+        stars: data.stargazers_count,
+        forks: data.forks_count,
+        watchers: data.watchers_count,
+        openIssues: data.open_issues_count,
+        language: data.language,
+        topics: data.topics || [],
+        createdAt: data.created_at,
+        updatedAt: data.updated_at,
+        pushedAt: data.pushed_at,
+        license: data.license?.spdx_id || null,
+        homepage: data.homepage || null,
+        archived: data.archived,
+      });
+      console.log(`  ✓ ${fullName} (${data.stargazers_count} stars)`);
+      await sleep(TOKEN ? 1000 : 3000);
     } catch (e) {
-      console.warn(`  ⚠ GraphQL 批次 ${i} 失败:`, e.message);
-      enriched.push(...repos.filter((r) => batch.includes(r.fullName)));
+      console.warn(`  ⚠ ${fullName}: ${e.message}`);
     }
-    await sleep(2000);
   }
-
-  return enriched;
+  console.log();
+  return repos;
 }
 
 // ============================================================
-// 3. 计算趋势数据
-// ============================================================
-
-async function computeTrends(repos) {
-  console.log("📈 计算趋势...");
-  const today = new Date().toISOString().slice(0, 10);
-
-  // 读昨天的快照做对比
-  const yesterday = getYesterday();
-  let prevData = {};
-  try {
-    const raw = fs.readFileSync(path.join(HISTORY_DIR, `${yesterday}.json`), "utf-8");
-    prevData = {};
-    for (const s of JSON.parse(raw)) {
-      prevData[s.fullName] = s;
-    }
-  } catch {
-    console.log("  无昨日快照，使用当天数据作为基准");
-  }
-
-  const result = repos.map((repo) => {
-    const prev = prevData[repo.fullName];
-    const starGrowth7d = prev ? repo.stars - (prev.stars || repo.stars) : 0;
-    const growthRate = prev?.stars ? ((starGrowth7d / prev.stars) * 100).toFixed(1) : "0.0";
-
-    return {
-      id: repo.fullName,
-      fullName: repo.fullName,
-      url: repo.url,
-      description: repo.description || "",
-      stars: repo.stars,
-      forks: repo.forks,
-      topics: repo.topics || repo.tags || [],
-      language: repo.primaryLanguage || repo.language,
-      createdAt: repo.createdAt,
-      updatedAt: repo.updatedAt,
-      latestRelease: repo.latestRelease || null,
-      license: repo.license,
-      openIssues: repo.openIssues,
-      // 趋势指标
-      starGrowth7d,
-      growthRate: parseFloat(growthRate),
-      // npm 数据（后续补充）
-      npmDownloads: null,
-      // 元数据
-      fetchedAt: today,
-      category: guessCategory(repo.topics || repo.tags || [], repo.description || ""),
-    };
-  });
-
-  return result;
-}
-
-// ============================================================
-// 4. 分类推断
+// 3. 分类推断
 // ============================================================
 
 function guessCategory(topics, description) {
   const text = [...topics, description].join(" ").toLowerCase();
   const rules = [
-    { cat: "Coding & Dev", keys: ["code", "programming", "developer", "ide", "editor", "cli", "git", "debug"] },
-    { cat: "AI & ML", keys: ["ai", "ml", "machine-learning", "llm", "model", "inference", "neural", "deep-learning"] },
-    { cat: "Productivity", keys: ["productivity", "automation", "workflow", "task", "notion", "calendar", "email"] },
-    { cat: "Data & Analytics", keys: ["data", "analytics", "visualization", "sql", "database", "big-data", "etl"] },
-    { cat: "Design & Creative", keys: ["design", "creative", "art", "image", "video", "audio", "3d", "animation"] },
-    { cat: "DevOps & Infra", keys: ["devops", "infra", "cloud", "docker", "kubernetes", "ci", "deploy", "monitoring"] },
-    { cat: "Web & API", keys: ["web", "api", "browser", "http", "rest", "graphql", "scraping", "crawler"] },
-    { cat: "Security", keys: ["security", "auth", "encryption", "vulnerability", "penetration"] },
-    { cat: "Finance", keys: ["finance", "trading", "stock", "crypto", "blockchain", "quant"] },
+    { cat: "Coding & Dev", keys: ["code", "programming", "developer", "ide", "editor", "cli", "git", "debug", "refactor", "lint"] },
+    { cat: "AI & ML", keys: ["ai", "ml", "machine-learning", "llm", "model", "inference", "neural", "deep-learning", "embedding", "rag"] },
+    { cat: "Productivity", keys: ["productivity", "automation", "workflow", "task", "notion", "calendar", "email", "schedule", "plan"] },
+    { cat: "Data & Analytics", keys: ["data", "analytics", "visualization", "sql", "database", "big-data", "etl", "chart", "dashboard"] },
+    { cat: "Design & Creative", keys: ["design", "creative", "art", "image", "video", "audio", "3d", "animation", "ui", "ux", "figma"] },
+    { cat: "DevOps & Infra", keys: ["devops", "infra", "cloud", "docker", "kubernetes", "ci", "deploy", "monitoring", "server"] },
+    { cat: "Web & API", keys: ["web", "api", "browser", "http", "rest", "graphql", "scraping", "crawler", "fetch"] },
+    { cat: "Security", keys: ["security", "auth", "encryption", "vulnerability", "penetration", "pentest"] },
+    { cat: "Knowledge & Docs", keys: ["knowledge", "docs", "documentation", "wiki", "note", "memory", "context", "rag"] },
+    { cat: "Communication", keys: ["chat", "slack", "discord", "telegram", "message", "notification"] },
   ];
-
   for (const rule of rules) {
     if (rule.keys.some((k) => text.includes(k))) return rule.cat;
   }
@@ -280,40 +196,197 @@ function guessCategory(topics, description) {
 }
 
 // ============================================================
-// 5. npm 下载量（可选）
+// 4. 计算趋势 & 排名
 // ============================================================
 
-async function fetchNpmDownloads(skills) {
-  console.log("📦 查询 npm 下载量...");
-  for (const skill of skills) {
-    const npmName = guessNpmName(skill.fullName, skill.description, skill.topics);
-    if (!npmName) continue;
+function computeStats(repos) {
+  console.log("📈 计算趋势与排名...");
 
-    try {
-      const res = await fetch(`https://api.npmjs.org/downloads/point/last-week/${npmName}`);
-      if (res.ok) {
-        const data = await res.json();
-        skill.npmDownloads = data.downloads || 0;
+  const today = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  // 读历史快照
+  let prevData = {};
+  const historyFile = path.join(HISTORY_DIR, `${getYesterday()}.json`);
+  try {
+    if (fs.existsSync(historyFile)) {
+      const raw = fs.readFileSync(historyFile, "utf-8");
+      for (const s of JSON.parse(raw)) {
+        prevData[s.fullName] = s;
       }
-    } catch {
-      // npm 查询静默失败
+      console.log("  ✓ 找到昨日快照，计算增长率");
     }
-    await sleep(500);
+  } catch {
+    console.log("  无历史快照，增长率设为 0");
   }
+
+  const skills = repos.map((repo) => {
+    const prev = prevData[repo.fullName];
+    const prevStars = prev?.stars || repo.stars;
+    const starGrowth = prev ? repo.stars - prevStars : 0;
+    const growthRate = prevStars > 0 ? ((starGrowth / prevStars) * 100) : 0;
+
+    // 根据创建时间判断是否为"新星"
+    const createdAt = new Date(repo.createdAt);
+    const ageDays = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
+    const isRising = ageDays < 90 && repo.stars > 100;
+
+    // 计算 stars/天 指标（衡量热度）
+    const starsPerDay = ageDays > 0 ? (repo.stars / ageDays) : 0;
+
+    return {
+      id: repo.fullName,
+      fullName: repo.fullName,
+      url: repo.url,
+      description: repo.description,
+      stars: repo.stars,
+      forks: repo.forks,
+      watchers: repo.watchers,
+      openIssues: repo.openIssues,
+      language: repo.language,
+      topics: repo.topics,
+      createdAt: repo.createdAt,
+      updatedAt: repo.updatedAt,
+      pushedAt: repo.pushedAt,
+      license: repo.license,
+      homepage: repo.homepage,
+      archived: repo.archived,
+      // 趋势指标
+      starGrowth,
+      growthRate: parseFloat(growthRate.toFixed(1)),
+      starsPerDay: parseFloat(starsPerDay.toFixed(1)),
+      ageDays,
+      isRising,
+      // 分类
+      category: guessCategory(repo.topics, repo.description),
+    };
+  });
+
   return skills;
 }
 
-function guessNpmName(fullName, description, topics) {
-  // 尝试从仓库名推断 npm 包名
-  const [, repo] = fullName.split("/");
-  const candidates = [repo];
-  if (topics) candidates.push(...topics.filter((t) => !t.includes("-skill") && !t.includes("mcp")));
-  // 只对明显有 npm 包的仓库查询
-  const text = [description, ...candidates].join(" ").toLowerCase();
-  if (text.includes("npm") || text.includes("package") || text.includes("install") || text.includes("npx")) {
-    return repo;
+// ============================================================
+// 5. 生成前端数据
+// ============================================================
+
+function generateOutput(skills) {
+  console.log("\n📦 生成输出文件...");
+
+  // 排序
+  const byStars = [...skills].sort((a, b) => b.stars - a.stars);
+  const byRising = [...skills]
+    .filter((s) => s.stars > 50)
+    .sort((a, b) => b.starsPerDay - a.starsPerDay);
+
+  // Most Downloaded: 优先有 homepage/npm 链接的，按 stars 排
+  const byDownloads = [...skills]
+    .filter((s) => s.forks > 10)
+    .sort((a, b) => b.forks - a.forks);
+
+  // 分类统计
+  const categoryMap = {};
+  for (const s of skills) {
+    if (!categoryMap[s.category]) categoryMap[s.category] = [];
+    categoryMap[s.category].push(s);
   }
-  return null;
+
+  const categories = Object.entries(categoryMap)
+    .map(([name, items]) => ({
+      name,
+      count: items.length,
+      totalStars: items.reduce((s, r) => s + r.stars, 0),
+      top: [...items].sort((a, b) => b.stars - a.stars).slice(0, 5).map((r) => r.fullName),
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  // 精选合集 — 从 topics 中识别 awesome/official/community
+  const awesomeLists = byStars.filter((s) =>
+    s.topics.some((t) => t.includes("awesome")) || s.fullName.toLowerCase().includes("awesome")
+  ).slice(0, 10);
+
+  const official = byStars.filter((s) =>
+    ["anthropics", "openai", "microsoft", "google", "meta"].some((org) =>
+      s.fullName.toLowerCase().startsWith(org + "/")
+    )
+  ).slice(0, 10);
+
+  const community = byStars.filter((s) =>
+    !awesomeLists.includes(s) && !official.includes(s)
+  ).slice(0, 10);
+
+  const summary = {
+    meta: {
+      updatedAt: new Date().toISOString(),
+      version: "1.0",
+      source: "GitHub Search API",
+      authenticated: !!TOKEN,
+    },
+    stats: {
+      totalSkills: skills.length,
+      totalStars: skills.reduce((s, r) => s + r.stars, 0),
+      totalForks: skills.reduce((s, r) => s + r.forks, 0),
+      categories: categories.length,
+      collections: awesomeLists.length + official.length + community.length,
+      newThisWeek: skills.filter((s) => s.ageDays < 7).length,
+    },
+    categories,
+    mostStarred: byStars.slice(0, 50).map(formatSkill),
+    mostDownloaded: byDownloads.slice(0, 50).map(formatSkill),
+    risingFast: byRising.slice(0, 50).map(formatSkill),
+    awesomeLists: awesomeLists.slice(0, 10).map(formatSkill),
+    official: official.slice(0, 10).map(formatSkill),
+    community: community.slice(0, 10).map(formatSkill),
+    allSkills: byStars.map(formatSkill),
+  };
+
+  // 确保目录存在
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(HISTORY_DIR)) fs.mkdirSync(HISTORY_DIR, { recursive: true });
+
+  // 写主数据文件
+  fs.writeFileSync(path.join(DATA_DIR, "skills.json"), JSON.stringify(summary, null, 2));
+  console.log(`  ✓ data/skills.json (${(JSON.stringify(summary).length / 1024).toFixed(0)} KB)`);
+
+  // 写历史快照
+  const today = new Date().toISOString().slice(0, 10);
+  const snapshot = skills.map((s) => ({
+    fullName: s.fullName,
+    stars: s.stars,
+    forks: s.forks,
+    fetchedAt: today,
+  }));
+  fs.writeFileSync(path.join(HISTORY_DIR, `${today}.json`), JSON.stringify(snapshot, null, 2));
+  console.log(`  ✓ data/history/${today}.json`);
+
+  // 也写一份到 public/ 供前端直接 fetch
+  const publicDataDir = path.join(ROOT, "public", "data");
+  if (!fs.existsSync(publicDataDir)) fs.mkdirSync(publicDataDir, { recursive: true });
+  fs.writeFileSync(path.join(publicDataDir, "skills.json"), JSON.stringify(summary, null, 2));
+  console.log(`  ✓ public/data/skills.json`);
+
+  return summary;
+}
+
+function formatSkill(s) {
+  return {
+    fullName: s.fullName,
+    url: s.url,
+    description: s.description,
+    stars: s.stars,
+    forks: s.forks,
+    language: s.language,
+    topics: s.topics,
+    category: s.category,
+    growthRate: s.growthRate,
+    starsPerDay: s.starsPerDay,
+    ageDays: s.ageDays,
+    createdAt: s.createdAt,
+    updatedAt: s.updatedAt,
+    license: s.license,
+    homepage: s.homepage,
+  };
 }
 
 // ============================================================
@@ -335,78 +408,32 @@ function getYesterday() {
 // ============================================================
 
 async function main() {
-  console.log("🚀 GitHub Skills 数据采集开始\n");
+  console.log("====================================");
+  console.log("  🚀 GitHub Skills 数据采集");
+  console.log(`  模式: ${TOKEN ? "认证 (5000次/小时)" : "免认证 (60次/小时)"}`);
+  console.log(`  时间: ${new Date().toISOString()}`);
+  console.log("====================================\n");
 
   // 1. 搜索发现
-  const discovered = await searchNewRepos();
+  const discovered = await discoverRepos();
 
-  // 2. 合并种子仓库（种子仓库中不在搜索结果的）
-  for (const seed of SEED_REPOS) {
-    if (!discovered.has(seed.fullName)) {
-      try {
-        const [owner, repo] = seed.fullName.split("/");
-        const data = await restAPI(`repos/${owner}/${repo}`);
-        discovered.set(seed.fullName, {
-          fullName: data.full_name,
-          url: data.html_url,
-          description: data.description,
-          tags: data.topics || [],
-          language: data.language,
-          stars: data.stargazers_count,
-          forks: data.forks_count,
-          createdAt: data.created_at,
-          updatedAt: data.updated_at,
-          pushedAt: data.pushed_at,
-          openIssues: data.open_issues_count,
-          license: data.license?.spdx_id || null,
-        });
-        await sleep(1000);
-      } catch (e) {
-        console.warn(`  ⚠ 种子仓库 ${seed.fullName} 获取失败:`, e.message);
-      }
-    }
-  }
+  // 2. 补充种子
+  await addSeedRepos(discovered);
 
-  // 3. 转换成数组，GraphQL 补充数据
-  const repoList = Array.from(discovered.values());
-  const enriched = await enrichWithGraphQL(repoList);
+  // 3. 计算趋势
+  const skills = computeStats(Array.from(discovered.values()));
 
-  // 4. 计算趋势
-  const skills = await computeTrends(enriched);
+  // 4. 生成输出
+  const summary = generateOutput(skills);
 
-  // 5. npm 下载量
-  await fetchNpmDownloads(skills);
-
-  // 6. 排序输出
-  skills.sort((a, b) => b.stars - a.stars);
-
-  // 保存当日快照
-  const today = new Date().toISOString().slice(0, 10);
-  if (!fs.existsSync(HISTORY_DIR)) fs.mkdirSync(HISTORY_DIR, { recursive: true });
-  fs.writeFileSync(path.join(HISTORY_DIR, `${today}.json`), JSON.stringify(skills, null, 2));
-
-  // 生成汇总数据（前端用）
-  const summary = {
-    updatedAt: new Date().toISOString(),
-    totalSkills: skills.length,
-    totalStars: skills.reduce((s, r) => s + r.stars, 0),
-    categories: [...new Set(skills.map((s) => s.category))].sort(),
-    mostStarred: skills.slice(0, 20),
-    risingFast: skills
-      .filter((s) => s.growthRate > 0)
-      .sort((a, b) => b.growthRate - a.growthRate)
-      .slice(0, 20),
-    // npmDownloads 暂时不单独做榜单（数据不完整）
-    allSkills: skills,
-  };
-
-  fs.writeFileSync(path.join(DATA_DIR, "skills.json"), JSON.stringify(summary, null, 2));
-
-  console.log(`\n✅ 采集完成！`);
-  console.log(`   总计: ${skills.length} 个 Skills`);
-  console.log(`   总星数: ${(summary.totalStars / 1000).toFixed(0)}k`);
-  console.log(`   分类: ${summary.categories.length} 个`);
-  console.log(`   数据已保存到 data/skills.json`);
+  console.log("\n====================================");
+  console.log("  ✅ 采集完成！");
+  console.log(`  总计: ${summary.stats.totalSkills} 个 Skills`);
+  console.log(`  总星数: ${(summary.stats.totalStars / 1000).toFixed(0)}k`);
+  console.log(`  总 Fork: ${summary.stats.totalForks.toLocaleString()}`);
+  console.log(`  分类: ${summary.stats.categories} 个`);
+  console.log(`  合集: ${summary.stats.collections} 个`);
+  console.log("====================================\n");
 }
 
 main().catch((e) => {

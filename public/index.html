@@ -707,51 +707,74 @@ body {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ===== DATA =====
-const skillsData = {
-  stars: [
-    { rank: 1, name: 'openclaw/openclaw', author: 'OpenClaw', stars: '217.8k', growth: '+12.4%', desc: '增长最快的 AI 助手平台，支持多 Agent 协作与技能编排。', tags: ['AI Platform', 'Multi-Agent'], type: 'stars' },
-    { rank: 2, name: 'anthropics/skills', author: 'Anthropic', stars: '138.0k', growth: '+450%', desc: 'Anthropic 官方 Claude Agent 技能仓库，3 天斩获 138k Stars。', tags: ['Official', 'Claude'], type: 'stars' },
-    { rank: 3, name: 'modelcontextprotocol/servers', author: 'MCP', stars: '79.1k', growth: '+8.7%', desc: 'MCP 官方协议层实现，标准化 Agent 与外部工具的通信协议。', tags: ['Protocol', 'MCP'], type: 'stars' },
-    { rank: 4, name: 'firecrawl/firecrawl', author: 'Firecrawl', stars: '84.7k', growth: '+5.2%', desc: '将任意网站转换为 LLM 可用的数据，支持爬虫与结构化提取。', tags: ['Data', 'Crawler'], type: 'stars' },
-    { rank: 5, name: 'ComposioHQ/awesome-claude-skills', author: 'Composio', stars: '36.6k', growth: '+3.1%', desc: '最全面的 Claude Skills 精选列表，涵盖 1000+ 生产级技能。', tags: ['Awesome', 'Claude'], type: 'stars' },
-    { rank: 6, name: 'browser-use/browser-use', author: 'Browser Use', stars: '78.7k', growth: '+6.8%', desc: '让 AI Agent 像人类一样操作浏览器的开源工具。', tags: ['Automation', 'Browser'], type: 'stars' },
-  ],
-  downloads: [
-    { rank: 1, name: 'anthropics/skills', author: 'Anthropic', stars: '138.0k', growth: '+450%', desc: '官方 Claude Skills，提供标准化技能模板与最佳实践。', tags: ['Official', 'Claude'], type: 'downloads' },
-    { rank: 2, name: 'openclaw/openclaw', author: 'OpenClaw', stars: '217.8k', growth: '+12.4%', desc: 'AI 助手平台，内置技能商店与一键安装。', tags: ['Platform', 'Store'], type: 'downloads' },
-    { rank: 3, name: 'ComposioHQ/awesome-claude-skills', author: 'Composio', stars: '36.6k', growth: '+3.1%', desc: '精选技能合集，每个技能都经过生产环境验证。', tags: ['Curated', 'Awesome'], type: 'downloads' },
-    { rank: 4, name: 'vercel-labs/agent-skills', author: 'Vercel', stars: '20.9k', growth: '+2.8%', desc: 'Vercel 官方技能集合，专注前端与部署场景。', tags: ['Vercel', 'Frontend'], type: 'downloads' },
-    { rank: 5, name: 'nextlevelbuilder/ui-ux-pro-max-skill', author: 'NextLevel', stars: '33.4k', growth: '+18.5%', desc: '最成功的独立 Skill，提供 UI/UX 设计全流程辅助。', tags: ['Design', 'UI/UX'], type: 'downloads' },
-    { rank: 6, name: 'browser-use/browser-use', author: 'Browser Use', stars: '78.7k', growth: '+6.8%', desc: '浏览器自动化，被众多 Agent 平台集成。', tags: ['Automation', 'Browser'], type: 'downloads' },
-  ],
-  rising: [
-    { rank: 1, name: 'anthropics/skills', author: 'Anthropic', stars: '138.0k', growth: '+450%', desc: '3 天 138k Stars，创纪录增长。官方技能库的开源里程碑。', tags: ['Official', 'Claude'], type: 'rising' },
-    { rank: 2, name: 'nextlevelbuilder/ui-ux-pro-max-skill', author: 'NextLevel', stars: '33.4k', growth: '+18.5%', desc: '不到 3 个月收获 33.4k Stars，增速最快的独立 Skill。', tags: ['Design', 'UI/UX'], type: 'rising' },
-    { rank: 3, name: 'openclaw/openclaw', author: 'OpenClaw', stars: '217.8k', growth: '+12.4%', desc: '诞生于 2025 年 11 月，3 个月拿下 217.8k Stars。', tags: ['Platform', 'Agent'], type: 'rising' },
-    { rank: 4, name: 'affaan-m/everything-claude-code', author: 'Affaan', stars: '49.4k', growth: '+9.3%', desc: 'Claude Code 完整配置参考，一站式配置模板。', tags: ['Config', 'Claude'], type: 'rising' },
-    { rank: 5, name: 'refly-ai/refly', author: 'Refly', stars: '6.6k', growth: '+7.8%', desc: '开源可视化 Skills Builder，拖拽式创建技能。', tags: ['Builder', 'Visual'], type: 'rising' },
-    { rank: 6, name: 'yusufkaraaslan/Skill_Seekers', author: 'Yusuf', stars: '9.7k', growth: '+6.2%', desc: '文档转 Skills 工具，将知识库自动转化为 Agent 技能。', tags: ['Tool', 'Converter'], type: 'rising' },
-  ]
+// ===== 全局数据 =====
+let SKILLS_DATA = null;
+
+// ===== 工具函数 =====
+function fmtStars(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
+  return String(n);
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function fmtRelative(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const days = Math.floor(diff / 86400000);
+  if (days === 0) return '今天';
+  if (days === 1) return '昨天';
+  if (days < 7) return days + ' 天前';
+  if (days < 30) return Math.floor(days / 7) + ' 周前';
+  return Math.floor(days / 30) + ' 个月前';
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// 分类图标映射
+const CATEGORY_ICONS = {
+  'Coding & Dev': '&#x1F4BB;',
+  'AI & ML': '&#x1F9E0;',
+  'Productivity': '&#x1F4DD;',
+  'Data & Analytics': '&#x1F4CA;',
+  'Design & Creative': '&#x1F3A8;',
+  'DevOps & Infra': '&#x2699;',
+  'Web & API': '&#x1F310;',
+  'Security': '&#x1F512;',
+  'Knowledge & Docs': '&#x1F4DA;',
+  'Communication': '&#x1F4AC;',
+  'Other': '&#x1F4E6;',
 };
 
-const categories = [
-  { icon: '&#x1F4BB;', name: 'Coding & Development', count: 13006, top: ['openclaw/openclaw', 'anthropics/skills', 'browser-use/browser-use'] },
-  { icon: '&#x1F3A8;', name: 'Art & Design', count: 4325, top: ['nextlevelbuilder/ui-ux-pro-max-skill', 'ui-ux-pro-max-skill', 'design-agent'] },
-  { icon: '&#x1F4DD;', name: 'Productivity & Collaboration', count: 3723, top: ['OthmanAdi/planning-with-files', 'planning-with-files', 'task-agent'] },
-  { icon: '&#x1F4CA;', name: 'Research & Data Analysis', count: 2921, top: ['research-agent', 'data-analysis-skill', 'firecrawl/firecrawl'] },
-  { icon: '&#x270D;', name: 'Writing & Editing', count: 1924, top: ['writing-assistant', 'content-creator', 'editor-skill'] },
-  { icon: '&#x1F3AC;', name: 'Video & Animation', count: 846, top: ['video-generator', 'animation-agent', 'clip-editor'] },
-  { icon: '&#x1F5BC;', name: 'Image', count: 352, top: ['image-generator', 'photo-editor', 'visual-agent'] },
-];
+// 根据数据生成近30天近似趋势（基于 starsPerDay 反推）
+function generateSparklineData(starsPerDay, ageDays) {
+  const points = 30;
+  const data = [];
+  const dailyRate = starsPerDay || 1;
+  for (let i = 0; i < points; i++) {
+    // 加入一些随机波动
+    const noise = 0.7 + Math.random() * 0.6;
+    const dayNum = i + 1;
+    // 如果仓库年龄不到30天，前面是0
+    if (ageDays < 30 && i < 30 - ageDays) {
+      data.push(0);
+    } else {
+      data.push(Math.max(1, dailyRate * (i + 1) * noise / points * 2));
+    }
+  }
+  // 确保是递增趋势
+  for (let i = 1; i < data.length; i++) {
+    if (data[i] < data[i-1]) data[i] = data[i-1] * (0.9 + Math.random() * 0.2);
+  }
+  return data;
+}
 
-const collections = [
-  { type: 'awesome', typeLabel: 'Awesome List', name: 'ComposioHQ/awesome-claude-skills', desc: '最全面的 Claude Skills 精选列表，涵盖 1000+ 生产级技能，覆盖文档处理、开发工具、数据分析等十余个领域。', stats: '36.6k Stars &middot; 1,000+ Skills &middot; 14 Categories' },
-  { type: 'official', typeLabel: 'Official', name: 'anthropics/skills', desc: 'Anthropic 官方开源的 Claude Agent 技能仓库。3 天斩获 138k Stars，定义了 Skills 生态的标准与最佳实践。', stats: '138.0k Stars &middot; 3 Days &middot; Official' },
-  { type: 'community', typeLabel: 'Community', name: 'VoltAgent/awesome-agent-skills', desc: '精心整理的 1000+ Agent 技能合集，来自官方开发团队和社区，兼容 Claude Code、Codex、Cursor 等多平台。', stats: '10.5k Stars &middot; 1,000+ Skills &middot; Multi-platform' },
-];
-
-// ===== RENDER FUNCTIONS =====
 function createSparkline(data, color) {
   const w = 80, h = 28, pad = 2;
   const min = Math.min(...data), max = Math.max(...data);
@@ -764,41 +787,119 @@ function createSparkline(data, color) {
   return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
+// ===== 渲染：Hero 数据 =====
+function renderHero(data) {
+  const s = data.stats;
+  const meta = data.meta;
+
+  // 更新徽章
+  const badge = document.querySelector('.hero-badge span:last-child');
+  if (badge) badge.textContent = `实时追踪 ${s.totalSkills.toLocaleString()}+ Agent Skills`;
+
+  // 更新统计卡片
+  const statsRow = document.querySelector('.stats-row');
+  const trendText = s.newThisWeek > 0 ? `+${s.newThisWeek} this week` : 'Live tracking';
+  statsRow.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Total Skills</div>
+      <div class="stat-value">${s.totalSkills.toLocaleString()}</div>
+      <div class="stat-trend up">${trendText}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Stars</div>
+      <div class="stat-value">${fmtStars(s.totalStars)}</div>
+      <div class="stat-trend up">${fmtStars(s.totalForks)} forks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Categories</div>
+      <div class="stat-value">${s.categories}</div>
+      <div class="stat-trend up">All tracked</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Collections</div>
+      <div class="stat-value">${s.collections}</div>
+      <div class="stat-trend up">Curated picks</div>
+    </div>
+  `;
+
+  // 更新 footer
+  const footer = document.querySelector('.footer p');
+  if (footer) {
+    footer.innerHTML = `Data from GitHub API &middot; Updated ${fmtRelative(meta.updatedAt)} &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a>`;
+  }
+}
+
+// ===== 渲染：技能卡片 =====
 function renderSkills(type) {
   const grid = document.getElementById('skillsGrid');
-  const data = skillsData[type];
-  const colorMap = { stars: '#e3b341', downloads: '#58a6ff', rising: '#f78166' };
-  const avatarMap = { stars: 'gold', downloads: 'blue', rising: 'orange' };
-  const tagMap = { stars: 'gold', downloads: 'blue', rising: 'orange' };
+  let data;
+  let primaryMetric, primaryMetricLabel, colorMap, avatarMap, tagMap;
 
-  grid.innerHTML = data.map(s => {
-    const spark = createSparkline([5,12,8,15,20,18,25,30,28,35,42,38,45,52,48,55,62,58,65,72,68,75,82,78,85,92,88,95,102,98], colorMap[type]);
+  if (type === 'stars') {
+    data = SKILLS_DATA.mostStarred;
+    colorMap = '#e3b341'; avatarMap = 'gold'; tagMap = 'gold';
+    primaryMetric = 'stars'; primaryMetricLabel = 'stars';
+  } else if (type === 'downloads') {
+    data = SKILLS_DATA.mostDownloaded;
+    colorMap = '#58a6ff'; avatarMap = 'blue'; tagMap = 'blue';
+    primaryMetric = 'forks'; primaryMetricLabel = 'forks';
+  } else {
+    data = SKILLS_DATA.risingFast;
+    colorMap = '#f78166'; avatarMap = 'orange'; tagMap = 'orange';
+    primaryMetric = 'starsPerDay'; primaryMetricLabel = '/day';
+  }
+
+  grid.innerHTML = data.slice(0, 12).map((s, i) => {
+    const rank = i + 1;
+    const sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
+    const spark = createSparkline(sparkData, colorMap);
+
+    // 主指标
+    let metricValue;
+    if (type === 'stars') metricValue = fmtStars(s.stars);
+    else if (type === 'downloads') metricValue = fmtStars(s.forks);
+    else metricValue = fmtStars(s.starsPerDay) + '/day';
+
+    // 增长率
+    const growthText = s.starsPerDay > 0 ? `+${fmtStars(s.starsPerDay)}/day` : '—';
+    const growthClass = s.starsPerDay > 0 ? 'up' : '';
+
+    // 标签（取前3个topic + 分类）
+    const tags = [...(s.topics || []).slice(0, 2), s.category].filter((v, idx, arr) => arr.indexOf(v) === idx).slice(0, 3);
+
+    // 作者
+    const author = s.fullName.split('/')[0];
+
     return `
       <div class="skill-card ${type}-card">
         <div class="card-header">
           <div style="display:flex;align-items:center;flex:1;overflow:hidden;">
-            <div class="card-avatar ${avatarMap[type]}">${s.rank}</div>
+            <div class="card-avatar ${avatarMap}">${rank}</div>
             <div class="card-meta">
-              <div class="card-name"><a href="#">${s.name}</a></div>
-              <div class="card-author">${s.author}</div>
+              <div class="card-name"><a href="${s.url}" target="_blank">${s.fullName}</a></div>
+              <div class="card-author">@${author}</div>
             </div>
           </div>
-          <div class="card-rank">#${s.rank}</div>
+          <div class="card-rank">#${rank}</div>
         </div>
         <div class="card-metrics">
           <div class="metric metric-stars">
             <span class="metric-icon">&#9733;</span>
-            <span class="metric-value">${s.stars}</span>
+            <span class="metric-value">${fmtStars(s.stars)}</span>
           </div>
-          <div class="metric metric-growth">
+          <div class="metric metric-downloads">
+            <span class="metric-icon">&#x1F4E6;</span>
+            <span class="metric-value">${fmtStars(s.forks)}</span>
+          </div>
+          <div class="metric metric-growth ${growthClass}">
             <span class="metric-icon">&#9650;</span>
-            <span class="metric-value">${s.growth}</span>
+            <span class="metric-value">${growthText}</span>
           </div>
         </div>
-        <div class="card-desc">${s.desc}</div>
+        <div class="card-desc">${escapeHtml(s.description) || 'No description available'}</div>
         <div class="card-footer">
           <div class="card-tags">
-            ${s.tags.map(t => `<span class="tag ${tagMap[type]}">${t}</span>`).join('')}
+            ${tags.map(t => `<span class="tag ${tagMap}">${escapeHtml(t)}</span>`).join('')}
           </div>
           <div class="card-sparkline">${spark}</div>
         </div>
@@ -807,49 +908,75 @@ function renderSkills(type) {
   }).join('');
 }
 
-function renderCategories() {
+// ===== 渲染：分类 =====
+function renderCategories(data) {
   const grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = categories.map(c => `
-    <div class="category-card">
-      <div class="category-icon">${c.icon}</div>
-      <div class="category-name">${c.name}</div>
-      <div class="category-count">${c.count.toLocaleString()} skills</div>
-      <div class="category-top">
-        ${c.top.map(t => `<div class="category-top-item">${t}</div>`).join('')}
+  grid.innerHTML = data.categories.map(c => {
+    const icon = CATEGORY_ICONS[c.name] || '&#x1F4E6;';
+    const totalStars = fmtStars(c.totalStars);
+    return `
+      <div class="category-card">
+        <div class="category-icon">${icon}</div>
+        <div class="category-name">${c.name}</div>
+        <div class="category-count">${c.count.toLocaleString()} skills &middot; ${totalStars} stars</div>
+        <div class="category-top">
+          ${c.top.map(t => `<div class="category-top-item">${t}</div>`).join('')}
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-function renderCollections() {
+// ===== 渲染：合集 =====
+function renderCollections(data) {
   const grid = document.getElementById('collectionsGrid');
-  grid.innerHTML = collections.map(c => `
-    <div class="collection-card">
-      <div class="collection-type ${c.type}">${c.typeLabel}</div>
-      <div class="collection-name">${c.name}</div>
-      <div class="collection-desc">${c.desc}</div>
-      <div class="collection-stats">${c.stats}</div>
-    </div>
-  `).join('');
+  const all = [
+    ...data.awesomeLists.map(s => ({...s, type: 'awesome', typeLabel: 'Awesome List'})),
+    ...data.official.map(s => ({...s, type: 'official', typeLabel: 'Official'})),
+    ...data.community.slice(0, 1).map(s => ({...s, type: 'community', typeLabel: 'Community'})),
+  ].slice(0, 6);
+
+  grid.innerHTML = all.map(c => {
+    const desc = c.description || 'No description available';
+    const stats = `${fmtStars(c.stars)} Stars &middot; ${fmtStars(c.forks)} Forks &middot; ${fmtRelative(c.createdAt)}`;
+    return `
+      <div class="collection-card">
+        <div class="collection-type ${c.type}">${c.typeLabel}</div>
+        <div class="collection-name"><a href="${c.url}" target="_blank" style="color:inherit;text-decoration:none">${c.fullName}</a></div>
+        <div class="collection-desc">${escapeHtml(desc)}</div>
+        <div class="collection-stats">${stats}</div>
+      </div>
+    `;
+  }).join('');
 }
 
-// ===== TABS =====
-document.querySelectorAll('.trend-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.trend-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    if (tab.classList.contains('stars')) renderSkills('stars');
-    if (tab.classList.contains('downloads')) renderSkills('downloads');
-    if (tab.classList.contains('rising')) renderSkills('rising');
-  });
-});
-
-// ===== CHART =====
-function initChart() {
+// ===== 渲染：趋势图表 =====
+function initChart(data) {
   const ctx = document.getElementById('trendChart').getContext('2d');
+
+  // 基于真实数据生成30天近似趋势
+  // 用 totalStars 反推，加上各仓库的 starsPerDay 波动
+  const totalStarsNow = data.stats.totalStars;
+  const totalStars30dAgo = Math.max(0, totalStarsNow - data.allSkills.reduce((sum, s) => sum + (s.starsPerDay || 0) * 30, 0) * 0.6);
+
   const labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
-  const totalStars = [2800,2815,2830,2850,2870,2890,2910,2930,2950,2970,2990,3010,3030,3050,3070,3090,3110,3130,3150,3170,3190,3210,3230,3250,3270,3290,3310,3330,3350,3370];
-  const newSkills = [3,4,2,5,6,4,3,5,7,6,4,5,8,6,7,5,6,4,8,7,6,5,7,6,8,7,9,8,7,6];
+  const starsLine = [];
+  const newSkillsLine = [];
+
+  for (let i = 0; i < 30; i++) {
+    const progress = i / 29;
+    // S曲线增长
+    const ease = progress * progress * (3 - 2 * progress);
+    const noise = 0.95 + Math.sin(i * 0.7) * 0.03 + Math.random() * 0.04;
+    starsLine.push(Math.round((totalStars30dAgo + (totalStarsNow - totalStars30dAgo) * ease) * noise));
+
+    // 每天新增 skill 数（近似）
+    const avgDaily = data.stats.totalSkills / Math.max(1, Math.max(...data.allSkills.map(s => s.ageDays || 1)));
+    newSkillsLine.push(Math.max(1, Math.round(avgDaily * (0.7 + Math.random() * 0.6))));
+  }
+
+  // 确保最后一个点是当前值
+  starsLine[29] = totalStarsNow;
 
   new Chart(ctx, {
     type: 'line',
@@ -858,7 +985,7 @@ function initChart() {
       datasets: [
         {
           label: 'Total Stars',
-          data: totalStars,
+          data: starsLine.map(v => v / 1000),
           borderColor: '#58a6ff',
           backgroundColor: 'rgba(88,166,255,0.06)',
           borderWidth: 2,
@@ -869,7 +996,7 @@ function initChart() {
         },
         {
           label: 'New Skills',
-          data: newSkills.map(v => v * 50),
+          data: newSkillsLine,
           borderColor: '#a371f7',
           backgroundColor: 'transparent',
           borderWidth: 2,
@@ -878,6 +1005,7 @@ function initChart() {
           tension: 0.4,
           pointRadius: 0,
           pointHoverRadius: 4,
+          yAxisID: 'y1',
         }
       ]
     },
@@ -897,31 +1025,137 @@ function initChart() {
           displayColors: true,
           callbacks: {
             label: function(context) {
-              if (context.datasetIndex === 0) return 'Stars: ' + context.parsed.y + 'k';
-              return 'New Skills: ' + (context.parsed.y / 50);
+              if (context.datasetIndex === 0) return 'Stars: ' + context.parsed.y.toFixed(0) + 'k';
+              return 'New Skills: ' + context.parsed.y;
             }
           }
         }
       },
       scales: {
-        x: {
-          display: false,
-          grid: { display: false }
-        },
-        y: {
-          display: false,
-          grid: { display: false }
-        }
+        x: { display: false, grid: { display: false } },
+        y: { display: false, grid: { display: false } },
+        y1: { display: false, grid: { display: false }, position: 'right' }
       }
     }
   });
 }
 
-// ===== INIT =====
-renderSkills('stars');
-renderCategories();
-renderCollections();
-initChart();
+// ===== Tab 切换 =====
+function initTabs() {
+  document.querySelectorAll('.trend-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.trend-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      if (tab.classList.contains('stars')) renderSkills('stars');
+      if (tab.classList.contains('downloads')) renderSkills('downloads');
+      if (tab.classList.contains('rising')) renderSkills('rising');
+    });
+  });
+}
+
+// ===== 搜索功能 =====
+function initSearch(data) {
+  const input = document.querySelector('.search-box input');
+  if (!input) return;
+
+  input.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) {
+      // 恢复默认显示
+      const activeTab = document.querySelector('.trend-tab.active');
+      if (activeTab?.classList.contains('stars')) renderSkills('stars');
+      else if (activeTab?.classList.contains('downloads')) renderSkills('downloads');
+      else renderSkills('rising');
+      return;
+    }
+
+    // 搜索所有技能
+    const results = data.allSkills.filter(s =>
+      s.fullName.toLowerCase().includes(q) ||
+      s.description?.toLowerCase().includes(q) ||
+      s.topics?.some(t => t.toLowerCase().includes(q)) ||
+      s.language?.toLowerCase().includes(q)
+    ).slice(0, 12);
+
+    const grid = document.getElementById('skillsGrid');
+    if (results.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">No results for "${escapeHtml(q)}"</div>`;
+      return;
+    }
+
+    grid.innerHTML = results.map((s, i) => {
+      const author = s.fullName.split('/')[0];
+      const tags = [...(s.topics || []).slice(0, 2), s.category].filter((v, idx, arr) => arr.indexOf(v) === idx).slice(0, 3);
+      const sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
+      const spark = createSparkline(sparkData, '#58a6ff');
+      return `
+        <div class="skill-card downloads-card">
+          <div class="card-header">
+            <div style="display:flex;align-items:center;flex:1;overflow:hidden;">
+              <div class="card-avatar blue">${i+1}</div>
+              <div class="card-meta">
+                <div class="card-name"><a href="${s.url}" target="_blank">${s.fullName}</a></div>
+                <div class="card-author">@${author}</div>
+              </div>
+            </div>
+          </div>
+          <div class="card-metrics">
+            <div class="metric metric-stars">
+              <span class="metric-icon">&#9733;</span>
+              <span class="metric-value">${fmtStars(s.stars)}</span>
+            </div>
+            <div class="metric metric-downloads">
+              <span class="metric-icon">&#x1F4E6;</span>
+              <span class="metric-value">${fmtStars(s.forks)}</span>
+            </div>
+            <div class="metric metric-growth">
+              <span class="metric-icon">&#9650;</span>
+              <span class="metric-value">${s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—'}</span>
+            </div>
+          </div>
+          <div class="card-desc">${escapeHtml(s.description) || 'No description'}</div>
+          <div class="card-footer">
+            <div class="card-tags">
+              ${tags.map(t => `<span class="tag blue">${escapeHtml(t)}</span>`).join('')}
+            </div>
+            <div class="card-sparkline">${spark}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  });
+}
+
+// ===== 初始化 =====
+async function init() {
+  try {
+    // 加载真实数据
+    const res = await fetch('data/skills.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    SKILLS_DATA = await res.json();
+
+    // 渲染所有区域
+    renderHero(SKILLS_DATA);
+    renderSkills('stars');
+    renderCategories(SKILLS_DATA);
+    renderCollections(SKILLS_DATA);
+    initChart(SKILLS_DATA);
+    initTabs();
+    initSearch(SKILLS_DATA);
+
+    console.log(`✅ Loaded ${SKILLS_DATA.stats.totalSkills} skills, ${fmtStars(SKILLS_DATA.stats.totalStars)} total stars`);
+    console.log(`   Updated: ${SKILLS_DATA.meta.updatedAt}`);
+  } catch (e) {
+    console.error('Failed to load data:', e);
+    document.getElementById('skillsGrid').innerHTML =
+      `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">
+        <p style="font-size:16px;margin-bottom:8px">⚠️ 数据加载失败</p>
+        <p style="font-size:13px">请先运行: <code style="background:var(--bg-surface-2);padding:2px 6px;border-radius:4px">node scripts/fetch-skills.js</code></p>
+      </div>`;
+  }
+}
+
+init();
 </script>
 </body>
 </html>
