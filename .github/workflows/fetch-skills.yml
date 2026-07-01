@@ -6,6 +6,10 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch: # 允许手动触发
 
+# 授予 GITHUB_TOKEN 写权限，否则 git push 会失败
+permissions:
+  contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -13,14 +17,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 需要 token 才能 git push 回仓库
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
+      - name: Restore npm cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Fetch Skills Data
         env:
+          # 传给采集脚本，用于突破 GitHub API 60次/小时限制
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/fetch-skills.js
 
@@ -28,6 +44,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
-          git diff --staged --quiet || git commit -m "📊 Update skills data [automated]"
+          git add data/ public/data/
+          git diff --staged --quiet || git commit -m "🤖 Update skills data [automated]"
           git push
