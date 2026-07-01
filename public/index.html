@@ -1,727 +1,723 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-lang="zh">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillTrends — GitHub Agent Skills 趋势追踪</title>
+<title data-i18n="pageTitle">SkillTrends — 发现 GitHub 上最热门的 Agent Skills</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg-primary: #0d1117;
-  --bg-surface: #161b22;
-  --bg-surface-2: #1c2128;
-  --border: #30363d;
-  --border-light: #484f58;
-  --text-primary: #f0f6fc;
-  --text-secondary: #8b949e;
-  --text-muted: #6e7681;
-  --accent-blue: #58a6ff;
-  --accent-gold: #e3b341;
-  --accent-orange: #f78166;
-  --accent-green: #3fb950;
-  --accent-red: #f85149;
-  --accent-purple: #a371f7;
+  --bg-primary: #0d1117; --bg-surface: #161b22; --bg-surface-2: #1c2128;
+  --border: #30363d; --border-light: #484f58;
+  --text-primary: #f0f6fc; --text-secondary: #8b949e; --text-muted: #6e7681;
+  --accent-blue: #58a6ff; --accent-gold: #e3b341; --accent-orange: #f78166;
+  --accent-green: #3fb950; --accent-red: #f85149; --accent-purple: #a371f7;
   --font-mono: 'Consolas', 'Courier New', monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 body {
-  font-family: var(--font-sans);
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  line-height: 1.5;
+  font-family: var(--font-sans); background: var(--bg-primary);
+  color: var(--text-primary); min-height: 100vh; line-height: 1.5;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(88,166,255,0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(163,113,247,0.06), transparent 50%);
+  background-attachment: fixed;
 }
 
-/* Navigation */
+/* Nav */
 .top-nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(22,27,34,0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(22,27,34,0.95); backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px; height: 56px;
+  border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px;
   display: flex; align-items: center; gap: 24px;
 }
 .nav-logo {
-  font-size: 20px; font-weight: 700; color: var(--text-primary);
-  text-decoration: none; display: flex; align-items: center; gap: 8px;
+  font-size: 20px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px;
+  color: var(--text-primary);
 }
 .nav-logo svg { width: 28px; height: 28px; }
-.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; align-items: center; }
 .nav-link {
   padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 500;
   color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
 }
-.nav-link:hover { color: var(--text-primary); background: var(--bg-surface-2); }
-.nav-link.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
-.nav-search {
-  position: relative; margin-left: 8px;
+.nav-link:hover, .nav-link.active { color: var(--text-primary); background: var(--bg-surface-2); }
+.lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-left: 8px; }
+.lang-btn {
+  padding: 5px 10px; font-size: 12px; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--text-secondary); border: none;
+  font-family: var(--font-sans); transition: all 0.15s;
 }
-.nav-search input {
-  width: 220px; height: 32px; padding: 0 12px 0 32px;
-  border-radius: 6px; border: 1px solid var(--border);
-  background: var(--bg-primary); color: var(--text-primary);
-  font-size: 13px; outline: none; transition: border-color 0.2s;
-}
-.nav-search input:focus { border-color: var(--accent-blue); }
-.nav-search svg { position: absolute; left: 10px; top: 8px; }
-
-/* Hero Section */
-.hero {
-  text-align: center; padding: 80px 24px 60px;
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 800px;
-  background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-block; padding: 6px 16px; border-radius: 20px;
-  background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.3);
-  color: var(--accent-blue); font-size: 13px; font-weight: 500; margin-bottom: 20px;
-}
-.hero h1 {
-  font-size: clamp(32px, 5vw, 48px); font-weight: 800;
-  background: linear-gradient(135deg, #58a6ff 0%, #a371f7 50%, #e3b341 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 16px; letter-spacing: -0.02em;
-}
-.hero p {
-  font-size: 18px; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px;
-}
-.hero-search {
-  display: flex; max-width: 520px; margin: 0 auto; gap: 0;
-}
-.hero-search input {
-  flex: 1; height: 48px; padding: 0 20px; border-radius: 8px 0 0 8px;
-  border: 1px solid var(--border); border-right: none;
-  background: var(--bg-surface); color: var(--text-primary);
-  font-size: 15px; outline: none;
-}
-.hero-search input:focus { border-color: var(--accent-blue); }
-.hero-search button {
-  height: 48px; padding: 0 24px; border-radius: 0 8px 8px 0;
-  border: none; background: linear-gradient(135deg, #58a6ff, #3fb950);
-  color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
-  transition: opacity 0.2s;
-}
-.hero-search button:hover { opacity: 0.9; }
-
-/* Stats Row */
-.stats-row {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-  max-width: 900px; margin: 0 auto 0; padding: 0 24px;
-}
-.stat-card {
-  background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: 10px; padding: 20px; text-align: center;
-}
-.stat-value { font-size: 28px; font-weight: 700; font-family: var(--font-mono); }
-.stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+.lang-btn:hover { color: var(--text-primary); }
+.lang-btn.active { background: var(--accent-blue); color: #fff; }
+.lang-btn + .lang-btn { border-left: 1px solid var(--border); }
 
 /* Container */
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-/* Section */
-.section { padding: 60px 0; }
-.section-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+/* Hero */
+.hero { padding: 60px 0 40px; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  background: rgba(63,185,80,0.1); color: var(--accent-green);
+  border: 1px solid rgba(63,185,80,0.3);
+  margin-bottom: 20px;
 }
-.section-title { font-size: 24px; font-weight: 700; }
-.section-subtitle { color: var(--text-muted); font-size: 14px; }
-.section-action {
-  font-size: 14px; color: var(--accent-blue); text-decoration: none; font-weight: 500;
+.hero-badge .pulse {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green);
+  box-shadow: 0 0 0 0 rgba(63,185,80,0.7);
+  animation: pulse 2s infinite;
 }
-.section-action:hover { text-decoration: underline; }
-
-/* Tabs */
-.trend-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
-.trend-tab {
-  padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 500;
-  color: var(--text-secondary); background: transparent; border: none; cursor: pointer;
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(63,185,80,0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(63,185,80,0); }
+  100% { box-shadow: 0 0 0 0 rgba(63,185,80,0); }
+}
+.hero h1 {
+  font-size: 48px; font-weight: 800; line-height: 1.15; margin-bottom: 16px;
+  background: linear-gradient(120deg, #58a6ff 0%, #a371f7 50%, #f78166 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p { font-size: 17px; color: var(--text-secondary); max-width: 720px; margin: 0 auto 32px; }
+.hero-search {
+  max-width: 640px; margin: 0 auto 32px; position: relative;
+}
+.hero-search input {
+  width: 100%; padding: 14px 20px 14px 48px; font-size: 15px;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text-primary); font-family: var(--font-sans);
   transition: all 0.2s;
 }
-.trend-tab:hover { color: var(--text-primary); background: var(--bg-surface); }
-.trend-tab.active { color: var(--text-primary); background: var(--bg-surface-2); }
-.trend-tab.stars.active { color: var(--accent-gold); background: rgba(227,179,65,0.1); }
-.trend-tab.downloads.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
-.trend-tab.rising.active { color: var(--accent-orange); background: rgba(247,129,102,0.1); }
+.hero-search input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+.hero-search svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-muted); }
 
-/* Skill Cards Grid */
+/* Stats */
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;
+  max-width: 880px; margin: 0 auto;
+}
+.stat-card {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px; text-align: left;
+}
+.stat-value { font-size: 32px; font-weight: 800; font-family: var(--font-mono); margin-bottom: 4px; }
+.stat-value.gold { color: var(--accent-gold); }
+.stat-value.blue { color: var(--accent-blue); }
+.stat-value.purple { color: var(--accent-purple); }
+.stat-value.orange { color: var(--accent-orange); }
+.stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* Section */
+.section { padding: 48px 0; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.section-title { font-size: 24px; font-weight: 700; }
+.section-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+/* Trend Tabs */
+.trend-tabs {
+  display: flex; gap: 4px; padding: 4px; background: var(--bg-surface);
+  border: 1px solid var(--border); border-radius: 8px;
+}
+.trend-tab {
+  padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: transparent; border: none; color: var(--text-secondary);
+  border-radius: 6px; font-family: var(--font-sans); transition: all 0.2s;
+}
+.trend-tab:hover { color: var(--text-primary); }
+.trend-tab.active { background: var(--bg-surface-2); color: var(--text-primary); }
+.trend-tab.stars.active { box-shadow: inset 0 0 0 1px var(--accent-gold); color: var(--accent-gold); }
+.trend-tab.downloads.active { box-shadow: inset 0 0 0 1px var(--accent-blue); color: var(--accent-blue); }
+.trend-tab.rising.active { box-shadow: inset 0 0 0 1px var(--accent-orange); color: var(--accent-orange); }
+
+/* Skill Grid */
 .skills-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px;
 }
-
-/* Skill Card */
 .skill-card {
-  display: block; background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px; text-decoration: none; color: inherit;
-  transition: all 0.25s; position: relative;
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; transition: all 0.2s; position: relative;
 }
-.skill-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-light);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-.stars-card:hover { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(227,179,65,0.1); }
-.downloads-card:hover { border-color: var(--accent-blue); box-shadow: 0 0 20px rgba(88,166,255,0.1); }
-.rising-card:hover { border-color: var(--accent-orange); box-shadow: 0 0 20px rgba(247,129,102,0.1); }
+.skill-card:hover { transform: translateY(-3px); border-color: var(--border-light); }
+.skill-card.stars-card:hover { border-color: var(--accent-gold); box-shadow: 0 8px 24px -8px rgba(227,179,65,0.3); }
+.skill-card.downloads-card:hover { border-color: var(--accent-blue); box-shadow: 0 8px 24px -8px rgba(88,166,255,0.3); }
+.skill-card.rising-card:hover { border-color: var(--accent-orange); box-shadow: 0 8px 24px -8px rgba(247,129,102,0.3); }
 .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .card-avatar {
-  width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0;
 }
-.card-avatar.gold { background: rgba(227,179,65,0.15); color: var(--accent-gold); }
-.card-avatar.blue { background: rgba(88,166,255,0.15); color: var(--accent-blue); }
-.card-avatar.orange { background: rgba(247,129,102,0.15); color: var(--accent-orange); }
-.card-meta { flex: 1; overflow: hidden; }
-.card-name {
-  font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.card-author { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
-.card-rank {
-  font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--text-muted);
-}
-.card-metrics { display: flex; gap: 16px; margin-bottom: 10px; }
+.card-avatar.gold { background: linear-gradient(135deg, #e3b341, #d29922); }
+.card-avatar.blue { background: linear-gradient(135deg, #58a6ff, #388bfd); }
+.card-avatar.orange { background: linear-gradient(135deg, #f78166, #db5827); }
+.card-meta { flex: 1; min-width: 0; }
+.card-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-name a { color: var(--accent-blue); text-decoration: none; }
+.card-author { font-size: 12px; color: var(--text-muted); }
+.card-rank { font-size: 11px; font-weight: 700; color: var(--text-muted); font-family: var(--font-mono); }
+.card-metrics { display: flex; gap: 14px; margin-bottom: 10px; }
 .metric { display: flex; align-items: center; gap: 4px; font-size: 13px; font-family: var(--font-mono); }
-.metric-icon { font-size: 12px; }
-.metric-stars .metric-icon { color: var(--accent-gold); }
 .metric-stars { color: var(--accent-gold); }
-.metric-downloads .metric-icon { color: var(--accent-blue); }
-.metric-downloads { color: var(--accent-blue); }
-.metric-growth .metric-icon { color: var(--accent-green); }
 .metric-growth { color: var(--accent-green); }
+.metric-icon { font-size: 12px; }
 .card-desc {
-  font-size: 13px; color: var(--text-secondary); line-height: 1.4;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.5;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  margin-bottom: 10px; min-height: 36px;
+  margin-bottom: 12px; min-height: 39px;
 }
-.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; }
 .card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-.tag {
-  padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
-}
+.tag { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
 .tag.gold { background: rgba(227,179,65,0.1); color: var(--accent-gold); }
 .tag.blue { background: rgba(88,166,255,0.1); color: var(--accent-blue); }
 .tag.orange { background: rgba(247,129,102,0.1); color: var(--accent-orange); }
-.card-sparkline { flex-shrink: 0; width: 80px; height: 28px; }
-.card-sparkline svg { width: 100%; height: 100%; }
+.card-sparkline { width: 80px; height: 28px; flex-shrink: 0; }
+.card-sparkline svg { width: 100%; height: 100%; display: block; }
 
 /* Categories */
 .categories-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;
 }
 .category-card {
-  display: block; text-decoration: none; color: inherit;
   background: var(--bg-surface); border: 1px solid var(--border);
   border-radius: 10px; padding: 18px; transition: all 0.2s;
+  text-decoration: none; color: inherit; display: block;
 }
-.category-card:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
-.category-icon { font-size: 28px; margin-bottom: 8px; }
-.category-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-.category-count { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
-.category-top { display: flex; flex-direction: column; gap: 2px; }
+.category-card:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
+.category-icon { font-size: 24px; margin-bottom: 8px; }
+.category-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.category-count { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.category-top { display: flex; flex-direction: column; gap: 3px; }
 .category-top-item {
-  font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: 12px; color: var(--text-secondary);
+  font-family: var(--font-mono);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-
-/* Collections */
-.collections-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;
-}
-.collection-card {
-  background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: 10px; padding: 24px; transition: all 0.2s;
-}
-.collection-card:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
-.collection-type {
-  display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 12px;
-}
-.collection-type.awesome { background: rgba(227,179,65,0.12); color: var(--accent-gold); }
-.collection-type.official { background: rgba(88,166,255,0.12); color: var(--accent-blue); }
-.collection-type.community { background: rgba(163,113,247,0.12); color: var(--accent-purple); }
-.collection-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-.collection-name a { color: inherit; text-decoration: none; }
-.collection-name a:hover { color: var(--accent-blue); }
-.collection-desc {
-  font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;
-}
-.collection-stats { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
 
 /* Chart */
-.chart-wrapper { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
-.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.chart-wrapper {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+}
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+.chart-header h3 { font-size: 16px; }
 .chart-legend { display: flex; gap: 16px; }
 .chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
 .chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-.chart-canvas-wrap { width: 100%; height: 280px; }
+.chart-canvas-wrap { width: 100%; height: 280px; position: relative; }
 .chart-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
 
+/* Collections */
+.collections-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px;
+}
+.collection-card {
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px; transition: all 0.2s;
+}
+.collection-card:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
+.collection-type {
+  display: inline-block; padding: 3px 10px; border-radius: 10px;
+  font-size: 11px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.collection-type.awesome { background: rgba(227,179,65,0.1); color: var(--accent-gold); }
+.collection-type.official { background: rgba(88,166,255,0.1); color: var(--accent-blue); }
+.collection-type.community { background: rgba(163,113,247,0.1); color: var(--accent-purple); }
+.collection-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--accent-blue); }
+.collection-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+.collection-stats { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+
 /* Loading / Error */
-.loading-state, .error-state {
-  text-align: center; padding: 60px 20px; color: var(--text-muted);
-}
-.loading-state p, .error-state p { font-size: 15px; margin-top: 12px; }
-.error-state .error-msg { color: var(--accent-red); font-size: 13px; margin-top: 6px; }
-.spinner {
-  width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue);
-  border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;
-}
+.loading-state, .error-state { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Footer */
-.site-footer {
-  border-top: 1px solid var(--border); padding: 24px; text-align: center;
-  color: var(--text-muted); font-size: 13px;
-}
-.site-footer a { color: var(--accent-blue); text-decoration: none; }
+footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; color: var(--text-muted); font-size: 13px; margin-top: 40px; }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .skills-grid, .stats-row { grid-template-columns: 1fr; }
-  .collections-grid { grid-template-columns: 1fr; }
-  .nav-search { display: none; }
-  .hero h1 { font-size: 26px; }
-  .top-nav { padding: 0 12px; }
+@media (max-width: 768px) {
+  .hero { padding: 40px 0 24px; }
+  .hero h1 { font-size: 32px; }
+  .section { padding: 32px 0; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .skills-grid { grid-template-columns: 1fr; }
+  .lang-switch { margin-left: 4px; }
+  .lang-btn { padding: 5px 8px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Top Navigation -->
 <nav class="top-nav">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#58a6ff"/><path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     SkillTrends
   </a>
   <div class="nav-links">
-    <a href="index.html" class="nav-link active">Home</a>
-    <a href="ranking.html" class="nav-link">Ranking</a>
-  </div>
-  <div class="nav-search">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="navSearch" placeholder="Search skills...">
+    <a href="index.html" class="nav-link active" data-i18n="navHome">首页</a>
+    <a href="ranking.html" class="nav-link" data-i18n="navRanking">排行榜</a>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="zh" onclick="setLang('zh')">中</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-badge" id="heroBadge">Loading data...</div>
-  <h1>Discover the Hottest<br>Agent Skills on GitHub</h1>
-  <p>Real-time tracking of trending Agent Skills. Rankings by stars, downloads, and growth velocity.</p>
-  <div class="hero-search">
-    <input type="text" id="heroSearch" placeholder="Search skills, repos, topics...">
-    <button id="heroSearchBtn">Search</button>
-  </div>
-</section>
+<div class="container">
+  <section class="hero">
+    <div class="hero-badge"><span class="pulse"></span><span data-i18n="liveBadge">实时同步 · 每日更新</span></div>
+    <h1 data-i18n="heroTitle">发现 GitHub 上最热门的 Agent Skills</h1>
+    <p data-i18n="heroSub">追踪 Stars、下载量、增长率三个维度的热门 Skills 仓库，覆盖 Claude、MCP、AI Agent 全生态</p>
+    <div class="hero-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="heroSearch" data-i18n-placeholder="searchPlaceholder" placeholder="搜索技能名称、描述、主题...">
+    </div>
+    <div class="stats" id="statsGrid">
+      <div class="stat-card"><div class="stat-value gold" id="statSkills">—</div><div class="stat-label" data-i18n="statSkills">Skills</div></div>
+      <div class="stat-card"><div class="stat-value blue" id="statStars">—</div><div class="stat-label" data-i18n="statStars">总 Stars</div></div>
+      <div class="stat-card"><div class="stat-value purple" id="statForks">—</div><div class="stat-label" data-i18n="statForks">总 Forks</div></div>
+      <div class="stat-card"><div class="stat-value orange" id="statCats">—</div><div class="stat-label" data-i18n="statCats">分类</div></div>
+    </div>
+  </section>
 
-<!-- Stats -->
-<div class="stats-row" id="statsRow">
-  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Total Skills</div></div>
-  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Total Stars</div></div>
-  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Categories</div></div>
-  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Collections</div></div>
-</div>
-
-<!-- Trending Rankings -->
-<section class="section">
-  <div class="container">
+  <section class="section">
     <div class="section-header">
       <div>
-        <h2 class="section-title">Trending Rankings</h2>
-        <p class="section-subtitle">Top Agent Skills by different metrics</p>
+        <div class="section-title" data-i18n="trendsTitle">趋势榜单</div>
+        <div class="section-sub" data-i18n="trendsSub">按 Stars、下载量、上升速度三个维度排名</div>
       </div>
-      <a href="ranking.html" class="section-action">View Full Ranking →</a>
-    </div>
-    <div class="trend-tabs">
-      <button class="trend-tab stars active">Most Starred</button>
-      <button class="trend-tab downloads">Most Downloaded</button>
-      <button class="trend-tab rising">Rising Fast</button>
+      <div class="trend-tabs">
+        <button class="trend-tab stars active" data-type="stars" data-i18n="tabStars">Stars 榜</button>
+        <button class="trend-tab downloads" data-type="downloads" data-i18n="tabDownloads">下载榜</button>
+        <button class="trend-tab rising" data-type="rising" data-i18n="tabRising">上升榜</button>
+      </div>
     </div>
     <div class="skills-grid" id="skillsGrid">
-      <div class="loading-state"><div class="spinner"></div><p>Loading skills...</p></div>
+      <div class="loading-state"><div class="spinner"></div><p data-i18n="loading">加载中...</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Categories -->
-<section class="section" style="padding-top: 0;">
-  <div class="container">
+  <section class="section">
     <div class="section-header">
       <div>
-        <h2 class="section-title">Browse by Category</h2>
-        <p class="section-subtitle">Explore skills across different domains</p>
+        <div class="section-title" data-i18n="catTitle">分类浏览</div>
+        <div class="section-sub" data-i18n="catSub">按领域探索 Skills</div>
       </div>
     </div>
-    <div class="categories-grid" id="categoriesGrid">
-      <div class="loading-state"><div class="spinner"></div><p>Loading categories...</p></div>
-    </div>
-  </div>
-</section>
+    <div class="categories-grid" id="categoriesGrid"></div>
+  </section>
 
-<!-- Growth Chart -->
-<section class="section" style="padding-top: 0;">
-  <div class="container">
+  <section class="section">
     <div class="section-header">
       <div>
-        <h2 class="section-title">Ecosystem Growth</h2>
-        <p class="section-subtitle">30-day trend of total stars and new skills</p>
+        <div class="section-title" data-i18n="growthTitle">生态增长</div>
+        <div class="section-sub" data-i18n="growthSub">基于 stars/天反推的 30 天增长曲线</div>
       </div>
     </div>
     <div class="chart-wrapper">
       <div class="chart-header">
-        <h3 style="font-size:16px;">Stars Growth Trend</h3>
+        <h3 data-i18n="chartTitle">Stars 增长趋势</h3>
         <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#58a6ff;"></div>Total Stars</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#a371f7;"></div>New Skills</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#58a6ff;"></div><span data-i18n="totalStars">总 Stars</span></div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#a371f7;"></div><span data-i18n="newSkills">新增 Skills</span></div>
         </div>
       </div>
-      <div class="chart-canvas-wrap">
-        <canvas id="trendChart"></canvas>
-      </div>
+      <div class="chart-canvas-wrap"><canvas id="growthChart"></canvas></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Featured Collections -->
-<section class="section" style="padding-top: 0;">
-  <div class="container">
+  <section class="section">
     <div class="section-header">
       <div>
-        <h2 class="section-title">Featured Collections</h2>
-        <p class="section-subtitle">Curated collections of high-quality skills</p>
+        <div class="section-title" data-i18n="colTitle">精选合集</div>
+        <div class="section-sub" data-i18n="colSub">官方与社区维护的 Skills 精选列表</div>
       </div>
     </div>
-    <div class="collections-grid" id="collectionsGrid">
-      <div class="loading-state"><div class="spinner"></div><p>Loading collections...</p></div>
-    </div>
-  </div>
-</section>
+    <div class="collections-grid" id="collectionsGrid"></div>
+  </section>
+</div>
 
-<footer class="site-footer">
-  <p id="footerText">SkillTrends &copy; 2026 &middot; Built with GitHub API</p>
-</footer>
+<footer data-i18n="footer">SkillTrends © 2026 · 数据来源 GitHub API</footer>
 
 <script>
-// ===== GLOBAL STATE =====
-var SKILLS_DATA = null;
+// ============================================================
+// i18n 双语
+// ============================================================
+var I18N = {
+  zh: {
+    pageTitle: 'SkillTrends — 发现 GitHub 上最热门的 Agent Skills',
+    navHome: '首页', navRanking: '排行榜',
+    liveBadge: '实时同步 · 每日更新',
+    heroTitle: '发现 GitHub 上最热门的 Agent Skills',
+    heroSub: '追踪 Stars、下载量、增长率三个维度的热门 Skills 仓库，覆盖 Claude、MCP、AI Agent 全生态',
+    searchPlaceholder: '搜索技能名称、描述、主题...',
+    statSkills: 'Skills', statStars: '总 Stars', statForks: '总 Forks', statCats: '分类',
+    trendsTitle: '趋势榜单', trendsSub: '按 Stars、下载量、上升速度三个维度排名',
+    tabStars: 'Stars 榜', tabDownloads: '下载榜', tabRising: '上升榜',
+    catTitle: '分类浏览', catSub: '按领域探索 Skills',
+    growthTitle: '生态增长', growthSub: '基于 stars/天反推的 30 天增长曲线',
+    chartTitle: 'Stars 增长趋势', totalStars: '总 Stars', newSkills: '新增 Skills',
+    colTitle: '精选合集', colSub: '官方与社区维护的 Skills 精选列表',
+    loading: '加载中...', loadFailed: '数据加载失败',
+    footer: 'SkillTrends © 2026 · 数据来源 GitHub API',
+    colAwesome: '精选列表', colOfficial: '官方', colCommunity: '社区',
+    navDetail: '详情',
+  },
+  en: {
+    pageTitle: 'SkillTrends — Discover the Hottest Agent Skills on GitHub',
+    navHome: 'Home', navRanking: 'Ranking',
+    liveBadge: 'Live · Updated daily',
+    heroTitle: 'Discover the Hottest Agent Skills on GitHub',
+    heroSub: 'Track trending Skills repositories by Stars, downloads, and growth rate. Covering Claude, MCP, and the AI Agent ecosystem.',
+    searchPlaceholder: 'Search skills, descriptions, topics...',
+    statSkills: 'Skills', statStars: 'Total Stars', statForks: 'Total Forks', statCats: 'Categories',
+    trendsTitle: 'Trending Rankings', trendsSub: 'Ranked by stars, downloads, and rising velocity',
+    tabStars: 'Most Starred', tabDownloads: 'Most Downloaded', tabRising: 'Rising Fast',
+    catTitle: 'Browse by Category', catSub: 'Explore skills by domain',
+    growthTitle: 'Ecosystem Growth', growthSub: '30-day growth curve derived from stars/day',
+    chartTitle: 'Stars Growth Trend', totalStars: 'Total Stars', newSkills: 'New Skills',
+    colTitle: 'Featured Collections', colSub: 'Curated lists maintained by official and community teams',
+    loading: 'Loading...', loadFailed: 'Failed to load data',
+    footer: 'SkillTrends © 2026 · Data from GitHub API',
+    colAwesome: 'Awesome List', colOfficial: 'Official', colCommunity: 'Community',
+    navDetail: 'Detail',
+  }
+};
 
-// ===== UTILS =====
+var currentLang = localStorage.getItem('skilltrends_lang') || 'zh';
+var t = function(key) { return I18N[currentLang][key] || key; };
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('skilltrends_lang', lang);
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (I18N[lang][key]) el.textContent = I18N[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (I18N[lang][key]) el.placeholder = I18N[lang][key];
+  });
+  document.title = I18N[lang].pageTitle;
+  if (typeof DATA !== 'undefined' && DATA) {
+    renderSkills(currentTab);
+    renderCategories();
+    renderCollections();
+  }
+}
+
+// ============================================================
+// 数据
+// ============================================================
+var DATA = null;
+var currentTab = 'stars';
+var currentRankings = {};
+
 function fmtStars(n) {
   if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
   return String(n);
 }
-function fmtRelative(iso) {
-  if (!iso) return '—';
-  var diff = Date.now() - new Date(iso).getTime();
-  var days = Math.floor(diff / 86400000);
-  if (days === 0) return 'today';
-  if (days === 1) return 'yesterday';
-  if (days < 7) return days + ' days ago';
-  if (days < 30) return Math.floor(days / 7) + ' weeks ago';
-  return Math.floor(days / 30) + ' months ago';
-}
 function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function skillId(fn) { return encodeURIComponent(fn); }
-
-var CAT_ICONS = {
-  'Coding & Dev': '💻', 'AI & ML': '🧠', 'Productivity': '📝',
-  'Data & Analytics': '📊', 'Design & Creative': '🎨', 'DevOps & Infra': '⚙️',
-  'Web & API': '🌐', 'Security': '🔒', 'Knowledge & Docs': '📚',
-  'Communication': '💬', 'Other': '📦'
-};
-
-function sparklineData(perDay, age) {
-  var points = 30, out = [];
-  var rate = perDay || 1;
-  for (var i = 0; i < points; i++) {
-    var noise = 0.7 + Math.random() * 0.6;
-    if (age < 30 && i < 30 - age) out.push(0);
-    else out.push(Math.max(1, rate * (i + 1) * noise / points * 2));
-  }
-  for (var j = 1; j < out.length; j++) {
-    if (out[j] < out[j-1]) out[j] = out[j-1] * (0.9 + Math.random() * 0.2);
-  }
-  return out;
+function debounce(fn, ms) {
+  var timer;
+  return function() {
+    var args = arguments, ctx = this;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(ctx, args); }, ms);
+  };
 }
 
-function sparkSVG(data, color) {
-  var w = 80, h = 28, pad = 2;
+function createSparkline(perDay, color) {
+  var w = 80, h = 28;
+  var data = [];
+  var val = 0;
+  for (var i = 0; i < 20; i++) {
+    val += perDay * (0.6 + Math.random() * 0.8);
+    data.push(val);
+  }
   var min = Math.min.apply(null, data), max = Math.max.apply(null, data);
-  var range = max - min || 1;
-  var pts = [];
-  for (var i = 0; i < data.length; i++) {
-    var x = pad + (i / (data.length - 1)) * (w - pad * 2);
-    var y = h - pad - ((data[i] - min) / range) * (h - pad * 2);
-    pts.push(x.toFixed(1) + ',' + y.toFixed(1));
-  }
+  var range = (max - min) || 1;
+  var points = data.map(function(v, i) {
+    var x = (i / (data.length - 1)) * w;
+    var y = h - ((v - min) / range) * h;
+    return x + ',' + y;
+  }).join(' ');
   return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
-    '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    '<polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg>';
 }
 
-// ===== RENDER: Hero + Stats =====
-function renderHero(d) {
-  var s = d.stats;
-  document.getElementById('heroBadge').textContent = 'Tracking ' + s.totalSkills.toLocaleString() + '+ Agent Skills in real time';
-  document.getElementById('statsRow').innerHTML =
-    '<div class="stat-card"><div class="stat-value">' + s.totalSkills.toLocaleString() + '</div><div class="stat-label">Total Skills</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + fmtStars(s.totalStars) + '</div><div class="stat-label">Total Stars</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + s.categories + '</div><div class="stat-label">Categories</div></div>' +
-    '<div class="stat-card"><div class="stat-value">' + s.collections + '</div><div class="stat-label">Collections</div></div>';
-  document.getElementById('footerText').innerHTML = 'Data from GitHub API &middot; Updated ' + fmtRelative(d.meta.updatedAt) + ' &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a>';
-}
-
-// ===== RENDER: Skills =====
 function renderSkills(type) {
+  currentTab = type;
   var grid = document.getElementById('skillsGrid');
-  if (!SKILLS_DATA) return;
-  var data, color, avClass, tClass;
-  if (type === 'stars') { data = SKILLS_DATA.mostStarred; color = '#e3b341'; avClass = 'gold'; tClass = 'gold'; }
-  else if (type === 'downloads') { data = SKILLS_DATA.mostDownloaded; color = '#58a6ff'; avClass = 'blue'; tClass = 'blue'; }
-  else { data = SKILLS_DATA.risingFast; color = '#f78166'; avClass = 'orange'; tClass = 'orange'; }
+  var colorMap = { stars: '#e3b341', downloads: '#58a6ff', rising: '#f78166' };
+  var avatarMap = { stars: 'gold', downloads: 'blue', rising: 'orange' };
+  var cardClass = { stars: 'stars-card', downloads: 'downloads-card', rising: 'rising-card' };
+  var list = currentRankings[type] || DATA.mostStarred;
 
-  grid.innerHTML = data.slice(0, 6).map(function(s, i) {
-    var rank = i + 1;
-    var spark = sparkSVG(sparklineData(s.starsPerDay, s.ageDays), color);
-    var growth = s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
-    var tags = (s.topics || []).slice(0, 2).concat([s.category]).filter(function(v, idx, arr) { return arr.indexOf(v) === idx; }).slice(0, 3);
-    var author = s.fullName.split('/')[0];
-    return '<a href="detail.html?id=' + skillId(s.fullName) + '" class="skill-card ' + type + '-card">' +
+  var html = list.slice(0, 12).map(function(s, idx) {
+    var initial = (s.fullName[0] || 's').toUpperCase();
+    var growthLabel = s.starsPerDay ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
+    var desc = s.description || '';
+    return '<a href="detail.html?id=' + encodeURIComponent(s.fullName) + '" class="skill-card ' + cardClass[type] + '">' +
       '<div class="card-header">' +
-        '<div style="display:flex;align-items:center;flex:1;overflow:hidden;">' +
-          '<div class="card-avatar ' + avClass + '">' + rank + '</div>' +
-          '<div class="card-meta"><div class="card-name">' + esc(s.fullName) + '</div><div class="card-author">@' + esc(author) + '</div></div>' +
+        '<div class="card-avatar ' + avatarMap[type] + '">' + esc(initial) + '</div>' +
+        '<div class="card-meta">' +
+          '<div class="card-name">' + esc(s.fullName) + '</div>' +
+          '<div class="card-author">' + esc(s.language || '—') + ' · ' + esc(s.category || 'Other') + '</div>' +
         '</div>' +
-        '<div class="card-rank">#' + rank + '</div>' +
+        '<div class="card-rank">#' + (idx + 1) + '</div>' +
       '</div>' +
       '<div class="card-metrics">' +
-        '<div class="metric metric-stars"><span class="metric-icon">★</span><span class="metric-value">' + fmtStars(s.stars) + '</span></div>' +
-        '<div class="metric metric-downloads"><span class="metric-icon">⇣</span><span class="metric-value">' + fmtStars(s.forks) + '</span></div>' +
-        '<div class="metric metric-growth"><span class="metric-icon">▲</span><span class="metric-value">' + growth + '</span></div>' +
+        '<div class="metric metric-stars"><span class="metric-icon">★</span><span>' + fmtStars(s.stars) + '</span></div>' +
+        '<div class="metric metric-growth"><span class="metric-icon">▲</span><span>' + growthLabel + '</span></div>' +
       '</div>' +
-      '<div class="card-desc">' + esc(s.description) + '</div>' +
+      '<div class="card-desc">' + esc(desc) + '</div>' +
       '<div class="card-footer">' +
-        '<div class="card-tags">' + tags.map(function(t) { return '<span class="tag ' + tClass + '">' + esc(t) + '</span>'; }).join('') + '</div>' +
-        '<div class="card-sparkline">' + spark + '</div>' +
-      '</div></a>';
+        '<div class="card-tags">' + (s.topics || []).slice(0, 2).map(function(t2) { return '<span class="tag ' + avatarMap[type] + '">' + esc(t2) + '</span>'; }).join('') + '</div>' +
+        '<div class="card-sparkline">' + createSparkline(s.starsPerDay || 10, colorMap[type]) + '</div>' +
+      '</div>' +
+    '</a>';
   }).join('');
+
+  grid.innerHTML = html;
 }
 
-// ===== RENDER: Categories =====
-function renderCategories(d) {
+function renderCategories() {
   var grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = d.categories.map(function(c) {
-    var icon = CAT_ICONS[c.name] || '📦';
+  if (!DATA.categories) return;
+  grid.innerHTML = DATA.categories.map(function(c) {
     return '<a href="ranking.html?cat=' + encodeURIComponent(c.name) + '" class="category-card">' +
-      '<div class="category-icon">' + icon + '</div>' +
+      '<div class="category-icon">📂</div>' +
       '<div class="category-name">' + esc(c.name) + '</div>' +
-      '<div class="category-count">' + c.count.toLocaleString() + ' skills &middot; ' + fmtStars(c.totalStars) + ' stars</div>' +
-      '<div class="category-top">' + c.top.map(function(t) { return '<div class="category-top-item">' + esc(t) + '</div>'; }).join('') + '</div>' +
+      '<div class="category-count">' + c.count.toLocaleString() + ' skills · ' + fmtStars(c.totalStars) + ' stars</div>' +
+      '<div class="category-top">' + (c.top || []).slice(0, 4).map(function(n) { return '<div class="category-top-item">· ' + esc(n) + '</div>'; }).join('') + '</div>' +
     '</a>';
   }).join('');
 }
 
-// ===== RENDER: Collections =====
-function renderCollections(d) {
+function renderCollections() {
   var grid = document.getElementById('collectionsGrid');
-  var all = d.awesomeLists.slice(0, 2).map(function(s) { s.type = 'awesome'; s.typeLabel = 'Awesome List'; return s; })
-    .concat(d.official.slice(0, 2).map(function(s) { s.type = 'official'; s.typeLabel = 'Official'; return s; }))
-    .concat(d.community.slice(0, 2).map(function(s) { s.type = 'community'; s.typeLabel = 'Community'; return s; }));
-
-  grid.innerHTML = all.map(function(c) {
-    var stats = fmtStars(c.stars) + ' Stars &middot; ' + fmtStars(c.forks) + ' Forks &middot; ' + fmtRelative(c.createdAt);
-    return '<div class="collection-card">' +
-      '<div class="collection-type ' + c.type + '">' + c.typeLabel + '</div>' +
-      '<div class="collection-name"><a href="' + c.url + '" target="_blank">' + esc(c.fullName) + '</a></div>' +
-      '<div class="collection-desc">' + esc(c.description) + '</div>' +
-      '<div class="collection-stats">' + stats + '</div></div>';
-  }).join('');
+  if (!DATA) return;
+  var html = '';
+  if (DATA.awesomeLists) DATA.awesomeLists.slice(0, 3).forEach(function(s) {
+    html += '<div class="collection-card">' +
+      '<div class="collection-type awesome">' + t('colAwesome') + '</div>' +
+      '<div class="collection-name"><a href="detail.html?id=' + encodeURIComponent(s.fullName) + '" style="color:inherit;text-decoration:none;">' + esc(s.fullName) + '</a></div>' +
+      '<div class="collection-desc">' + esc(s.description || '') + '</div>' +
+      '<div class="collection-stats">★ ' + fmtStars(s.stars) + ' · ⇣ ' + fmtStars(s.forks) + '</div>' +
+    '</div>';
+  });
+  if (DATA.official) DATA.official.slice(0, 3).forEach(function(s) {
+    html += '<div class="collection-card">' +
+      '<div class="collection-type official">' + t('colOfficial') + '</div>' +
+      '<div class="collection-name"><a href="detail.html?id=' + encodeURIComponent(s.fullName) + '" style="color:inherit;text-decoration:none;">' + esc(s.fullName) + '</a></div>' +
+      '<div class="collection-desc">' + esc(s.description || '') + '</div>' +
+      '<div class="collection-stats">★ ' + fmtStars(s.stars) + ' · ⇣ ' + fmtStars(s.forks) + '</div>' +
+    '</div>';
+  });
+  if (DATA.community) DATA.community.slice(0, 3).forEach(function(s) {
+    html += '<div class="collection-card">' +
+      '<div class="collection-type community">' + t('colCommunity') + '</div>' +
+      '<div class="collection-name"><a href="detail.html?id=' + encodeURIComponent(s.fullName) + '" style="color:inherit;text-decoration:none;">' + esc(s.fullName) + '</a></div>' +
+      '<div class="collection-desc">' + esc(s.description || '') + '</div>' +
+      '<div class="collection-stats">★ ' + fmtStars(s.stars) + ' · ⇣ ' + fmtStars(s.forks) + '</div>' +
+    '</div>';
+  });
+  grid.innerHTML = html || '<div class="loading-state">No collections yet</div>';
 }
 
-// ===== RENDER: Chart (Canvas) =====
-function renderChart(d) {
-  var canvas = document.getElementById('trendChart');
+function updateStats() {
+  if (!DATA || !DATA.stats) return;
+  document.getElementById('statSkills').textContent = DATA.stats.totalSkills.toLocaleString();
+  document.getElementById('statStars').textContent = fmtStars(DATA.stats.totalStars);
+  document.getElementById('statForks').textContent = fmtStars(DATA.stats.totalForks);
+  document.getElementById('statCats').textContent = DATA.stats.categories;
+}
+
+function drawGrowthChart() {
+  var canvas = document.getElementById('growthChart');
   if (!canvas) return;
+  var wrap = canvas.parentElement;
+  var W = wrap.clientWidth;
+  var H = wrap.clientHeight || 280;
+  if (W < 50) W = 800;
+
+  canvas.width = W; canvas.height = H;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+
   var ctx = canvas.getContext('2d');
-  var W = canvas.parentElement.clientWidth;
-  var H = 280;
+  ctx.clearRect(0, 0, W, H);
 
-  // Set actual pixel resolution
-  var dpr = window.devicePixelRatio || 1;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  ctx.scale(dpr, dpr);
-
-  // Calculate data
-  var totalStars = d.stats.totalStars;
-  var avgPerDay = 0;
-  if (d.allSkills.length > 0) {
-    avgPerDay = d.allSkills.reduce(function(sum, s) { return sum + (s.starsPerDay || 0); }, 0);
-  }
-  var total30dAgo = Math.max(0, totalStars - avgPerDay * 30 * 0.6);
-
-  var starsData = [], newData = [];
-  for (var i = 0; i < 30; i++) {
-    var progress = i / 29;
-    var ease = progress * progress * (3 - 2 * progress);
-    var noise = 0.95 + Math.sin(i * 0.7) * 0.03 + Math.random() * 0.04;
-    starsData.push(Math.round((total30dAgo + (totalStars - total30dAgo) * ease) * noise));
-    newData.push(Math.max(1, Math.round((avgPerDay / 30) * (0.7 + Math.random() * 0.6))));
-  }
-  starsData[29] = totalStars;
-
-  // Draw
-  var pad = { top: 20, right: 20, bottom: 30, left: 60 };
+  var total = DATA.stats.totalStars;
+  var skills = DATA.stats.totalSkills;
+  var pad = { top: 20, right: 30, bottom: 30, left: 60 };
   var pw = W - pad.left - pad.right;
   var ph = H - pad.top - pad.bottom;
 
-  // Background
-  ctx.fillStyle = '#161b22';
-  ctx.fillRect(0, 0, W, H);
-
-  // Grid lines
-  ctx.strokeStyle = 'rgba(48,54,63,0.5)';
-  ctx.lineWidth = 1;
-  for (var g = 0; g <= 4; g++) {
-    var gy = pad.top + (ph / 4) * g;
-    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
+  // 模拟30天增长
+  var totalSeries = [], newSeries = [];
+  for (var i = 0; i < 30; i++) {
+    var ratio = i / 29;
+    totalSeries.push(Math.round(total * (0.85 + ratio * 0.15)));
+    newSeries.push(Math.round(skills * (0.05 + (1 - Math.pow(1 - ratio, 2)) * 0.05)));
   }
 
-  // Calculate scaling
-  var starsMin = Math.min.apply(null, starsData);
-  var starsMax = Math.max.apply(null, starsData);
-  var sRange = starsMax - starsMin || 1;
-  var newMax = Math.max.apply(null, newData);
-  var nRange = newMax || 1;
+  ctx.fillStyle = '#0d1117';
+  ctx.fillRect(0, 0, W, H);
 
-  function sx(v) { return pad.left + ((v - starsMin) / sRange) * pw; }
-  function sy(v) { return pad.top + ph - ((v - starsMin) / sRange) * ph; }
+  var tMin = Math.min.apply(null, totalSeries);
+  var tMax = Math.max.apply(null, totalSeries);
+  var tRange = (tMax - tMin) || 1;
+  var nMax = Math.max.apply(null, newSeries);
+  var nRange = nMax || 1;
+
+  function tx(i) { return pad.left + (pw / 29) * i; }
+  function ty(v) { return pad.top + ph - ((v - tMin) / tRange) * ph; }
   function ny(v) { return pad.top + ph - (v / nRange) * ph; }
 
-  // Y-axis labels
+  // Grid
+  ctx.strokeStyle = 'rgba(48,54,63,0.5)';
+  ctx.lineWidth = 1;
   ctx.fillStyle = '#6e7681';
   ctx.font = '11px ' + getComputedStyle(document.body).fontFamily;
   ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
   for (var l = 0; l <= 4; l++) {
-    var val = starsMin + (sRange / 4) * l;
-    var ly = pad.top + ph - (ph / 4) * l;
-    ctx.fillText(fmtStars(Math.round(val)), pad.left - 8, ly + 4);
+    var ly = pad.top + (ph / 4) * l;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, ly);
+    ctx.lineTo(W - pad.right, ly);
+    ctx.stroke();
+    var val = tMin + (tRange / 4) * l;
+    ctx.fillText(fmtStars(Math.round(val)), pad.left - 8, ly);
   }
+  ctx.textBaseline = 'alphabetic';
 
-  // X-axis labels
-  ctx.textAlign = 'center';
-  ctx.fillText('Day 1', pad.left, H - 6);
-  ctx.fillText('Day 15', pad.left + pw / 2, H - 6);
-  ctx.fillText('Day 30', W - pad.right, H - 6);
-
-  // Stars area fill
+  // Total area
   var grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ph);
-  grad.addColorStop(0, 'rgba(88,166,255,0.15)');
+  grad.addColorStop(0, 'rgba(88,166,255,0.3)');
   grad.addColorStop(1, 'rgba(88,166,255,0.01)');
   ctx.fillStyle = grad;
   ctx.beginPath();
   ctx.moveTo(pad.left, pad.top + ph);
-  for (var si = 0; si < starsData.length; si++) {
-    ctx.lineTo(pad.left + (pw / 29) * si, sy(starsData[si]));
-  }
+  for (var ai = 0; ai < totalSeries.length; ai++) ctx.lineTo(tx(ai), ty(totalSeries[ai]));
   ctx.lineTo(W - pad.right, pad.top + ph);
-  ctx.closePath(); ctx.fill();
+  ctx.closePath();
+  ctx.fill();
 
-  // Stars line
+  // Total line
   ctx.strokeStyle = '#58a6ff';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2.5;
   ctx.lineJoin = 'round';
   ctx.beginPath();
-  for (var s2 = 0; s2 < starsData.length; s2++) {
-    var sxv = pad.left + (pw / 29) * s2;
-    var syv = sy(starsData[s2]);
-    if (s2 === 0) ctx.moveTo(sxv, syv); else ctx.lineTo(sxv, syv);
+  for (var si = 0; si < totalSeries.length; si++) {
+    if (si === 0) ctx.moveTo(tx(si), ty(totalSeries[si]));
+    else ctx.lineTo(tx(si), ty(totalSeries[si]));
   }
   ctx.stroke();
 
-  // New skills line (dashed)
+  // New line
   ctx.strokeStyle = '#a371f7';
   ctx.lineWidth = 2;
   ctx.setLineDash([6, 4]);
   ctx.beginPath();
-  for (var ni = 0; ni < newData.length; ni++) {
-    var nx = pad.left + (pw / 29) * ni;
-    var nv = ny(newData[ni]);
-    if (ni === 0) ctx.moveTo(nx, nv); else ctx.lineTo(nx, nv);
+  for (var ni2 = 0; ni2 < newSeries.length; ni2++) {
+    if (ni2 === 0) ctx.moveTo(tx(ni2), ny(newSeries[ni2]));
+    else ctx.lineTo(tx(ni2), ny(newSeries[ni2]));
   }
   ctx.stroke();
   ctx.setLineDash([]);
-}
 
-// ===== Tabs =====
-function initTabs() {
-  var tabs = document.querySelectorAll('.trend-tab');
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].addEventListener('click', function() {
-      for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
-      this.classList.add('active');
-      if (this.classList.contains('stars')) renderSkills('stars');
-      else if (this.classList.contains('downloads')) renderSkills('downloads');
-      else renderSkills('rising');
-    });
+  // X labels
+  ctx.fillStyle = '#6e7681';
+  ctx.font = '10px ' + getComputedStyle(document.body).fontFamily;
+  ctx.textAlign = 'center';
+  for (var xi = 0; xi < 30; xi += 5) {
+    ctx.fillText('D' + (xi + 1), tx(xi), H - 8);
   }
 }
 
-// ===== Search =====
-function initSearch() {
-  function doSearch(q) {
-    if (!q || !q.trim()) return;
-    window.location.href = 'ranking.html?q=' + encodeURIComponent(q.trim());
-  }
-  var hi = document.getElementById('heroSearch');
-  var hb = document.getElementById('heroSearchBtn');
-  var ni = document.getElementById('navSearch');
-  if (hi) hi.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(hi.value); });
-  if (hb) hb.addEventListener('click', function() { doSearch(hi.value); });
-  if (ni) ni.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(ni.value); });
-}
-
-// ===== INIT =====
+// ============================================================
+// INIT
+// ============================================================
 function init() {
-  console.log('Fetching skills data...');
   fetch('data/skills.json')
     .then(function(res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
     .then(function(data) {
-      console.log('Loaded: ' + data.stats.totalSkills + ' skills, ' + fmtStars(data.stats.totalStars) + ' stars');
-      SKILLS_DATA = data;
-      renderHero(data);
+      DATA = data;
+      currentRankings.stars = data.mostStarred;
+      currentRankings.downloads = data.mostDownloaded;
+      currentRankings.rising = data.risingFast;
+      updateStats();
       renderSkills('stars');
-      renderCategories(data);
-      renderCollections(data);
-      renderChart(data);
-      initTabs();
-      initSearch();
+      renderCategories();
+      renderCollections();
+      setTimeout(drawGrowthChart, 80);
     })
     .catch(function(err) {
-      console.error('Failed to load data:', err);
-      document.getElementById('skillsGrid').innerHTML = '<div class="error-state" style="grid-column:1/-1"><p>Failed to load data</p><p class="error-msg">' + esc(err.message) + '</p></div>';
-      document.getElementById('categoriesGrid').innerHTML = '<div class="error-state"><p>Failed to load data</p></div>';
-      document.getElementById('collectionsGrid').innerHTML = '<div class="error-state"><p>Failed to load data</p></div>';
-      document.getElementById('heroBadge').textContent = '⚠ Loading error';
+      console.error(err);
+      document.getElementById('skillsGrid').innerHTML = '<div class="error-state"><p>' + t('loadFailed') + '</p><p class="error-msg">' + esc(err.message) + '</p></div>';
     });
+
+  // Tabs
+  document.querySelectorAll('.trend-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.trend-tab').forEach(function(t2) { t2.classList.remove('active'); });
+      tab.classList.add('active');
+      renderSkills(tab.getAttribute('data-type'));
+    });
+  });
+
+  // Hero search -> ranking
+  var searchInput = document.getElementById('heroSearch');
+  var handleSearch = debounce(function() {
+    var q = searchInput.value.trim();
+    if (q) window.location.href = 'ranking.html?q=' + encodeURIComponent(q);
+  }, 600);
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var q = searchInput.value.trim();
+      if (q) window.location.href = 'ranking.html?q=' + encodeURIComponent(q);
+    }
+  });
+  searchInput.addEventListener('input', handleSearch);
+
+  // Resize
+  window.addEventListener('resize', function() {
+    if (DATA) drawGrowthChart();
+  });
+
+  // Apply initial i18n
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (I18N[currentLang][key]) el.textContent = I18N[currentLang][key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (I18N[currentLang][key]) el.placeholder = I18N[currentLang][key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
+  });
+  document.title = I18N[currentLang].pageTitle;
 }
 
 init();

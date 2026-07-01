@@ -36,6 +36,8 @@ const SEARCH_QUERIES = [
   { q: "topic:llm-agent+stars:>1000", label: "LLM Agent" },
   { q: "topic:mcp+stars:>200", label: "MCP" },
   { q: "topic:ai-tools+stars:>1000", label: "AI Tools" },
+  { q: "topic:skills+stars:>100", label: "Skills (GitHub Topic)" },
+  { q: "skills+stars:>5000+language:markdown", label: "Skills (Keyword)" },
 ];
 
 // 种子仓库 — 确保热门项目一定被收录
@@ -52,6 +54,9 @@ const SEED_REPOS = [
   "crewAIInc/crewAI",
   "microsoft/autogen",
   "VoltAgent/awesome-agent-skills",
+  "obra/superpowers",
+  "nicbarker/awesome-agent-skills",
+  "kortix-ai/awesome-claude-skills",
 ];
 
 // ============================================================
