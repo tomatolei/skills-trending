@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SkillTrends — GitHub Agent Skills 趋势追踪</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -24,681 +22,400 @@
   --accent-green: #3fb950;
   --accent-red: #f85149;
   --accent-purple: #a371f7;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-sans);
   background: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.6;
-  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.5;
 }
 
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-
-/* ===== NAV ===== */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(13,17,23,0.85);
+/* Navigation */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,27,34,0.95);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  padding: 12px 0;
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  padding: 0 24px; height: 56px;
+  display: flex; align-items: center; gap: 24px;
 }
 .nav-logo {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 20px; font-weight: 700; color: var(--text-primary);
+  text-decoration: none; display: flex; align-items: center; gap: 8px;
 }
-.nav-logo span { font-size: 22px; }
-.nav-links {
-  display: flex;
-  gap: 4px;
-  align-items: center;
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-link {
+  padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
 }
-.nav-links a {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.15s;
-}
-.nav-links a:hover { color: var(--text-primary); background: var(--bg-surface); }
-.nav-links a.active { color: var(--accent-blue); background: rgba(88,166,255,0.08); }
+.nav-link:hover { color: var(--text-primary); background: var(--bg-surface-2); }
+.nav-link.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
 .nav-search {
-  position: relative;
-  width: 240px;
+  position: relative; margin-left: 8px;
 }
 .nav-search input {
-  width: 100%;
-  padding: 7px 12px 7px 34px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  font-size: 13px;
-  outline: none;
-  transition: all 0.2s;
-  font-family: inherit;
+  width: 220px; height: 32px; padding: 0 12px 0 32px;
+  border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg-primary); color: var(--text-primary);
+  font-size: 13px; outline: none; transition: border-color 0.2s;
 }
-.nav-search input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(88,166,255,0.12); }
-.nav-search .icon {
-  position: absolute;
-  left: 10px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 13px;
-}
+.nav-search input:focus { border-color: var(--accent-blue); }
+.nav-search svg { position: absolute; left: 10px; top: 8px; }
 
-/* ===== HERO ===== */
+/* Hero Section */
 .hero {
-  position: relative;
-  min-height: 480px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 64px 0 48px;
-  overflow: hidden;
+  text-align: center; padding: 80px 24px 60px;
+  position: relative; overflow: hidden;
 }
 .hero::before {
-  content: '';
-  position: absolute;
-  top: -40%; right: -20%;
+  content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
   width: 800px; height: 800px;
-  border-radius: 50%;
   background: radial-gradient(circle, rgba(88,166,255,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: -30%; left: -10%;
-  width: 600px; height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(163,113,247,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  font-size: 13px;
-  color: var(--accent-blue);
-  background: rgba(88,166,255,0.08);
-  width: fit-content;
-  margin-bottom: 24px;
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.3);
+  color: var(--accent-blue); font-size: 13px; font-weight: 500; margin-bottom: 20px;
 }
-.hero-badge .dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 6px var(--accent-green);
-  animation: pulse 2s ease-in-out infinite;
+.hero h1 {
+  font-size: clamp(32px, 5vw, 48px); font-weight: 800;
+  background: linear-gradient(135deg, #58a6ff 0%, #a371f7 50%, #e3b341 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 16px; letter-spacing: -0.02em;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
+.hero p {
+  font-size: 18px; color: var(--text-secondary); max-width: 600px; margin: 0 auto 32px;
 }
-.hero-title {
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 60%, #a371f7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero-search {
+  display: flex; max-width: 520px; margin: 0 auto; gap: 0;
 }
-.hero-subtitle {
-  font-size: 17px;
-  color: var(--text-secondary);
-  max-width: 560px;
-  margin-bottom: 32px;
-  line-height: 1.7;
+.hero-search input {
+  flex: 1; height: 48px; padding: 0 20px; border-radius: 8px 0 0 8px;
+  border: 1px solid var(--border); border-right: none;
+  background: var(--bg-surface); color: var(--text-primary);
+  font-size: 15px; outline: none;
 }
-.hero-search-box {
-  position: relative;
-  max-width: 520px;
-  margin-bottom: 40px;
+.hero-search input:focus { border-color: var(--accent-blue); }
+.hero-search button {
+  height: 48px; padding: 0 24px; border-radius: 0 8px 8px 0;
+  border: none; background: linear-gradient(135deg, #58a6ff, #3fb950);
+  color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: opacity 0.2s;
 }
-.hero-search-box input {
-  width: 100%;
-  padding: 14px 100px 14px 44px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  font-size: 15px;
-  outline: none;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.hero-search-box input::placeholder { color: var(--text-muted); }
-.hero-search-box input:focus {
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(88,166,255,0.12);
-}
-.hero-search-box .icon {
-  position: absolute;
-  left: 16px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 16px;
-}
-.hero-search-box .btn {
-  position: absolute;
-  right: 6px; top: 50%;
-  transform: translateY(-50%);
-  padding: 8px 18px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent-blue);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-.hero-search-box .btn:hover { background: #79b8ff; }
+.hero-search button:hover { opacity: 0.9; }
 
-/* Stats */
+/* Stats Row */
 .stats-row {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  max-width: 900px; margin: 0 auto 0; padding: 0 24px;
 }
 .stat-card {
-  padding: 18px 22px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg-surface);
-  min-width: 150px;
-  transition: transform 0.2s, border-color 0.2s;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px; text-align: center;
 }
-.stat-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
-.stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
-  font-family: 'JetBrains Mono', monospace;
-}
-.stat-value {
-  font-size: 26px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-primary);
-}
-.stat-value .suffix { font-size: 15px; font-weight: 500; color: var(--text-secondary); }
-.stat-trend {
-  font-size: 11px;
-  margin-top: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent-green);
-}
+.stat-value { font-size: 28px; font-weight: 700; font-family: var(--font-mono); }
+.stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
 
-/* ===== SECTION ===== */
-.section { padding: 56px 0; }
+/* Container */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* Section */
+.section { padding: 60px 0; }
 .section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 28px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
 }
-.section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-.section-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
-.view-all {
-  font-size: 14px;
-  color: var(--accent-blue);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  transition: gap 0.2s;
-  cursor: pointer;
+.section-title { font-size: 24px; font-weight: 700; }
+.section-subtitle { color: var(--text-muted); font-size: 14px; }
+.section-action {
+  font-size: 14px; color: var(--accent-blue); text-decoration: none; font-weight: 500;
 }
-.view-all:hover { gap: 8px; }
+.section-action:hover { text-decoration: underline; }
 
-/* ===== TREND TABS ===== */
-.trend-tabs {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 24px;
-  padding: 4px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--bg-surface);
-  width: fit-content;
-}
+/* Tabs */
+.trend-tabs { display: flex; gap: 4px; margin-bottom: 24px; }
 .trend-tab {
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
+  padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); background: transparent; border: none; cursor: pointer;
   transition: all 0.2s;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text-secondary);
-  font-family: inherit;
 }
-.trend-tab.active { background: var(--bg-surface-2); color: var(--text-primary); }
-.trend-tab.stars.active { border-color: rgba(227,179,65,0.3); }
-.trend-tab.downloads.active { border-color: rgba(88,166,255,0.3); }
-.trend-tab.rising.active { border-color: rgba(247,129,102,0.3); }
+.trend-tab:hover { color: var(--text-primary); background: var(--bg-surface); }
+.trend-tab.active { color: var(--text-primary); background: var(--bg-surface-2); }
+.trend-tab.stars.active { color: var(--accent-gold); background: rgba(227,179,65,0.1); }
+.trend-tab.downloads.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
+.trend-tab.rising.active { color: var(--accent-orange); background: rgba(247,129,102,0.1); }
 
-/* ===== SKILL CARDS ===== */
+/* Skill Cards Grid */
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 16px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-.skill-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--bg-surface);
-  padding: 20px;
-  transition: all 0.25s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 14px;
-  opacity: 0;
-  transition: opacity 0.25s;
-  pointer-events: none;
-  border: 1px solid transparent;
-}
-.skill-card.stars-card::before { border-color: rgba(227,179,65,0.4); }
-.skill-card.downloads-card::before { border-color: rgba(88,166,255,0.4); }
-.skill-card.rising-card::before { border-color: rgba(247,129,102,0.4); }
-.skill-card:hover::before { opacity: 1; }
-.skill-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-}
-.skill-card.stars-card:hover { box-shadow: 0 8px 32px rgba(227,179,65,0.08); }
-.skill-card.downloads-card:hover { box-shadow: 0 8px 32px rgba(88,166,255,0.08); }
-.skill-card.rising-card:hover { box-shadow: 0 8px 32px rgba(247,129,102,0.08); }
 
-.card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 12px;
+/* Skill Card */
+.skill-card {
+  display: block; background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px; text-decoration: none; color: inherit;
+  transition: all 0.25s; position: relative;
 }
+.skill-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-light);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.stars-card:hover { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(227,179,65,0.1); }
+.downloads-card:hover { border-color: var(--accent-blue); box-shadow: 0 0 20px rgba(88,166,255,0.1); }
+.rising-card:hover { border-color: var(--accent-orange); box-shadow: 0 0 20px rgba(247,129,102,0.1); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .card-avatar {
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  background: var(--bg-surface-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
-  flex-shrink: 0;
-  border: 1px solid var(--border);
+  width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; font-family: var(--font-mono); flex-shrink: 0;
 }
-.card-avatar.gold { color: var(--accent-gold); border-color: rgba(227,179,65,0.3); }
-.card-avatar.blue { color: var(--accent-blue); border-color: rgba(88,166,255,0.3); }
-.card-avatar.orange { color: var(--accent-orange); border-color: rgba(247,129,102,0.3); }
-.card-meta { flex: 1; margin-left: 12px; overflow: hidden; }
+.card-avatar.gold { background: rgba(227,179,65,0.15); color: var(--accent-gold); }
+.card-avatar.blue { background: rgba(88,166,255,0.15); color: var(--accent-blue); }
+.card-avatar.orange { background: rgba(247,129,102,0.15); color: var(--accent-orange); }
+.card-meta { flex: 1; overflow: hidden; }
 .card-name {
-  font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.card-name a { color: var(--text-primary); text-decoration: none; }
-.card-name a:hover { color: var(--accent-blue); }
-.card-author { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.card-author { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
 .card-rank {
-  font-size: 18px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-muted);
-  opacity: 0.5;
+  font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--text-muted);
 }
-.card-metrics {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
-.metric { display: flex; align-items: center; gap: 5px; }
+.card-metrics { display: flex; gap: 16px; margin-bottom: 10px; }
+.metric { display: flex; align-items: center; gap: 4px; font-size: 13px; font-family: var(--font-mono); }
 .metric-icon { font-size: 12px; }
+.metric-stars .metric-icon { color: var(--accent-gold); }
 .metric-stars { color: var(--accent-gold); }
+.metric-downloads .metric-icon { color: var(--accent-blue); }
 .metric-downloads { color: var(--accent-blue); }
+.metric-growth .metric-icon { color: var(--accent-green); }
 .metric-growth { color: var(--accent-green); }
-.metric-value { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
 .card-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 14px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin-bottom: 10px; min-height: 36px;
 }
-.card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .tag {
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  border: 1px solid var(--border);
-  background: var(--bg-surface-2);
-  color: var(--text-secondary);
-  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
 }
-.tag.gold { color: var(--accent-gold); border-color: rgba(227,179,65,0.25); background: rgba(227,179,65,0.06); }
-.tag.blue { color: var(--accent-blue); border-color: rgba(88,166,255,0.25); background: rgba(88,166,255,0.06); }
-.tag.orange { color: var(--accent-orange); border-color: rgba(247,129,102,0.25); background: rgba(247,129,102,0.06); }
-.card-sparkline { width: 80px; height: 28px; flex-shrink: 0; }
+.tag.gold { background: rgba(227,179,65,0.1); color: var(--accent-gold); }
+.tag.blue { background: rgba(88,166,255,0.1); color: var(--accent-blue); }
+.tag.orange { background: rgba(247,129,102,0.1); color: var(--accent-orange); }
+.card-sparkline { flex-shrink: 0; width: 80px; height: 28px; }
 .card-sparkline svg { width: 100%; height: 100%; }
 
-/* ===== CATEGORIES ===== */
+/* Categories */
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px;
 }
 .category-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--bg-surface);
-  padding: 24px;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; transition: all 0.2s;
 }
-.category-card:hover { border-color: var(--border-light); transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.2); }
-.category-icon {
-  width: 44px; height: 44px;
-  border-radius: 10px;
-  background: var(--bg-surface-2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  margin-bottom: 14px;
-}
-.category-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-.category-count { font-size: 13px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-.category-top { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.category-card:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
+.category-icon { font-size: 28px; margin-bottom: 8px; }
+.category-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.category-count { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+.category-top { display: flex; flex-direction: column; gap: 2px; }
 .category-top-item {
-  font-size: 12px;
-  color: var(--text-secondary);
-  padding: 3px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-/* ===== TREND CHART ===== */
-.trend-chart-section {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--bg-surface);
-  padding: 28px;
-  position: relative;
-  overflow: hidden;
-}
-.chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.chart-title { font-size: 16px; font-weight: 600; }
-.chart-legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); }
-.legend-item { display: flex; align-items: center; gap: 6px; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-.chart-area { position: relative; height: 220px; }
-.chart-area canvas { width: 100% !important; height: 100% !important; }
-
-/* ===== COLLECTIONS ===== */
+/* Collections */
 .collections-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;
 }
 .collection-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--bg-surface);
-  padding: 20px;
-  transition: all 0.25s ease;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 24px; transition: all 0.2s;
 }
-.collection-card:hover { border-color: var(--border-light); transform: translateY(-3px); }
+.collection-card:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
 .collection-type {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 6px;
-  width: fit-content;
-  margin-bottom: 14px;
-  font-weight: 600;
+  display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-bottom: 12px;
 }
-.collection-type.awesome { color: var(--accent-purple); border: 1px solid rgba(163,113,247,0.25); background: rgba(163,113,247,0.06); }
-.collection-type.official { color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.25); background: rgba(88,166,255,0.06); }
-.collection-type.community { color: var(--accent-green); border: 1px solid rgba(63,185,80,0.25); background: rgba(63,185,80,0.06); }
-.collection-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
-.collection-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px; }
-.collection-stats { display: flex; gap: 16px; font-size: 13px; color: var(--text-muted); }
-
-/* ===== FOOTER ===== */
-.footer {
-  border-top: 1px solid var(--border);
-  padding: 32px 0;
-  margin-top: 32px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-muted);
+.collection-type.awesome { background: rgba(227,179,65,0.12); color: var(--accent-gold); }
+.collection-type.official { background: rgba(88,166,255,0.12); color: var(--accent-blue); }
+.collection-type.community { background: rgba(163,113,247,0.12); color: var(--accent-purple); }
+.collection-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.collection-name a { color: inherit; text-decoration: none; }
+.collection-name a:hover { color: var(--accent-blue); }
+.collection-desc {
+  font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;
 }
-.footer a { color: var(--text-secondary); text-decoration: none; }
-.footer a:hover { color: var(--accent-blue); }
+.collection-stats { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
 
-.divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+/* Chart */
+.chart-wrapper { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.chart-legend { display: flex; gap: 16px; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+.chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.chart-canvas-wrap { width: 100%; height: 280px; }
+.chart-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
 
-/* ===== LOADING ===== */
-.loading {
-  text-align: center;
-  padding: 60px;
-  color: var(--text-muted);
-  font-size: 14px;
+/* Loading / Error */
+.loading-state, .error-state {
+  text-align: center; padding: 60px 20px; color: var(--text-muted);
 }
-.loading .spinner {
-  display: inline-block;
-  width: 28px; height: 28px;
-  border: 2px solid var(--border);
-  border-top-color: var(--accent-blue);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
+.loading-state p, .error-state p { font-size: 15px; margin-top: 12px; }
+.error-state .error-msg { color: var(--accent-red); font-size: 13px; margin-top: 6px; }
+.spinner {
+  width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue);
+  border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .nav-search { display: none; }
-  .hero-title { font-size: 32px; }
-  .stats-row { gap: 12px; }
-  .stat-card { min-width: 140px; padding: 14px; }
-  .stat-value { font-size: 20px; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border); padding: 24px; text-align: center;
+  color: var(--text-muted); font-size: 13px;
+}
+.site-footer a { color: var(--accent-blue); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .skills-grid, .stats-row { grid-template-columns: 1fr; }
   .collections-grid { grid-template-columns: 1fr; }
-  .section { padding: 36px 0; }
+  .nav-search { display: none; }
+  .hero h1 { font-size: 26px; }
+  .top-nav { padding: 0 12px; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="nav-logo"><span>&#x1F680;</span> SkillTrends</a>
-    <div class="nav-links">
-      <a href="index.html" class="active">首页</a>
-      <a href="ranking.html">排行榜</a>
-    </div>
-    <div class="nav-search">
-      <span class="icon">&#x1F50D;</span>
-      <input type="text" id="navSearch" placeholder="搜索技能...">
-    </div>
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#58a6ff"/><path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    SkillTrends
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="ranking.html" class="nav-link">Ranking</a>
+  </div>
+  <div class="nav-search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="navSearch" placeholder="Search skills...">
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- Hero -->
 <section class="hero">
-  <div class="container">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      <span id="heroBadge">实时追踪 Agent Skills</span>
-    </div>
-    <h1 class="hero-title">发现 GitHub 上最热门的<br>Agent Skills</h1>
-    <p class="hero-subtitle">追踪 Stars、下载量、增长趋势，发现下一个可能改变 AI 工作流的技能。覆盖 Claude、Codex、Cursor 等全平台。</p>
-    <div class="hero-search-box">
-      <span class="icon">&#x1F50D;</span>
-      <input type="text" id="heroSearch" placeholder="搜索技能名称、作者、标签或描述...">
-      <button class="btn" id="heroSearchBtn">搜索</button>
-    </div>
-    <div class="stats-row" id="statsRow">
-      <div class="stat-card"><div class="stat-label">Loading...</div></div>
-    </div>
+  <div class="hero-badge" id="heroBadge">Loading data...</div>
+  <h1>Discover the Hottest<br>Agent Skills on GitHub</h1>
+  <p>Real-time tracking of trending Agent Skills. Rankings by stars, downloads, and growth velocity.</p>
+  <div class="hero-search">
+    <input type="text" id="heroSearch" placeholder="Search skills, repos, topics...">
+    <button id="heroSearchBtn">Search</button>
   </div>
 </section>
 
-<hr class="divider">
+<!-- Stats -->
+<div class="stats-row" id="statsRow">
+  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Total Skills</div></div>
+  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Total Stars</div></div>
+  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Categories</div></div>
+  <div class="stat-card"><div class="stat-value">—</div><div class="stat-label">Collections</div></div>
+</div>
 
-<!-- TRENDING SECTION -->
+<!-- Trending Rankings -->
 <section class="section">
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="section-title">趋势榜单</h2>
-        <p class="section-subtitle">实时追踪 GitHub 上 Agent Skills 的热门趋势</p>
+        <h2 class="section-title">Trending Rankings</h2>
+        <p class="section-subtitle">Top Agent Skills by different metrics</p>
       </div>
-      <a href="ranking.html" class="view-all">查看全部 &rarr;</a>
+      <a href="ranking.html" class="section-action">View Full Ranking →</a>
     </div>
-
     <div class="trend-tabs">
       <button class="trend-tab stars active">Most Starred</button>
       <button class="trend-tab downloads">Most Downloaded</button>
       <button class="trend-tab rising">Rising Fast</button>
     </div>
-
     <div class="skills-grid" id="skillsGrid">
-      <div class="loading"><div class="spinner"></div><br>加载真实数据中...</div>
+      <div class="loading-state"><div class="spinner"></div><p>Loading skills...</p></div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
-
-<!-- CATEGORIES -->
-<section class="section">
+<!-- Categories -->
+<section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="section-title">分类浏览</h2>
-        <p class="section-subtitle">按领域探索 Agent Skills</p>
+        <h2 class="section-title">Browse by Category</h2>
+        <p class="section-subtitle">Explore skills across different domains</p>
       </div>
     </div>
-    <div class="categories-grid" id="categoriesGrid"></div>
+    <div class="categories-grid" id="categoriesGrid">
+      <div class="loading-state"><div class="spinner"></div><p>Loading categories...</p></div>
+    </div>
   </div>
 </section>
 
-<hr class="divider">
-
-<!-- TREND CHART -->
-<section class="section">
+<!-- Growth Chart -->
+<section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="section-title">生态增长趋势</h2>
-        <p class="section-subtitle">过去 30 天 Agent Skills 生态的 Stars 增长趋势</p>
+        <h2 class="section-title">Ecosystem Growth</h2>
+        <p class="section-subtitle">30-day trend of total stars and new skills</p>
       </div>
     </div>
-    <div class="trend-chart-section">
+    <div class="chart-wrapper">
       <div class="chart-header">
-        <div class="chart-title">Stars 累计增长</div>
+        <h3 style="font-size:16px;">Stars Growth Trend</h3>
         <div class="chart-legend">
-          <span class="legend-item"><span class="legend-dot" style="background:#58a6ff"></span>Total Stars</span>
-          <span class="legend-item"><span class="legend-dot" style="background:#a371f7"></span>New Skills</span>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#58a6ff;"></div>Total Stars</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#a371f7;"></div>New Skills</div>
         </div>
       </div>
-      <div class="chart-area"><canvas id="trendChart"></canvas></div>
+      <div class="chart-canvas-wrap">
+        <canvas id="trendChart"></canvas>
+      </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
-
-<!-- COLLECTIONS -->
-<section class="section">
+<!-- Featured Collections -->
+<section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="section-header">
       <div>
-        <h2 class="section-title">精选合集</h2>
-        <p class="section-subtitle">官方与社区精选的技能仓库</p>
+        <h2 class="section-title">Featured Collections</h2>
+        <p class="section-subtitle">Curated collections of high-quality skills</p>
       </div>
     </div>
-    <div class="collections-grid" id="collectionsGrid"></div>
+    <div class="collections-grid" id="collectionsGrid">
+      <div class="loading-state"><div class="spinner"></div><p>Loading collections...</p></div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container" id="footerText">
-    <p>Data sourced from GitHub API &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a></p>
-  </div>
+<footer class="site-footer">
+  <p id="footerText">SkillTrends &copy; 2026 &middot; Built with GitHub API</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ===== 全局数据 =====
-let SKILLS_DATA = null;
+// ===== GLOBAL STATE =====
+var SKILLS_DATA = null;
 
-// ===== 工具函数 =====
+// ===== UTILS =====
 function fmtStars(n) {
   if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
@@ -706,228 +423,305 @@ function fmtStars(n) {
 }
 function fmtRelative(iso) {
   if (!iso) return '—';
-  const diff = Date.now() - new Date(iso).getTime();
-  const days = Math.floor(diff / 86400000);
-  if (days === 0) return '今天';
-  if (days === 1) return '昨天';
-  if (days < 7) return days + ' 天前';
-  if (days < 30) return Math.floor(days / 7) + ' 周前';
-  return Math.floor(days / 30) + ' 个月前';
+  var diff = Date.now() - new Date(iso).getTime();
+  var days = Math.floor(diff / 86400000);
+  if (days === 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 7) return days + ' days ago';
+  if (days < 30) return Math.floor(days / 7) + ' weeks ago';
+  return Math.floor(days / 30) + ' months ago';
 }
-function escapeHtml(s) {
+function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function getSkillId(fullName) {
-  return encodeURIComponent(fullName);
-}
+function skillId(fn) { return encodeURIComponent(fn); }
 
-// 分类图标映射
-const CATEGORY_ICONS = {
-  'Coding & Dev': '&#x1F4BB;', 'AI & ML': '&#x1F9E0;', 'Productivity': '&#x1F4DD;',
-  'Data & Analytics': '&#x1F4CA;', 'Design & Creative': '&#x1F3A8;', 'DevOps & Infra': '&#x2699;',
-  'Web & API': '&#x1F310;', 'Security': '&#x1F512;', 'Knowledge & Docs': '&#x1F4DA;',
-  'Communication': '&#x1F4AC;', 'Other': '&#x1F4E6;',
+var CAT_ICONS = {
+  'Coding & Dev': '💻', 'AI & ML': '🧠', 'Productivity': '📝',
+  'Data & Analytics': '📊', 'Design & Creative': '🎨', 'DevOps & Infra': '⚙️',
+  'Web & API': '🌐', 'Security': '🔒', 'Knowledge & Docs': '📚',
+  'Communication': '💬', 'Other': '📦'
 };
 
-function generateSparklineData(starsPerDay, ageDays) {
-  const points = 30;
-  const data = [];
-  const dailyRate = starsPerDay || 1;
-  for (let i = 0; i < points; i++) {
-    const noise = 0.7 + Math.random() * 0.6;
-    if (ageDays < 30 && i < 30 - ageDays) { data.push(0); }
-    else { data.push(Math.max(1, dailyRate * (i + 1) * noise / points * 2)); }
+function sparklineData(perDay, age) {
+  var points = 30, out = [];
+  var rate = perDay || 1;
+  for (var i = 0; i < points; i++) {
+    var noise = 0.7 + Math.random() * 0.6;
+    if (age < 30 && i < 30 - age) out.push(0);
+    else out.push(Math.max(1, rate * (i + 1) * noise / points * 2));
   }
-  for (let i = 1; i < data.length; i++) {
-    if (data[i] < data[i-1]) data[i] = data[i-1] * (0.9 + Math.random() * 0.2);
+  for (var j = 1; j < out.length; j++) {
+    if (out[j] < out[j-1]) out[j] = out[j-1] * (0.9 + Math.random() * 0.2);
   }
-  return data;
+  return out;
 }
 
-function createSparkline(data, color) {
-  const w = 80, h = 28, pad = 2;
-  const min = Math.min(...data), max = Math.max(...data);
-  const range = max - min || 1;
-  const points = data.map((v, i) => {
-    const x = pad + (i / (data.length - 1)) * (w - pad * 2);
-    const y = h - pad - ((v - min) / range) * (h - pad * 2);
-    return x.toFixed(1) + ',' + y.toFixed(1);
-  }).join(' ');
-  return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none"><polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function sparkSVG(data, color) {
+  var w = 80, h = 28, pad = 2;
+  var min = Math.min.apply(null, data), max = Math.max.apply(null, data);
+  var range = max - min || 1;
+  var pts = [];
+  for (var i = 0; i < data.length; i++) {
+    var x = pad + (i / (data.length - 1)) * (w - pad * 2);
+    var y = h - pad - ((data[i] - min) / range) * (h - pad * 2);
+    pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+  }
+  return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+    '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }
 
-// ===== 渲染：Hero =====
-function renderHero(data) {
-  const s = data.stats;
-  document.getElementById('heroBadge').textContent = '实时追踪 ' + s.totalSkills.toLocaleString() + '+ Agent Skills';
-  document.getElementById('statsRow').innerHTML = 
-    '<div class="stat-card"><div class="stat-label">Total Skills</div><div class="stat-value">' + s.totalSkills.toLocaleString() + '</div><div class="stat-trend">Live tracking</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Total Stars</div><div class="stat-value">' + fmtStars(s.totalStars) + '</div><div class="stat-trend">' + fmtStars(s.totalForks) + ' forks</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Categories</div><div class="stat-value">' + s.categories + '</div><div class="stat-trend">All tracked</div></div>' +
-    '<div class="stat-card"><div class="stat-label">Collections</div><div class="stat-value">' + s.collections + '</div><div class="stat-trend">Curated picks</div></div>';
-  document.getElementById('footerText').innerHTML = '<p>Data from GitHub API &middot; Updated ' + fmtRelative(data.meta.updatedAt) + ' &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a></p>';
+// ===== RENDER: Hero + Stats =====
+function renderHero(d) {
+  var s = d.stats;
+  document.getElementById('heroBadge').textContent = 'Tracking ' + s.totalSkills.toLocaleString() + '+ Agent Skills in real time';
+  document.getElementById('statsRow').innerHTML =
+    '<div class="stat-card"><div class="stat-value">' + s.totalSkills.toLocaleString() + '</div><div class="stat-label">Total Skills</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + fmtStars(s.totalStars) + '</div><div class="stat-label">Total Stars</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + s.categories + '</div><div class="stat-label">Categories</div></div>' +
+    '<div class="stat-card"><div class="stat-value">' + s.collections + '</div><div class="stat-label">Collections</div></div>';
+  document.getElementById('footerText').innerHTML = 'Data from GitHub API &middot; Updated ' + fmtRelative(d.meta.updatedAt) + ' &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a>';
 }
 
-// ===== 渲染：技能卡片 =====
+// ===== RENDER: Skills =====
 function renderSkills(type) {
   var grid = document.getElementById('skillsGrid');
-  var data, color, avatarClass, tagClass;
-
-  if (type === 'stars') {
-    data = SKILLS_DATA.mostStarred; color = '#e3b341'; avatarClass = 'gold'; tagClass = 'gold';
-  } else if (type === 'downloads') {
-    data = SKILLS_DATA.mostDownloaded; color = '#58a6ff'; avatarClass = 'blue'; tagClass = 'blue';
-  } else {
-    data = SKILLS_DATA.risingFast; color = '#f78166'; avatarClass = 'orange'; tagClass = 'orange';
-  }
+  if (!SKILLS_DATA) return;
+  var data, color, avClass, tClass;
+  if (type === 'stars') { data = SKILLS_DATA.mostStarred; color = '#e3b341'; avClass = 'gold'; tClass = 'gold'; }
+  else if (type === 'downloads') { data = SKILLS_DATA.mostDownloaded; color = '#58a6ff'; avClass = 'blue'; tClass = 'blue'; }
+  else { data = SKILLS_DATA.risingFast; color = '#f78166'; avClass = 'orange'; tClass = 'orange'; }
 
   grid.innerHTML = data.slice(0, 6).map(function(s, i) {
     var rank = i + 1;
-    var sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
-    var spark = createSparkline(sparkData, color);
-    var growthText = s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
+    var spark = sparkSVG(sparklineData(s.starsPerDay, s.ageDays), color);
+    var growth = s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
     var tags = (s.topics || []).slice(0, 2).concat([s.category]).filter(function(v, idx, arr) { return arr.indexOf(v) === idx; }).slice(0, 3);
     var author = s.fullName.split('/')[0];
-    var detailUrl = 'detail.html?id=' + getSkillId(s.fullName);
-
-    return '<a href="' + detailUrl + '" class="skill-card ' + type + '-card">' +
+    return '<a href="detail.html?id=' + skillId(s.fullName) + '" class="skill-card ' + type + '-card">' +
       '<div class="card-header">' +
         '<div style="display:flex;align-items:center;flex:1;overflow:hidden;">' +
-          '<div class="card-avatar ' + avatarClass + '">' + rank + '</div>' +
-          '<div class="card-meta">' +
-            '<div class="card-name">' + escapeHtml(s.fullName) + '</div>' +
-            '<div class="card-author">@' + escapeHtml(author) + '</div>' +
-          '</div>' +
+          '<div class="card-avatar ' + avClass + '">' + rank + '</div>' +
+          '<div class="card-meta"><div class="card-name">' + esc(s.fullName) + '</div><div class="card-author">@' + esc(author) + '</div></div>' +
         '</div>' +
         '<div class="card-rank">#' + rank + '</div>' +
       '</div>' +
       '<div class="card-metrics">' +
-        '<div class="metric metric-stars"><span class="metric-icon">&#9733;</span><span class="metric-value">' + fmtStars(s.stars) + '</span></div>' +
-        '<div class="metric metric-downloads"><span class="metric-icon">&#x1F4E6;</span><span class="metric-value">' + fmtStars(s.forks) + '</span></div>' +
-        '<div class="metric metric-growth"><span class="metric-icon">&#9650;</span><span class="metric-value">' + growthText + '</span></div>' +
+        '<div class="metric metric-stars"><span class="metric-icon">★</span><span class="metric-value">' + fmtStars(s.stars) + '</span></div>' +
+        '<div class="metric metric-downloads"><span class="metric-icon">⇣</span><span class="metric-value">' + fmtStars(s.forks) + '</span></div>' +
+        '<div class="metric metric-growth"><span class="metric-icon">▲</span><span class="metric-value">' + growth + '</span></div>' +
       '</div>' +
-      '<div class="card-desc">' + escapeHtml(s.description) + '</div>' +
+      '<div class="card-desc">' + esc(s.description) + '</div>' +
       '<div class="card-footer">' +
-        '<div class="card-tags">' + tags.map(function(t) { return '<span class="tag ' + tagClass + '">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
+        '<div class="card-tags">' + tags.map(function(t) { return '<span class="tag ' + tClass + '">' + esc(t) + '</span>'; }).join('') + '</div>' +
         '<div class="card-sparkline">' + spark + '</div>' +
-      '</div>' +
-    '</a>';
+      '</div></a>';
   }).join('');
 }
 
-// ===== 渲染：分类 =====
-function renderCategories(data) {
+// ===== RENDER: Categories =====
+function renderCategories(d) {
   var grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = data.categories.map(function(c) {
-    var icon = CATEGORY_ICONS[c.name] || '&#x1F4E6;';
+  grid.innerHTML = d.categories.map(function(c) {
+    var icon = CAT_ICONS[c.name] || '📦';
     return '<a href="ranking.html?cat=' + encodeURIComponent(c.name) + '" class="category-card">' +
       '<div class="category-icon">' + icon + '</div>' +
-      '<div class="category-name">' + escapeHtml(c.name) + '</div>' +
+      '<div class="category-name">' + esc(c.name) + '</div>' +
       '<div class="category-count">' + c.count.toLocaleString() + ' skills &middot; ' + fmtStars(c.totalStars) + ' stars</div>' +
-      '<div class="category-top">' + c.top.map(function(t) { return '<div class="category-top-item">' + escapeHtml(t) + '</div>'; }).join('') + '</div>' +
+      '<div class="category-top">' + c.top.map(function(t) { return '<div class="category-top-item">' + esc(t) + '</div>'; }).join('') + '</div>' +
     '</a>';
   }).join('');
 }
 
-// ===== 渲染：合集 =====
-function renderCollections(data) {
+// ===== RENDER: Collections =====
+function renderCollections(d) {
   var grid = document.getElementById('collectionsGrid');
-  var all = data.awesomeLists.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'awesome', typeLabel:'Awesome List'}); })
-    .concat(data.official.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'official', typeLabel:'Official'}); }))
-    .concat(data.community.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'community', typeLabel:'Community'}); }));
+  var all = d.awesomeLists.slice(0, 2).map(function(s) { s.type = 'awesome'; s.typeLabel = 'Awesome List'; return s; })
+    .concat(d.official.slice(0, 2).map(function(s) { s.type = 'official'; s.typeLabel = 'Official'; return s; }))
+    .concat(d.community.slice(0, 2).map(function(s) { s.type = 'community'; s.typeLabel = 'Community'; return s; }));
 
   grid.innerHTML = all.map(function(c) {
     var stats = fmtStars(c.stars) + ' Stars &middot; ' + fmtStars(c.forks) + ' Forks &middot; ' + fmtRelative(c.createdAt);
     return '<div class="collection-card">' +
       '<div class="collection-type ' + c.type + '">' + c.typeLabel + '</div>' +
-      '<div class="collection-name"><a href="' + c.url + '" target="_blank" style="color:inherit;text-decoration:none">' + escapeHtml(c.fullName) + '</a></div>' +
-      '<div class="collection-desc">' + escapeHtml(c.description) + '</div>' +
-      '<div class="collection-stats">' + stats + '</div>' +
-    '</div>';
+      '<div class="collection-name"><a href="' + c.url + '" target="_blank">' + esc(c.fullName) + '</a></div>' +
+      '<div class="collection-desc">' + esc(c.description) + '</div>' +
+      '<div class="collection-stats">' + stats + '</div></div>';
   }).join('');
 }
 
-// ===== 渲染：趋势图 =====
-function initChart(data) {
-  var ctx = document.getElementById('trendChart').getContext('2d');
-  var totalStarsNow = data.stats.totalStars;
-  var totalStars30dAgo = Math.max(0, totalStarsNow - data.allSkills.reduce(function(sum, s) { return sum + (s.starsPerDay || 0) * 30; }, 0) * 0.6);
-  var labels = Array.from({length: 30}, function(_, i) { return 'Day ' + (i+1); });
-  var starsLine = [], newSkillsLine = [];
+// ===== RENDER: Chart (Canvas) =====
+function renderChart(d) {
+  var canvas = document.getElementById('trendChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.parentElement.clientWidth;
+  var H = 280;
 
+  // Set actual pixel resolution
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  // Calculate data
+  var totalStars = d.stats.totalStars;
+  var avgPerDay = 0;
+  if (d.allSkills.length > 0) {
+    avgPerDay = d.allSkills.reduce(function(sum, s) { return sum + (s.starsPerDay || 0); }, 0);
+  }
+  var total30dAgo = Math.max(0, totalStars - avgPerDay * 30 * 0.6);
+
+  var starsData = [], newData = [];
   for (var i = 0; i < 30; i++) {
     var progress = i / 29;
     var ease = progress * progress * (3 - 2 * progress);
     var noise = 0.95 + Math.sin(i * 0.7) * 0.03 + Math.random() * 0.04;
-    starsLine.push(Math.round((totalStars30dAgo + (totalStarsNow - totalStars30dAgo) * ease) * noise));
-    var avgDaily = data.stats.totalSkills / Math.max(1, Math.max.apply(null, data.allSkills.map(function(s) { return s.ageDays || 1; })));
-    newSkillsLine.push(Math.max(1, Math.round(avgDaily * (0.7 + Math.random() * 0.6))));
+    starsData.push(Math.round((total30dAgo + (totalStars - total30dAgo) * ease) * noise));
+    newData.push(Math.max(1, Math.round((avgPerDay / 30) * (0.7 + Math.random() * 0.6))));
   }
-  starsLine[29] = totalStarsNow;
+  starsData[29] = totalStars;
 
-  new Chart(ctx, {
-    type: 'line',
-    data: { labels: labels, datasets: [
-      { label: 'Total Stars', data: starsLine.map(function(v) { return v / 1000; }), borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,0.06)', borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4 },
-      { label: 'New Skills', data: newSkillsLine, borderColor: '#a371f7', backgroundColor: 'transparent', borderWidth: 2, borderDash: [4, 4], fill: false, tension: 0.4, pointRadius: 0, pointHoverRadius: 4, yAxisID: 'y1' }
-    ]},
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#161b22', titleColor: '#f0f6fc', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, padding: 10, callbacks: { label: function(context) { return context.datasetIndex === 0 ? 'Stars: ' + context.parsed.y.toFixed(0) + 'k' : 'New Skills: ' + context.parsed.y; } } } },
-      scales: { x: { display: false, grid: { display: false } }, y: { display: false, grid: { display: false } }, y1: { display: false, grid: { display: false }, position: 'right' } }
-    }
-  });
+  // Draw
+  var pad = { top: 20, right: 20, bottom: 30, left: 60 };
+  var pw = W - pad.left - pad.right;
+  var ph = H - pad.top - pad.bottom;
+
+  // Background
+  ctx.fillStyle = '#161b22';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(48,54,63,0.5)';
+  ctx.lineWidth = 1;
+  for (var g = 0; g <= 4; g++) {
+    var gy = pad.top + (ph / 4) * g;
+    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
+  }
+
+  // Calculate scaling
+  var starsMin = Math.min.apply(null, starsData);
+  var starsMax = Math.max.apply(null, starsData);
+  var sRange = starsMax - starsMin || 1;
+  var newMax = Math.max.apply(null, newData);
+  var nRange = newMax || 1;
+
+  function sx(v) { return pad.left + ((v - starsMin) / sRange) * pw; }
+  function sy(v) { return pad.top + ph - ((v - starsMin) / sRange) * ph; }
+  function ny(v) { return pad.top + ph - (v / nRange) * ph; }
+
+  // Y-axis labels
+  ctx.fillStyle = '#6e7681';
+  ctx.font = '11px ' + getComputedStyle(document.body).fontFamily;
+  ctx.textAlign = 'right';
+  for (var l = 0; l <= 4; l++) {
+    var val = starsMin + (sRange / 4) * l;
+    var ly = pad.top + ph - (ph / 4) * l;
+    ctx.fillText(fmtStars(Math.round(val)), pad.left - 8, ly + 4);
+  }
+
+  // X-axis labels
+  ctx.textAlign = 'center';
+  ctx.fillText('Day 1', pad.left, H - 6);
+  ctx.fillText('Day 15', pad.left + pw / 2, H - 6);
+  ctx.fillText('Day 30', W - pad.right, H - 6);
+
+  // Stars area fill
+  var grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ph);
+  grad.addColorStop(0, 'rgba(88,166,255,0.15)');
+  grad.addColorStop(1, 'rgba(88,166,255,0.01)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top + ph);
+  for (var si = 0; si < starsData.length; si++) {
+    ctx.lineTo(pad.left + (pw / 29) * si, sy(starsData[si]));
+  }
+  ctx.lineTo(W - pad.right, pad.top + ph);
+  ctx.closePath(); ctx.fill();
+
+  // Stars line
+  ctx.strokeStyle = '#58a6ff';
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  for (var s2 = 0; s2 < starsData.length; s2++) {
+    var sxv = pad.left + (pw / 29) * s2;
+    var syv = sy(starsData[s2]);
+    if (s2 === 0) ctx.moveTo(sxv, syv); else ctx.lineTo(sxv, syv);
+  }
+  ctx.stroke();
+
+  // New skills line (dashed)
+  ctx.strokeStyle = '#a371f7';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  for (var ni = 0; ni < newData.length; ni++) {
+    var nx = pad.left + (pw / 29) * ni;
+    var nv = ny(newData[ni]);
+    if (ni === 0) ctx.moveTo(nx, nv); else ctx.lineTo(nx, nv);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
 }
 
-// ===== Tab 切换 =====
+// ===== Tabs =====
 function initTabs() {
-  document.querySelectorAll('.trend-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.trend-tab').forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      if (tab.classList.contains('stars')) renderSkills('stars');
-      else if (tab.classList.contains('downloads')) renderSkills('downloads');
+  var tabs = document.querySelectorAll('.trend-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].addEventListener('click', function() {
+      for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+      this.classList.add('active');
+      if (this.classList.contains('stars')) renderSkills('stars');
+      else if (this.classList.contains('downloads')) renderSkills('downloads');
       else renderSkills('rising');
     });
-  });
+  }
 }
 
-// ===== 搜索跳转 =====
+// ===== Search =====
 function initSearch() {
   function doSearch(q) {
-    if (!q.trim()) return;
+    if (!q || !q.trim()) return;
     window.location.href = 'ranking.html?q=' + encodeURIComponent(q.trim());
   }
-  var heroInput = document.getElementById('heroSearch');
-  var heroBtn = document.getElementById('heroSearchBtn');
-  var navInput = document.getElementById('navSearch');
-  if (heroInput) heroInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(heroInput.value); });
-  if (heroBtn) heroBtn.addEventListener('click', function() { doSearch(heroInput.value); });
-  if (navInput) navInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(navInput.value); });
+  var hi = document.getElementById('heroSearch');
+  var hb = document.getElementById('heroSearchBtn');
+  var ni = document.getElementById('navSearch');
+  if (hi) hi.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(hi.value); });
+  if (hb) hb.addEventListener('click', function() { doSearch(hi.value); });
+  if (ni) ni.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(ni.value); });
 }
 
-// ===== 初始化 =====
-async function init() {
-  try {
-    var res = await fetch('data/skills.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    SKILLS_DATA = await res.json();
-
-    renderHero(SKILLS_DATA);
-    renderSkills('stars');
-    renderCategories(SKILLS_DATA);
-    renderCollections(SKILLS_DATA);
-    initChart(SKILLS_DATA);
-    initTabs();
-    initSearch();
-
-    console.log('Loaded ' + SKILLS_DATA.stats.totalSkills + ' skills, ' + fmtStars(SKILLS_DATA.stats.totalStars) + ' total stars');
-  } catch (e) {
-    console.error('Failed to load data:', e);
-    document.getElementById('skillsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)"><p>数据加载失败: ' + escapeHtml(e.message) + '</p></div>';
-  }
+// ===== INIT =====
+function init() {
+  console.log('Fetching skills data...');
+  fetch('data/skills.json')
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      console.log('Loaded: ' + data.stats.totalSkills + ' skills, ' + fmtStars(data.stats.totalStars) + ' stars');
+      SKILLS_DATA = data;
+      renderHero(data);
+      renderSkills('stars');
+      renderCategories(data);
+      renderCollections(data);
+      renderChart(data);
+      initTabs();
+      initSearch();
+    })
+    .catch(function(err) {
+      console.error('Failed to load data:', err);
+      document.getElementById('skillsGrid').innerHTML = '<div class="error-state" style="grid-column:1/-1"><p>Failed to load data</p><p class="error-msg">' + esc(err.message) + '</p></div>';
+      document.getElementById('categoriesGrid').innerHTML = '<div class="error-state"><p>Failed to load data</p></div>';
+      document.getElementById('collectionsGrid').innerHTML = '<div class="error-state"><p>Failed to load data</p></div>';
+      document.getElementById('heroBadge').textContent = '⚠ Loading error';
+    });
 }
 
 init();

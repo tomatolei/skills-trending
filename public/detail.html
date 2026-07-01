@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skill Details — SkillTrends</title>
+<title>Skill Detail — SkillTrends</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -15,173 +13,158 @@
   --text-primary: #f0f6fc; --text-secondary: #8b949e; --text-muted: #6e7681;
   --accent-blue: #58a6ff; --accent-gold: #e3b341; --accent-orange: #f78166;
   --accent-green: #3fb950; --accent-red: #f85149; --accent-purple: #a371f7;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+  font-family: var(--font-sans); background: var(--bg-primary);
+  color: var(--text-primary); min-height: 100vh; line-height: 1.5;
 }
 
-.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-
-/* ===== NAV ===== */
-.nav { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 0; }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-links { display: flex; gap: 4px; }
-.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; color: var(--text-secondary); text-decoration: none; transition: all 0.15s; }
-.nav-links a:hover { color: var(--text-primary); background: var(--bg-surface); }
-
-/* ===== BACK ===== */
-.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-secondary); text-decoration: none; margin-bottom: 24px; transition: color 0.15s; }
-.back-link:hover { color: var(--accent-blue); }
-
-/* ===== HEADER ===== */
-.detail-header {
-  padding: 28px; border: 1px solid var(--border); border-radius: 16px;
-  background: var(--bg-surface); margin-bottom: 20px;
+/* Nav */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,27,34,0.95); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px;
+  display: flex; align-items: center; gap: 24px;
 }
-.detail-name {
-  font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
-  margin-bottom: 8px; word-break: break-all;
+.nav-logo {
+  font-size: 20px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px;
+  color: var(--text-primary);
 }
-.detail-desc {
-  font-size: 15px; color: var(--text-secondary); line-height: 1.6;
-  margin-bottom: 20px; max-width: 700px;
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-link {
+  padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
 }
-.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
-  text-decoration: none; transition: all 0.15s; cursor: pointer;
-  font-family: inherit; border: 1px solid var(--border);
-  background: var(--bg-surface-2); color: var(--text-primary);
-}
-.btn:hover { border-color: var(--border-light); }
-.btn-primary { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
-.btn-primary:hover { background: #79b8ff; }
+.nav-link:hover { color: var(--text-primary); background: var(--bg-surface-2); }
 
-/* ===== METRICS ===== */
+/* Container */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+/* Breadcrumb */
+.breadcrumb { padding: 24px 0 0; font-size: 13px; color: var(--text-muted); }
+.breadcrumb a { color: var(--accent-blue); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* Repo Header */
+.repo-header {
+  display: flex; align-items: flex-start; gap: 20px; padding: 24px 0 32px;
+  border-bottom: 1px solid var(--border); flex-wrap: wrap;
+}
+.repo-avatar {
+  width: 64px; height: 64px; border-radius: 12px;
+  background: linear-gradient(135deg, #58a6ff, #a371f7);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.repo-info-main { flex: 1; min-width: 0; }
+.repo-title { font-size: 28px; font-weight: 700; margin-bottom: 4px; word-break: break-all; }
+.repo-title a { color: var(--accent-blue); text-decoration: none; }
+.repo-title a:hover { text-decoration: underline; }
+.repo-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; }
+.repo-desc-full { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+.repo-topics { display: flex; gap: 6px; flex-wrap: wrap; }
+.topic-tag {
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  background: rgba(88,166,255,0.1); color: var(--accent-blue);
+}
+.gh-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-surface); color: var(--text-primary);
+  font-size: 14px; font-weight: 500; text-decoration: none;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.gh-btn:hover { border-color: var(--accent-blue); }
+.gh-btn svg { width: 18px; height: 18px; }
+
+/* Metrics Grid */
 .metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px; margin-bottom: 20px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;
+  padding: 32px 0;
 }
 .metric-card {
-  padding: 18px; border: 1px solid var(--border); border-radius: 12px;
-  background: var(--bg-surface); text-align: center;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px;
 }
-.metric-card-value {
-  font-size: 24px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
-}
-.metric-card-value.stars { color: var(--accent-gold); }
-.metric-card-value.forks { color: var(--accent-blue); }
-.metric-card-value.growth { color: var(--accent-green); }
-.metric-card-label {
-  font-size: 12px; color: var(--text-muted); margin-top: 4px;
-  text-transform: uppercase; letter-spacing: 0.05em;
-}
+.metric-card-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.metric-card-value { font-size: 24px; font-weight: 700; font-family: var(--font-mono); }
+.metric-card-value.gold { color: var(--accent-gold); }
+.metric-card-value.blue { color: var(--accent-blue); }
+.metric-card-value.green { color: var(--accent-green); }
+.metric-card-value.orange { color: var(--accent-orange); }
+.metric-card-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-/* ===== INFO TABLE ===== */
-.info-section {
-  padding: 24px; border: 1px solid var(--border); border-radius: 16px;
-  background: var(--bg-surface); margin-bottom: 20px;
-}
-.info-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-.info-row {
-  display: flex; justify-content: space-between; padding: 10px 0;
-  border-bottom: 1px solid var(--border); font-size: 14px;
-}
-.info-row:last-child { border-bottom: none; }
-.info-label { color: var(--text-muted); }
-.info-value { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
-.info-value a { color: var(--accent-blue); text-decoration: none; }
-.info-value a:hover { text-decoration: underline; }
+/* Chart */
+.chart-section { padding: 0 0 32px; }
+.chart-wrapper { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
+.chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+.chart-header h3 { font-size: 16px; }
+.chart-legend { display: flex; gap: 16px; }
+.chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+.chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.chart-canvas-wrap { width: 100%; height: 280px; }
+.chart-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
 
-/* Tags */
-.tag-list { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
-.tag {
-  padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
-  border: 1px solid var(--border); background: var(--bg-surface-2);
-  color: var(--accent-blue); font-family: 'JetBrains Mono', monospace;
+/* Similar / Related */
+.similar-section { padding: 0 0 48px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.similar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.similar-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--bg-surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px; transition: all 0.2s;
 }
-
-/* ===== CHART ===== */
-.chart-section {
-  padding: 24px; border: 1px solid var(--border); border-radius: 16px;
-  background: var(--bg-surface); margin-bottom: 20px;
-}
-.chart-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-.chart-area { position: relative; height: 280px; }
-.chart-area canvas { width: 100% !important; height: 100% !important; }
-
-/* ===== RELATED ===== */
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
-}
-.related-card {
-  padding: 16px; border: 1px solid var(--border); border-radius: 10px;
-  background: var(--bg-surface); cursor: pointer; text-decoration: none;
-  color: inherit; transition: all 0.2s; display: block;
-}
-.related-card:hover { border-color: var(--border-light); background: var(--bg-surface-2); }
-.related-card-name {
-  font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
-  margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.related-card-desc {
-  font-size: 12px; color: var(--text-muted); line-height: 1.4;
+.similar-card:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
+.similar-card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.similar-card-desc {
+  font-size: 12px; color: var(--text-secondary);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   margin-bottom: 8px;
 }
-.related-card-stats {
-  display: flex; gap: 14px; font-size: 12px; font-family: 'JetBrains Mono', monospace;
-}
-.related-card-stars { color: var(--accent-gold); }
-.related-card-forks { color: var(--text-muted); }
+.similar-card-stats { display: flex; gap: 12px; font-size: 12px; font-family: var(--font-mono); color: var(--text-muted); }
 
-/* ===== LOADING / ERROR ===== */
-.state-msg { text-align: center; padding: 60px; color: var(--text-muted); }
-.state-msg .spinner { display: inline-block; width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+/* Loading / Error */
+.loading-state, .error-state { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.error-state .error-msg { color: var(--accent-red); font-size: 13px; margin-top: 6px; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
 @media (max-width: 600px) {
-  .detail-name { font-size: 20px; }
-  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .repo-title { font-size: 20px; }
+  .repo-header { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="nav-logo">&#x1F680; SkillTrends</a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="ranking.html">排行榜</a>
-    </div>
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#58a6ff"/><path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    SkillTrends
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="ranking.html" class="nav-link">Ranking</a>
   </div>
 </nav>
 
-<div class="container" style="padding-top:32px;padding-bottom:64px;">
-  <a href="ranking.html" class="back-link">&larr; 返回排行榜</a>
+<div class="container">
+  <div class="breadcrumb"><a href="index.html">Home</a> / <a href="ranking.html">Ranking</a> / <span id="breadcrumbRepo">...</span></div>
 
-  <!-- Dynamic content -->
-  <div id="detailContent">
-    <div class="state-msg"><div class="spinner"></div><br>加载技能数据...</div>
-  </div>
-
-  <!-- RELATED -->
-  <div style="margin-top:32px;" id="relatedSection">
-    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;" id="relatedTitle">同类技能推荐</h3>
-    <div class="related-grid" id="relatedGrid"></div>
+  <div id="content">
+    <div class="loading-state"><div class="spinner"></div><p>Loading skill details...</p></div>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<footer>SkillTrends &copy; 2026 &middot; Data from GitHub API</footer>
+
 <script>
 var SKILLS_DATA = null;
 var currentSkill = null;
@@ -191,156 +174,231 @@ function fmtStars(n) {
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
   return String(n);
 }
-function fmtNumber(n) { return Number(n).toLocaleString(); }
-function escapeHtml(s) {
+function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function fmtRelative(iso) {
-  if (!iso) return '—';
-  var diff = Date.now() - new Date(iso).getTime();
-  var days = Math.floor(diff / 86400000);
-  if (days === 0) return '今天';
-  if (days === 1) return '昨天';
-  if (days < 7) return days + ' 天前';
-  if (days < 30) return Math.floor(days / 7) + ' 周前';
-  return Math.floor(days / 30) + ' 个月前';
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
 }
 
-function renderSkill(s) {
-  var author = s.fullName.split('/')[0];
-  var desc = s.description || 'No description available.';
-  var lang = s.language && s.language !== 'N/A' ? s.language : 'N/A';
-  var license = s.license && s.license !== 'N/A' ? s.license : 'N/A';
-  var homepage = s.homepage && s.homepage !== 'N/A' ? s.homepage : '';
-  var ageText = s.ageDays ? s.ageDays + ' days' : '—';
-  var tags = (s.topics || []).slice(0, 8);
+function renderAll(skill) {
+  document.title = esc(skill.fullName) + ' — SkillTrends';
+  document.getElementById('breadcrumbRepo').textContent = skill.fullName.split('/')[1] || skill.fullName;
 
-  document.getElementById('detailContent').innerHTML =
-    '<div class="detail-header">' +
-      '<div class="detail-name">' + escapeHtml(s.fullName) + '</div>' +
-      '<div class="detail-desc">' + escapeHtml(desc) + '</div>' +
-      '<div class="detail-actions">' +
-        '<a href="' + s.url + '" target="_blank" class="btn btn-primary">&#9733; GitHub</a>' +
-        (homepage ? '<a href="' + homepage + '" target="_blank" class="btn">&#x1F310; Homepage</a>' : '') +
-        '<a href="ranking.html" class="btn">&#x1F50D; Back to Rankings</a>' +
+  var author = skill.fullName.split('/')[0];
+  var initial = (author[0] || 's').toUpperCase();
+  var growth = skill.starsPerDay ? '+' + fmtStars(skill.starsPerDay) + '/day' : '—';
+  var topics = (skill.topics || []).slice(0, 6);
+
+  var html = '';
+
+  // Repo header
+  html += '<div class="repo-header">' +
+    '<div class="repo-avatar">' + esc(initial) + '</div>' +
+    '<div class="repo-info-main">' +
+      '<div class="repo-title"><a href="' + esc(skill.url) + '" target="_blank">' + esc(skill.fullName) + '</a></div>' +
+      '<div class="repo-sub">@' + esc(author) + ' · ' + esc(skill.language || 'Unknown') + ' · ' + esc(skill.category || 'Other') + ' · License: ' + esc(skill.license || 'N/A') + '</div>' +
+      '<div class="repo-desc-full">' + esc(skill.description) + '</div>' +
+      '<div class="repo-topics">' + topics.map(function(t) { return '<span class="topic-tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+    '</div>' +
+    '<a href="' + esc(skill.url) + '" target="_blank" class="gh-btn">' +
+      '<svg viewBox="0 0 16 16" fill="var(--text-primary)"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>' +
+      'View on GitHub' +
+    '</a>' +
+  '</div>';
+
+  // Metrics
+  html += '<div class="metrics-grid">' +
+    '<div class="metric-card"><div class="metric-card-label">Stars</div><div class="metric-card-value gold">' + fmtStars(skill.stars) + '</div><div class="metric-card-sub">GitHub stars</div></div>' +
+    '<div class="metric-card"><div class="metric-card-label">Forks</div><div class="metric-card-value blue">' + fmtStars(skill.forks) + '</div><div class="metric-card-sub">Repository forks</div></div>' +
+    '<div class="metric-card"><div class="metric-card-label">Growth Rate</div><div class="metric-card-value green">' + growth + '</div><div class="metric-card-sub">Stars per day</div></div>' +
+    '<div class="metric-card"><div class="metric-card-label">Repo Age</div><div class="metric-card-value orange">' + (skill.ageDays || '—') + 'd</div><div class="metric-card-sub">Days since creation</div></div>' +
+    '<div class="metric-card"><div class="metric-card-label">Stars / Day</div><div class="metric-card-value" style="color:var(--accent-purple)">' + (skill.starsPerDay ? fmtStars(skill.starsPerDay) : '—') + '</div><div class="metric-card-sub">Average daily stars</div></div>' +
+    '<div class="metric-card"><div class="metric-card-label">Language</div><div class="metric-card-value" style="color:var(--text-primary);font-size:20px;">' + esc(skill.language || 'N/A') + '</div><div class="metric-card-sub">Primary language</div></div>' +
+  '</div>';
+
+  // Chart
+  html += '<div class="chart-section"><div class="chart-wrapper">' +
+    '<div class="chart-header">' +
+      '<h3>Stars Growth (30-day simulation)</h3>' +
+      '<div class="chart-legend">' +
+        '<div class="chart-legend-item"><div class="chart-legend-dot" style="background:#e3b341;"></div>Stars</div>' +
+        '<div class="chart-legend-item"><div class="chart-legend-dot" style="background:#a371f7;"></div>Growth Trend</div>' +
       '</div>' +
     '</div>' +
+    '<div class="chart-canvas-wrap"><canvas id="detailChart"></canvas></div>' +
+  '</div></div>';
 
-    '<div class="metrics-grid">' +
-      '<div class="metric-card"><div class="metric-card-value stars">' + fmtStars(s.stars) + '</div><div class="metric-card-label">Stars</div></div>' +
-      '<div class="metric-card"><div class="metric-card-value forks">' + fmtStars(s.forks) + '</div><div class="metric-card-label">Forks</div></div>' +
-      '<div class="metric-card"><div class="metric-card-value growth">' + (s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) : '—') + '</div><div class="metric-card-label">Stars/Day</div></div>' +
-      '<div class="metric-card"><div class="metric-card-value">' + escapeHtml(ageText) + '</div><div class="metric-card-label">Repository Age</div></div>' +
-    '</div>' +
-
-    '<div class="info-section">' +
-      '<div class="info-title">Repository Info</div>' +
-      '<div class="info-row"><span class="info-label">Author</span><span class="info-value">@' + escapeHtml(author) + '</span></div>' +
-      '<div class="info-row"><span class="info-label">Language</span><span class="info-value">' + escapeHtml(lang) + '</span></div>' +
-      '<div class="info-row"><span class="info-label">License</span><span class="info-value">' + escapeHtml(license) + '</span></div>' +
-      '<div class="info-row"><span class="info-label">Category</span><span class="info-value">' + escapeHtml(s.category || 'N/A') + '</span></div>' +
-      '<div class="info-row"><span class="info-label">Created</span><span class="info-value">' + (s.createdAt ? new Date(s.createdAt).toLocaleDateString('zh-CN') : 'N/A') + '</span></div>' +
-      '<div class="info-row"><span class="info-label">Updated</span><span class="info-value">' + (s.updatedAt ? fmtRelative(s.updatedAt) : 'N/A') + '</span></div>' +
-      '<div class="tag-list">' + tags.map(function(t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
-    '</div>' +
-
-    '<div class="chart-section">' +
-      '<div class="chart-title">Stars 增长趋势（30天估算）</div>' +
-      '<div class="chart-area"><canvas id="detailChart"></canvas></div>' +
-    '</div>';
-
-  // init chart
-  var ctx = document.getElementById('detailChart').getContext('2d');
-  var points = 30;
-  var starsLine = [];
-  var dailyRate = Math.max(1, s.starsPerDay || 1);
-  var age = s.ageDays || 30;
-  for (var i = 0; i < points; i++) {
-    var progress = i / (points - 1);
-    var noise = 0.92 + Math.random() * 0.16;
-    if (age < 30 && i < 30 - age) {
-      starsLine.push(0);
-    } else {
-      starsLine.push(Math.round(dailyRate * (i + 1) * noise));
-    }
+  // Similar
+  var similar = findSimilar(skill);
+  if (similar.length > 0) {
+    html += '<div class="similar-section"><h3 class="section-title">Similar Skills</h3><div class="similar-grid">';
+    similar.forEach(function(s) {
+      html += '<a href="detail.html?id=' + encodeURIComponent(s.fullName) + '" class="similar-card">' +
+        '<div class="similar-card-name">' + esc(s.fullName) + '</div>' +
+        '<div class="similar-card-desc">' + esc(s.description) + '</div>' +
+        '<div class="similar-card-stats">' +
+          '<span>☆ ' + fmtStars(s.stars) + '</span>' +
+          '<span>⇣ ' + fmtStars(s.forks) + '</span>' +
+          '<span>' + esc(s.language || '—') + '</span>' +
+        '</div>' +
+      '</a>';
+    });
+    html += '</div></div>';
   }
-  for (var j = 1; j < starsLine.length; j++) {
-    if (starsLine[j] < starsLine[j-1]) starsLine[j] = Math.round(starsLine[j-1] * (0.95 + Math.random() * 0.1));
-  }
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: Array.from({length:30}, function(_,i){return 'Day '+(i+1);}),
-      datasets: [{
-        label: 'Stars', data: starsLine,
-        borderColor: '#e3b341', backgroundColor: 'rgba(227,179,65,0.08)',
-        borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: { legend: {display:false}, tooltip: { backgroundColor:'#161b22', titleColor:'#f0f6fc', bodyColor:'#8b949e', borderColor:'#30363d', borderWidth:1, padding:10 } },
-      scales: { x: {grid:{color:'#21262d'},ticks:{color:'#8b949e',font:{size:11}}}, y: {grid:{color:'#21262d'},ticks:{color:'#8b949e',font:{size:11},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'k':v;}}} }
-    }
-  });
+
+  document.getElementById('content').innerHTML = html;
+
+  // Draw chart after DOM update
+  setTimeout(function() { drawDetailChart(skill); }, 50);
 }
 
-function renderRelated() {
-  if (!currentSkill) return;
-  var category = currentSkill.category;
-  var related = SKILLS_DATA.allSkills.filter(function(s) {
-    return s.fullName !== currentSkill.fullName && s.category === category;
-  }).slice(0, 6);
+function findSimilar(skill) {
+  return SKILLS_DATA.allSkills.filter(function(s) {
+    if (s.fullName === skill.fullName) return false;
+    if (s.category === skill.category) return true;
+    if (s.language === skill.language && skill.language) return true;
+    if (s.topics && skill.topics && s.topics.some(function(t) { return skill.topics.indexOf(t) >= 0; })) return true;
+    return false;
+  }).sort(function(a, b) { return b.stars - a.stars; }).slice(0, 6);
+}
 
-  if (related.length === 0) {
-    document.getElementById('relatedGrid').innerHTML = '<p style="color:var(--text-muted)">暂无同类技能数据</p>';
+function drawDetailChart(skill) {
+  var canvas = document.getElementById('detailChart');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.parentElement.clientWidth;
+  var H = 280;
+
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  // Simulate 30-day star growth
+  var perDay = skill.starsPerDay || 10;
+  var current = skill.stars;
+  var startVal = Math.max(0, current - perDay * 30 * 0.7);
+  var growthData = [];
+  for (var i = 0; i < 30; i++) {
+    var ratio = i / 29;
+    var expected = startVal + (current - startVal) * ratio * ratio * (3 - 2 * ratio);
+    var noise = 0.95 + Math.random() * 0.1;
+    growthData.push(Math.round(expected * noise));
+  }
+  growthData[29] = current;
+
+  var trendData = [];
+  var base = 0;
+  for (var ti = 0; ti < 30; ti++) {
+    base += perDay / 30 * (0.7 + Math.random() * 0.6);
+    trendData.push(Math.round(base));
+  }
+
+  var pad = { top: 20, right: 30, bottom: 30, left: 60 };
+  var pw = W - pad.left - pad.right;
+  var ph = H - pad.top - pad.bottom;
+
+  ctx.fillStyle = '#161b22';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(48,54,63,0.5)';
+  ctx.lineWidth = 1;
+  for (var g = 0; g <= 4; g++) {
+    var gy = pad.top + (ph / 4) * g;
+    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
+  }
+
+  var gMin = Math.min.apply(null, growthData);
+  var gMax = Math.max.apply(null, growthData);
+  var gRange = gMax - gMin || 1;
+  var tMax = Math.max.apply(null, trendData);
+  var tRange = tMax || 1;
+
+  function gx(v) { return pad.left + ((v - gMin) / gRange) * pw; }
+  function gy(v) { return pad.top + ph - ((v - gMin) / gRange) * ph; }
+  function ty(v) { return pad.top + ph - (v / tRange) * ph; }
+
+  // Y-axis
+  ctx.fillStyle = '#6e7681';
+  ctx.font = '11px ' + getComputedStyle(document.body).fontFamily;
+  ctx.textAlign = 'right';
+  for (var l = 0; l <= 4; l++) {
+    var val = gMin + (gRange / 4) * l;
+    ctx.fillText(fmtStars(Math.round(val)), pad.left - 8, pad.top + ph - (ph / 4) * l + 4);
+  }
+
+  // Area
+  var grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ph);
+  grad.addColorStop(0, 'rgba(227,179,65,0.15)');
+  grad.addColorStop(1, 'rgba(227,179,65,0.01)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top + ph);
+  for (var ai = 0; ai < growthData.length; ai++) {
+    ctx.lineTo(pad.left + (pw / 29) * ai, gy(growthData[ai]));
+  }
+  ctx.lineTo(W - pad.right, pad.top + ph);
+  ctx.closePath(); ctx.fill();
+
+  // Stars line
+  ctx.strokeStyle = '#e3b341';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  for (var si = 0; si < growthData.length; si++) {
+    var sx = pad.left + (pw / 29) * si;
+    var sy = gy(growthData[si]);
+    if (si === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+  }
+  ctx.stroke();
+
+  // Trend line
+  ctx.strokeStyle = '#a371f7';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  for (var ni = 0; ni < trendData.length; ni++) {
+    var nx = pad.left + (pw / 29) * ni;
+    var ny = ty(trendData[ni]);
+    if (ni === 0) ctx.moveTo(nx, ny); else ctx.lineTo(nx, ny);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+// ===== INIT =====
+function init() {
+  var id = getParam('id');
+  if (!id) {
+    document.getElementById('content').innerHTML = '<div class="error-state"><p>No skill ID provided.</p></div>';
     return;
   }
 
-  document.getElementById('relatedTitle').textContent = '同类技能推荐 (' + escapeHtml(category) + ')';
-  document.getElementById('relatedGrid').innerHTML = related.map(function(r) {
-    var desc = (r.description || '').slice(0, 100);
-    return '<a href="detail.html?id=' + encodeURIComponent(r.fullName) + '" class="related-card">' +
-      '<div class="related-card-name">' + escapeHtml(r.fullName) + '</div>' +
-      '<div class="related-card-desc">' + escapeHtml(desc) + '</div>' +
-      '<div class="related-card-stats">' +
-        '<span class="related-card-stars">&#9733; ' + fmtStars(r.stars) + '</span>' +
-        '<span class="related-card-forks">' + fmtStars(r.forks) + ' forks</span>' +
-      '</div>' +
-    '</a>';
-  }).join('');
-}
+  fetch('data/skills.json')
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      SKILLS_DATA = data;
+      var decodedId = decodeURIComponent(id);
+      currentSkill = data.allSkills.find(function(s) { return s.fullName === decodedId; });
 
-async function init() {
-  try {
-    var params = new URLSearchParams(window.location.search);
-    var skillId = params.get('id');
-    if (!skillId) {
-      document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p style="font-size:16px;margin-bottom:8px">未指定技能 ID</p><p style="font-size:13px">请从排行榜页面选择一个技能查看</p><a href="ranking.html" class="btn" style="margin-top:16px">前往排行榜</a></div>';
-      return;
-    }
+      if (!currentSkill) {
+        document.getElementById('content').innerHTML = '<div class="error-state"><p>Skill not found: <strong>' + esc(decodedId) + '</strong></p><p style="margin-top:8px;font-size:13px;">It may have been removed or the data is being refreshed.</p></div>';
+        return;
+      }
 
-    var res = await fetch('data/skills.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    SKILLS_DATA = await res.json();
-
-    var fullName = decodeURIComponent(skillId);
-    currentSkill = SKILLS_DATA.allSkills.find(function(s) { return s.fullName === fullName; });
-
-    if (!currentSkill) {
-      document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p style="font-size:16px;margin-bottom:8px">未找到技能: ' + escapeHtml(fullName) + '</p><a href="ranking.html" class="btn" style="margin-top:16px">前往排行榜</a></div>';
-      return;
-    }
-
-    document.title = escapeHtml(currentSkill.fullName) + ' — SkillTrends';
-    renderSkill(currentSkill);
-    renderRelated();
-  } catch (e) {
-    console.error(e);
-    document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p>加载失败: ' + escapeHtml(e.message) + '</p></div>';
-  }
+      console.log('Rendering:', currentSkill.fullName);
+      renderAll(currentSkill);
+    })
+    .catch(function(err) {
+      console.error('Failed to load:', err);
+      document.getElementById('content').innerHTML = '<div class="error-state"><p>Failed to load data</p><p class="error-msg">' + esc(err.message) + '</p></div>';
+    });
 }
 
 init();

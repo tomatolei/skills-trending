@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>排行榜 — SkillTrends</title>
+<title>Ranking — SkillTrends</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -15,376 +13,382 @@
   --text-primary: #f0f6fc; --text-secondary: #8b949e; --text-muted: #6e7681;
   --accent-blue: #58a6ff; --accent-gold: #e3b341; --accent-orange: #f78166;
   --accent-green: #3fb950; --accent-red: #f85149; --accent-purple: #a371f7;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden;
+  font-family: var(--font-sans); background: var(--bg-primary);
+  color: var(--text-primary); min-height: 100vh; line-height: 1.5;
 }
 
+/* Nav */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,27,34,0.95); backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px;
+  display: flex; align-items: center; gap: 24px;
+}
+.nav-logo {
+  font-size: 20px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 8px;
+  color: var(--text-primary);
+}
+.nav-logo svg { width: 28px; height: 28px; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-link {
+  padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+}
+.nav-link:hover { color: var(--text-primary); background: var(--bg-surface-2); }
+.nav-link.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
+
+/* Container */
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-/* ===== NAV ===== */
-.nav { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 0; }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; display: flex; align-items: center; gap: 8px; }
-.nav-links { display: flex; gap: 4px; }
-.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; color: var(--text-secondary); text-decoration: none; transition: all 0.15s; }
-.nav-links a:hover { color: var(--text-primary); background: var(--bg-surface); }
-.nav-links a.active { color: var(--accent-blue); background: rgba(88,166,255,0.08); }
+/* Page Header */
+.page-header { padding: 40px 0 24px; }
+.page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.page-header p { color: var(--text-secondary); font-size: 14px; }
 
-/* ===== PAGE ===== */
-.page { padding: 40px 0; }
-.page-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-.page-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
-
-/* ===== FILTER BAR ===== */
+/* Search + Filters Bar */
 .filter-bar {
-  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-  padding: 16px; border: 1px solid var(--border); border-radius: 12px;
-  background: var(--bg-surface); margin-bottom: 24px;
+  display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;
 }
-.search-input {
-  flex: 1; min-width: 200px;
-  padding: 8px 12px 8px 34px;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: var(--bg-surface-2); color: var(--text-primary);
-  font-size: 14px; outline: none; font-family: inherit;
-  transition: border-color 0.2s;
+.search-box {
+  position: relative; flex: 1; min-width: 250px; max-width: 400px;
 }
-.search-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(88,166,255,0.12); }
-.search-wrap { position: relative; flex: 1; min-width: 200px; }
-.search-wrap .icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 13px; }
-
+.search-box input {
+  width: 100%; height: 40px; padding: 0 14px 0 38px;
+  border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-surface); color: var(--text-primary);
+  font-size: 14px; outline: none; transition: border-color 0.2s;
+}
+.search-box input:focus { border-color: var(--accent-blue); }
+.search-box svg { position: absolute; left: 12px; top: 12px; }
 .filter-select {
-  padding: 8px 12px;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: var(--bg-surface-2); color: var(--text-primary);
-  font-size: 13px; font-family: inherit; outline: none; cursor: pointer;
-  min-width: 130px;
+  height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-surface); color: var(--text-primary);
+  font-size: 13px; cursor: pointer; outline: none; min-width: 140px;
 }
 .filter-select:focus { border-color: var(--accent-blue); }
-.filter-select option { background: var(--bg-primary); }
+.result-count { font-size: 13px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
 
-/* ===== TABS ===== */
-.trend-tabs {
-  display: flex; gap: 6px; margin-bottom: 20px;
-  padding: 4px; border: 1px solid var(--border); border-radius: 10px;
-  background: var(--bg-surface); width: fit-content;
+/* Tabs */
+.rank-tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+.rank-tab {
+  padding: 8px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
+  color: var(--text-secondary); background: transparent; border: none; cursor: pointer;
+  transition: all 0.2s;
 }
-.trend-tab {
-  padding: 8px 22px; border-radius: 8px; font-size: 14px; font-weight: 500;
-  cursor: pointer; transition: all 0.2s; border: 1px solid transparent;
-  background: transparent; color: var(--text-secondary); font-family: inherit;
-}
-.trend-tab.active { background: var(--bg-surface-2); color: var(--text-primary); }
-.trend-tab.stars.active { border-color: rgba(227,179,65,0.3); }
-.trend-tab.downloads.active { border-color: rgba(88,166,255,0.3); }
-.trend-tab.rising.active { border-color: rgba(247,129,102,0.3); }
+.rank-tab:hover { color: var(--text-primary); background: var(--bg-surface); }
+.rank-tab.active { color: var(--text-primary); background: var(--bg-surface-2); }
+.rank-tab.stars.active { color: var(--accent-gold); background: rgba(227,179,65,0.1); }
+.rank-tab.downloads.active { color: var(--accent-blue); background: rgba(88,166,255,0.1); }
+.rank-tab.rising.active { color: var(--accent-orange); background: rgba(247,129,102,0.1); }
 
-/* ===== RESULT INFO ===== */
-.result-info { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
-
-/* ===== SKILL CARDS (table style for ranking) ===== */
-.skills-list { display: flex; flex-direction: column; gap: 10px; }
-
-.skill-row {
-  display: grid;
-  grid-template-columns: 48px 1fr 100px 80px 90px 180px;
-  align-items: center; gap: 12px;
-  padding: 14px 16px;
-  border: 1px solid var(--border); border-radius: 10px;
-  background: var(--bg-surface); transition: all 0.2s;
-  cursor: pointer; text-decoration: none; color: inherit;
+/* Table */
+.skills-table {
+  width: 100%; border-collapse: separate; border-spacing: 0 6px;
 }
-.skill-row:hover { border-color: var(--border-light); background: var(--bg-surface-2); transform: translateX(4px); }
-.skill-row-rank {
-  font-size: 18px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
-  text-align: center;
+.skills-table th {
+  text-align: left; padding: 8px 14px; font-size: 12px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
 }
-.skill-row-rank.top1 { color: var(--accent-gold); }
-.skill-row-rank.top2 { color: #c0c0c0; }
-.skill-row-rank.top3 { color: #cd7f32; }
-.skill-row-name {
-  font-size: 14px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.skills-table td { padding: 14px; }
+.skills-table tr.skill-row {
+  background: var(--bg-surface); border-radius: 8px;
+  cursor: pointer; transition: all 0.2s;
 }
-.skill-row-author { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-.skill-row-stars { font-size: 14px; font-weight: 600; color: var(--accent-gold); text-align: right; font-family: 'JetBrains Mono', monospace; }
-.skill-row-forks { font-size: 13px; color: var(--text-secondary); text-align: right; font-family: 'JetBrains Mono', monospace; }
-.skill-row-growth { font-size: 13px; text-align: center; font-family: 'JetBrains Mono', monospace; }
-.skill-row-growth.up { color: var(--accent-green); }
-.skill-row-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
-.skill-row-tags .tag {
-  padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500;
-  border: 1px solid var(--border); background: var(--bg-surface-2); color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+.skills-table tr.skill-row:hover {
+  background: var(--bg-surface-2); transform: translateX(2px);
+}
+.skills-table tr.skill-row td:first-child { border-radius: 8px 0 0 8px; }
+.skills-table tr.skill-row td:last-child { border-radius: 0 8px 8px 0; }
+.rank-num { font-size: 16px; font-weight: 700; font-family: var(--font-mono); color: var(--text-muted); width: 40px; text-align: center; }
+.repo-info { display: flex; align-items: center; gap: 12px; }
+.repo-name { font-size: 14px; font-weight: 600; }
+.repo-name a { color: var(--accent-blue); text-decoration: none; }
+.repo-name a:hover { text-decoration: underline; }
+.repo-author { font-size: 12px; color: var(--text-muted); }
+.repo-desc { font-size: 13px; color: var(--text-secondary); max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stat-cell { font-family: var(--font-mono); font-size: 14px; text-align: right; }
+.stat-cell.gold { color: var(--accent-gold); }
+.stat-cell.blue { color: var(--accent-blue); }
+.stat-cell.green { color: var(--accent-green); }
+.tag-cell { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag {
+  padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;
+  background: var(--bg-surface-2); color: var(--text-secondary);
 }
 
-/* ===== PAGINATION ===== */
-.pagination {
-  display: flex; justify-content: center; gap: 4px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);
-}
+/* Pagination */
+.pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 24px; padding: 20px 0; }
 .page-btn {
-  padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
   background: var(--bg-surface); color: var(--text-secondary);
-  font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: inherit;
+  font-size: 13px; cursor: pointer; transition: all 0.2s;
 }
-.page-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
-.page-btn.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+.page-btn:hover:not(:disabled) { border-color: var(--accent-blue); color: var(--accent-blue); }
 .page-btn:disabled { opacity: 0.4; cursor: default; }
+.page-info { font-size: 13px; color: var(--text-muted); }
 
-/* ===== LOADING ===== */
-.loading { text-align: center; padding: 60px; color: var(--text-muted); }
-.loading .spinner { display: inline-block; width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+/* Loading / Error */
+.loading-state, .error-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.error-state .error-msg { color: var(--accent-red); font-size: 13px; margin-top: 6px; }
+.spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
+.no-results { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.no-results svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.5; }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .skill-row { grid-template-columns: 42px 1fr 70px 60px; gap: 8px; }
-  .skill-row-forks, .skill-row-tags { display: none; }
+@media (max-width: 768px) {
+  .skills-table { font-size: 12px; }
+  .repo-desc { display: none; }
+  .tag-cell { display: none; }
   .filter-bar { flex-direction: column; }
-}
-@media (max-width: 600px) {
-  .skill-row { grid-template-columns: 36px 1fr 60px; }
-  .skill-row-growth { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <div class="container nav-inner">
-    <a href="index.html" class="nav-logo">&#x1F680; SkillTrends</a>
-    <div class="nav-links">
-      <a href="index.html">首页</a>
-      <a href="ranking.html" class="active">排行榜</a>
-    </div>
+<nav class="top-nav">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#58a6ff"/><path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    SkillTrends
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="ranking.html" class="nav-link active">Ranking</a>
   </div>
 </nav>
 
-<!-- PAGE -->
-<div class="page">
-  <div class="container">
-    <h1 class="page-title">排行榜</h1>
-    <p class="page-subtitle">浏览全部收录的 Agent Skills，支持按 Stars、Forks、增长率排序和筛选</p>
-
-    <!-- FILTER BAR -->
-    <div class="filter-bar">
-      <div class="search-wrap">
-        <span class="icon">&#x1F50D;</span>
-        <input type="text" class="search-input" id="searchInput" placeholder="搜索技能名称、描述、标签...">
-      </div>
-      <select class="filter-select" id="categoryFilter">
-        <option value="">全部分类</option>
-      </select>
-      <select class="filter-select" id="languageFilter">
-        <option value="">全部语言</option>
-      </select>
-    </div>
-
-    <!-- TABS -->
-    <div class="trend-tabs">
-      <button class="trend-tab stars active">Most Starred</button>
-      <button class="trend-tab downloads">Most Downloaded (Forks)</button>
-      <button class="trend-tab rising">Rising Fast</button>
-    </div>
-
-    <div class="result-info" id="resultInfo">Loading...</div>
-
-    <!-- SKILLS LIST -->
-    <div class="skills-list" id="skillsList">
-      <div class="loading"><div class="spinner"></div><br>加载数据中...</div>
-    </div>
-
-    <!-- PAGINATION -->
-    <div class="pagination" id="pagination"></div>
+<div class="container">
+  <div class="page-header">
+    <h1>Skill Rankings</h1>
+    <p>Complete list of Agent Skills on GitHub, ranked and filterable.</p>
   </div>
+
+  <div class="filter-bar">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search by name, description, topic...">
+    </div>
+    <select class="filter-select" id="categoryFilter">
+      <option value="all">All Categories</option>
+    </select>
+    <select class="filter-select" id="languageFilter">
+      <option value="all">All Languages</option>
+    </select>
+    <span class="result-count" id="resultCount">— results</span>
+  </div>
+
+  <div class="rank-tabs">
+    <button class="rank-tab stars active">Most Starred</button>
+    <button class="rank-tab downloads">Most Downloaded</button>
+    <button class="rank-tab rising">Rising Fast</button>
+  </div>
+
+  <div id="tableContainer">
+    <div class="loading-state"><div class="spinner"></div><p>Loading rankings...</p></div>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
 </div>
 
 <script>
 var SKILLS_DATA = null;
-var currentTab = 'stars';
+var currentRanking = 'stars';
 var currentPage = 1;
-var PER_PAGE = 15;
+var pageSize = 20;
 var searchQuery = '';
-var categoryFilter = '';
-var languageFilter = '';
+var catFilter = 'all';
+var langFilter = 'all';
+var filteredData = [];
 
+// ===== UTILS =====
 function fmtStars(n) {
   if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
   return String(n);
 }
-
-function escapeHtml(s) {
+function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function getSkillId(fullName) {
-  return encodeURIComponent(fullName);
+// ===== PARSE URL PARAMS =====
+function getParam(name) {
+  var params = new URLSearchParams(window.location.search);
+  return params.get(name);
 }
 
-function getData() {
-  if (currentTab === 'stars') return SKILLS_DATA.mostStarred;
-  if (currentTab === 'downloads') return SKILLS_DATA.mostDownloaded;
-  return SKILLS_DATA.risingFast;
-}
+// ===== FILTER =====
+function applyFilters() {
+  var data = [];
+  if (currentRanking === 'stars') data = SKILLS_DATA.mostStarred;
+  else if (currentRanking === 'downloads') data = SKILLS_DATA.mostDownloaded;
+  else data = SKILLS_DATA.risingFast;
 
-function filterData(data) {
-  var filtered = data.slice();
-  if (searchQuery) {
-    var q = searchQuery.toLowerCase();
-    filtered = filtered.filter(function(s) {
-      return (s.fullName || '').toLowerCase().indexOf(q) !== -1 ||
-             (s.description || '').toLowerCase().indexOf(q) !== -1 ||
-             (s.topics || []).some(function(t) { return t.toLowerCase().indexOf(q) !== -1; }) ||
-             (s.language || '').toLowerCase().indexOf(q) !== -1 ||
-             (s.category || '').toLowerCase().indexOf(q) !== -1;
-    });
-  }
-  if (categoryFilter) {
-    filtered = filtered.filter(function(s) { return s.category === categoryFilter; });
-  }
-  if (languageFilter && languageFilter !== 'N/A') {
-    filtered = filtered.filter(function(s) { return s.language === languageFilter; });
-  } else if (languageFilter === 'N/A') {
-    filtered = filtered.filter(function(s) { return !s.language || s.language === 'N/A'; });
-  }
-  return filtered;
-}
-
-function render() {
-  var rawData = getData();
-  var filtered = filterData(rawData);
-  var totalPages = Math.ceil(filtered.length / PER_PAGE);
-  if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
-  var start = (currentPage - 1) * PER_PAGE;
-  var pageData = filtered.slice(start, start + PER_PAGE);
-
-  // result info
-  document.getElementById('resultInfo').textContent = 'Showing ' + (filtered.length === 0 ? 0 : start + 1) + '-' + Math.min(start + PER_PAGE, filtered.length) + ' of ' + filtered.length + ' skills';
-
-  // skills list
-  var list = document.getElementById('skillsList');
-  if (pageData.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:48px;color:var(--text-muted)">没有找到匹配的技能</div>';
-  } else {
-    list.innerHTML = pageData.map(function(s, i) {
-      var rank = start + i + 1;
-      var rankClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
-      var growthText = s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/d' : '—';
-      var growthClass = s.starsPerDay > 0 ? 'up' : '';
-      var author = s.fullName.split('/')[0];
-      var tags = (s.topics || []).slice(0, 3);
-      var lang = s.language && s.language !== 'N/A' ? s.language : '';
-
-      return '<a href="detail.html?id=' + getSkillId(s.fullName) + '" class="skill-row">' +
-        '<div class="skill-row-rank ' + rankClass + '">' + rank + '</div>' +
-        '<div><div class="skill-row-name">' + escapeHtml(s.fullName) + '</div><div class="skill-row-author">@' + escapeHtml(author) + ' &middot; ' + escapeHtml(s.category || '') + '</div></div>' +
-        '<div class="skill-row-stars">&#9733; ' + fmtStars(s.stars) + '</div>' +
-        '<div class="skill-row-forks">' + fmtStars(s.forks) + ' forks</div>' +
-        '<div class="skill-row-growth ' + growthClass + '">' + growthText + '</div>' +
-        '<div class="skill-row-tags">' + (lang ? '<span class="tag">' + escapeHtml(lang) + '</span>' : '') + tags.map(function(t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
-      '</a>';
-    }).join('');
-  }
-
-  // pagination
-  var pag = document.getElementById('pagination');
-  if (totalPages <= 1) {
-    pag.innerHTML = '';
-    return;
-  }
-  var html = '<button class="page-btn" onclick="goPage(' + (currentPage - 1) + ')" ' + (currentPage <= 1 ? 'disabled' : '') + '>&laquo; Prev</button>';
-  for (var p = 1; p <= totalPages; p++) {
-    if (p === 1 || p === totalPages || (p >= currentPage - 2 && p <= currentPage + 2)) {
-      html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goPage(' + p + ')">' + p + '</button>';
-    } else if (p === currentPage - 3 || p === currentPage + 3) {
-      html += '<span style="padding:6px 4px;color:var(--text-muted)">...</span>';
+  filteredData = data.filter(function(s) {
+    if (catFilter !== 'all' && s.category !== catFilter) return false;
+    if (langFilter !== 'all' && s.language !== langFilter) return false;
+    if (searchQuery) {
+      var q = searchQuery.toLowerCase();
+      var matchName = s.fullName.toLowerCase().indexOf(q) >= 0;
+      var matchDesc = s.description && s.description.toLowerCase().indexOf(q) >= 0;
+      var matchTopics = s.topics && s.topics.some(function(t) { return t.toLowerCase().indexOf(q) >= 0; });
+      var matchLang = s.language && s.language.toLowerCase().indexOf(q) >= 0;
+      if (!matchName && !matchDesc && !matchTopics && !matchLang) return false;
     }
-  }
-  html += '<button class="page-btn" onclick="goPage(' + (currentPage + 1) + ')" ' + (currentPage >= totalPages ? 'disabled' : '') + '>Next &raquo;</button>';
-  pag.innerHTML = html;
-}
-
-function goPage(p) {
-  var rawData = getData();
-  var filtered = filterData(rawData);
-  var totalPages = Math.ceil(filtered.length / PER_PAGE) || 1;
-  currentPage = Math.max(1, Math.min(totalPages, p));
-  render();
-  window.scrollTo({ top: 300, behavior: 'smooth' });
-}
-
-function loadFilters() {
-  var catArr = [];
-  SKILLS_DATA.categories.forEach(function(c) { catArr.push(c.name); });
-  catArr.sort();
-
-  var langSet = {};
-  SKILLS_DATA.allSkills.forEach(function(s) {
-    if (s.language && s.language !== 'N/A') langSet[s.language] = true;
+    return true;
   });
 
-  document.getElementById('categoryFilter').innerHTML = '<option value="">全部分类</option>' + catArr.map(function(c) { return '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>'; }).join('');
-  document.getElementById('languageFilter').innerHTML = '<option value="">全部语言</option>' + Object.keys(langSet).sort().map(function(l) { return '<option value="' + escapeHtml(l) + '">' + escapeHtml(l) + '</option>'; }).join('');
+  document.getElementById('resultCount').textContent = filteredData.length.toLocaleString() + ' results';
+  currentPage = 1;
+  renderTable();
+  renderPagination();
 }
 
-async function init() {
-  try {
-    var res = await fetch('data/skills.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    SKILLS_DATA = await res.json();
-    loadFilters();
+// ===== RENDER TABLE =====
+function renderTable() {
+  var container = document.getElementById('tableContainer');
+  var start = (currentPage - 1) * pageSize;
+  var page = filteredData.slice(start, start + pageSize);
 
-    // parse URL params
-    var params = new URLSearchParams(window.location.search);
-    if (params.get('q')) { searchQuery = params.get('q'); document.getElementById('searchInput').value = searchQuery; }
-    if (params.get('cat')) { categoryFilter = params.get('cat'); document.getElementById('categoryFilter').value = categoryFilter; }
-
-    render();
-
-    // tab switches
-    document.querySelectorAll('.trend-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.trend-tab').forEach(function(t) { t.classList.remove('active'); });
-        tab.classList.add('active');
-        if (tab.classList.contains('stars')) currentTab = 'stars';
-        else if (tab.classList.contains('downloads')) currentTab = 'downloads';
-        else currentTab = 'rising';
-        currentPage = 1;
-        render();
-      });
-    });
-
-    // search
-    var si = document.getElementById('searchInput');
-    var timer;
-    si.addEventListener('input', function() {
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        searchQuery = si.value.trim();
-        currentPage = 1;
-        render();
-      }, 300);
-    });
-
-    // filters
-    document.getElementById('categoryFilter').addEventListener('change', function() {
-      categoryFilter = this.value; currentPage = 1; render();
-    });
-    document.getElementById('languageFilter').addEventListener('change', function() {
-      languageFilter = this.value; currentPage = 1; render();
-    });
-
-    console.log('Ranking page loaded: ' + SKILLS_DATA.stats.totalSkills + ' skills');
-  } catch (e) {
-    console.error(e);
-    document.getElementById('skillsList').innerHTML = '<div style="text-align:center;padding:48px;color:var(--text-muted)">数据加载失败: ' + escapeHtml(e.message) + '</div>';
+  if (page.length === 0) {
+    container.innerHTML = '<div class="no-results"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>No skills match your search criteria.</p></div>';
+    return;
   }
+
+  var html = '<table class="skills-table"><thead><tr>' +
+    '<th>#</th><th>Repository</th><th>Description</th><th>Stars</th><th>Forks</th><th>Growth</th><th>Tags</th>' +
+    '</tr></thead><tbody>';
+
+  for (var i = 0; i < page.length; i++) {
+    var s = page[i];
+    var rank = start + i + 1;
+    var author = s.fullName.split('/')[0];
+    var growth = s.starsPerDay ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
+    var tags = (s.topics || []).concat(s.category ? [s.category] : []).slice(0, 3);
+    var detailUrl = 'detail.html?id=' + encodeURIComponent(s.fullName);
+
+    html += '<tr class="skill-row" onclick="window.location.href=\'' + detailUrl + '\'">' +
+      '<td class="rank-num">' + rank + '</td>' +
+      '<td>' +
+        '<div class="repo-info">' +
+          '<div><div class="repo-name"><a href="' + detailUrl + '" onclick="event.stopPropagation()">' + esc(s.fullName) + '</a></div>' +
+          '<div class="repo-author">@' + esc(author) + (s.language ? ' · ' + esc(s.language) : '') + '</div></div>' +
+        '</div>' +
+      '</td>' +
+      '<td class="repo-desc">' + esc(s.description) + '</td>' +
+      '<td class="stat-cell gold">' + fmtStars(s.stars) + '</td>' +
+      '<td class="stat-cell blue">' + fmtStars(s.forks) + '</td>' +
+      '<td class="stat-cell green">' + growth + '</td>' +
+      '<td class="tag-cell">' + tags.map(function(t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</td>' +
+    '</tr>';
+  }
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+// ===== PAGINATION =====
+function renderPagination() {
+  var total = Math.ceil(filteredData.length / pageSize);
+  var el = document.getElementById('pagination');
+  if (total <= 1) { el.innerHTML = ''; return; }
+
+  var html = '<button class="page-btn" onclick="goPage(' + (currentPage - 1) + ')" ' + (currentPage <= 1 ? 'disabled' : '') + '>← Prev</button>';
+  html += '<span class="page-info">Page ' + currentPage + ' / ' + total + '</span>';
+  html += '<button class="page-btn" onclick="goPage(' + (currentPage + 1) + ')" ' + (currentPage >= total ? 'disabled' : '') + '>Next →</button>';
+  el.innerHTML = html;
+}
+
+function goPage(n) {
+  var total = Math.ceil(filteredData.length / pageSize);
+  if (n < 1 || n > total) return;
+  currentPage = n;
+  renderTable();
+  renderPagination();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== POPULATE FILTERS =====
+function populateFilters() {
+  var cats = new Set(), langs = new Set();
+  SKILLS_DATA.allSkills.forEach(function(s) {
+    if (s.category) cats.add(s.category);
+    if (s.language) langs.add(s.language);
+  });
+
+  var catSel = document.getElementById('categoryFilter');
+  Array.from(cats).sort().forEach(function(c) {
+    catSel.innerHTML += '<option value="' + esc(c) + '">' + esc(c) + '</option>';
+  });
+
+  var langSel = document.getElementById('languageFilter');
+  Array.from(langs).sort().forEach(function(l) {
+    langSel.innerHTML += '<option value="' + esc(l) + '">' + esc(l) + '</option>';
+  });
+}
+
+// ===== INIT =====
+function init() {
+  fetch('data/skills.json')
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      SKILLS_DATA = data;
+      console.log('Loaded: ' + data.stats.totalSkills + ' skills');
+
+      populateFilters();
+
+      // Apply URL params
+      var q = getParam('q');
+      var cat = getParam('cat');
+      if (q) { document.getElementById('searchInput').value = q; searchQuery = q; }
+      if (cat) { document.getElementById('categoryFilter').value = cat; catFilter = cat; }
+
+      applyFilters();
+
+      // Tabs
+      var tabs = document.querySelectorAll('.rank-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', function() {
+          for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+          this.classList.add('active');
+          if (this.classList.contains('stars')) currentRanking = 'stars';
+          else if (this.classList.contains('downloads')) currentRanking = 'downloads';
+          else currentRanking = 'rising';
+          applyFilters();
+        });
+      }
+
+      // Search input
+      var searchInp = document.getElementById('searchInput');
+      var debounceTimer;
+      searchInp.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+          searchQuery = searchInp.value.trim();
+          applyFilters();
+        }, 300);
+      });
+
+      // Filters
+      document.getElementById('categoryFilter').addEventListener('change', function() {
+        catFilter = this.value; applyFilters();
+      });
+      document.getElementById('languageFilter').addEventListener('change', function() {
+        langFilter = this.value; applyFilters();
+      });
+    })
+    .catch(function(err) {
+      console.error('Failed to load:', err);
+      document.getElementById('tableContainer').innerHTML = '<div class="error-state"><p>Failed to load data</p><p class="error-msg">' + esc(err.message) + '</p></div>';
+    });
 }
 
 init();
