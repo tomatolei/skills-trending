@@ -36,14 +36,83 @@ body {
 
 .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
+/* ===== NAV ===== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,17,23,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav-logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-logo span { font-size: 22px; }
+.nav-links {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.nav-links a {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-links a:hover { color: var(--text-primary); background: var(--bg-surface); }
+.nav-links a.active { color: var(--accent-blue); background: rgba(88,166,255,0.08); }
+.nav-search {
+  position: relative;
+  width: 240px;
+}
+.nav-search input {
+  width: 100%;
+  padding: 7px 12px 7px 34px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.nav-search input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 2px rgba(88,166,255,0.12); }
+.nav-search .icon {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  min-height: 520px;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 0 60px;
+  padding: 64px 0 48px;
   overflow: hidden;
 }
 .hero::before {
@@ -89,7 +158,7 @@ body {
   50% { opacity: 0.6; transform: scale(0.85); }
 }
 .hero-title {
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -100,22 +169,20 @@ body {
   background-clip: text;
 }
 .hero-subtitle {
-  font-size: 18px;
+  font-size: 17px;
   color: var(--text-secondary);
   max-width: 560px;
   margin-bottom: 32px;
   line-height: 1.7;
 }
-
-/* Search */
-.search-box {
+.hero-search-box {
   position: relative;
   max-width: 520px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
-.search-box input {
+.hero-search-box input {
   width: 100%;
-  padding: 14px 48px 14px 44px;
+  padding: 14px 100px 14px 44px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg-surface);
@@ -123,50 +190,52 @@ body {
   font-size: 15px;
   outline: none;
   transition: all 0.2s;
+  font-family: inherit;
 }
-.search-box input::placeholder { color: var(--text-muted); }
-.search-box input:focus {
+.hero-search-box input::placeholder { color: var(--text-muted); }
+.hero-search-box input:focus {
   border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(88,166,255,0.12);
 }
-.search-box .search-icon {
+.hero-search-box .icon {
   position: absolute;
   left: 16px; top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
   font-size: 16px;
 }
-.search-box .search-shortcut {
+.hero-search-box .btn {
   position: absolute;
-  right: 12px; top: 50%;
+  right: 6px; top: 50%;
   transform: translateY(-50%);
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text-muted);
-  background: var(--bg-surface-2);
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent-blue);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
 }
+.hero-search-box .btn:hover { background: #79b8ff; }
 
 /* Stats */
 .stats-row {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 .stat-card {
-  padding: 20px 24px;
+  padding: 18px 22px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg-surface);
-  min-width: 160px;
+  min-width: 150px;
   transition: transform 0.2s, border-color 0.2s;
 }
-.stat-card:hover {
-  border-color: var(--border-light);
-  transform: translateY(-2px);
-}
+.stat-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
 .stat-label {
   font-size: 12px;
   color: var(--text-muted);
@@ -176,42 +245,29 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 .stat-value {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text-primary);
 }
-.stat-value .suffix {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
+.stat-value .suffix { font-size: 15px; font-weight: 500; color: var(--text-secondary); }
 .stat-trend {
-  font-size: 12px;
+  font-size: 11px;
   margin-top: 6px;
   font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-green);
 }
-.stat-trend.up { color: var(--accent-green); }
-.stat-trend.down { color: var(--accent-red); }
 
 /* ===== SECTION ===== */
-.section { padding: 64px 0; }
+.section { padding: 56px 0; }
 .section-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
-.section-title {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-.section-subtitle {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
+.section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.section-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 .view-all {
   font-size: 14px;
   color: var(--accent-blue);
@@ -220,13 +276,14 @@ body {
   align-items: center;
   gap: 4px;
   transition: gap 0.2s;
+  cursor: pointer;
 }
 .view-all:hover { gap: 8px; }
 
 /* ===== TREND TABS ===== */
 .trend-tabs {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 24px;
   padding: 4px;
   border: 1px solid var(--border);
@@ -235,24 +292,21 @@ body {
   width: fit-content;
 }
 .trend-tab {
-  padding: 8px 20px;
+  padding: 8px 18px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--text-secondary);
   font-family: inherit;
 }
-.trend-tab.active {
-  background: var(--bg-surface-2);
-  color: var(--text-primary);
-}
-.trend-tab.stars.active { border: 1px solid rgba(227,179,65,0.3); }
-.trend-tab.downloads.active { border: 1px solid rgba(88,166,255,0.3); }
-.trend-tab.rising.active { border: 1px solid rgba(247,129,102,0.3); }
+.trend-tab.active { background: var(--bg-surface-2); color: var(--text-primary); }
+.trend-tab.stars.active { border-color: rgba(227,179,65,0.3); }
+.trend-tab.downloads.active { border-color: rgba(88,166,255,0.3); }
+.trend-tab.rising.active { border-color: rgba(247,129,102,0.3); }
 
 /* ===== SKILL CARDS ===== */
 .skills-grid {
@@ -268,6 +322,10 @@ body {
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 .skill-card::before {
   content: '';
@@ -277,10 +335,11 @@ body {
   opacity: 0;
   transition: opacity 0.25s;
   pointer-events: none;
+  border: 1px solid transparent;
 }
-.skill-card.stars-card::before { border: 1px solid rgba(227,179,65,0.4); }
-.skill-card.downloads-card::before { border: 1px solid rgba(88,166,255,0.4); }
-.skill-card.rising-card::before { border: 1px solid rgba(247,129,102,0.4); }
+.skill-card.stars-card::before { border-color: rgba(227,179,65,0.4); }
+.skill-card.downloads-card::before { border-color: rgba(88,166,255,0.4); }
+.skill-card.rising-card::before { border-color: rgba(247,129,102,0.4); }
 .skill-card:hover::before { opacity: 1; }
 .skill-card:hover {
   transform: translateY(-4px);
@@ -297,14 +356,14 @@ body {
   margin-bottom: 12px;
 }
 .card-avatar {
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   border-radius: 10px;
   background: var(--bg-surface-2);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   flex-shrink: 0;
   border: 1px solid var(--border);
 }
@@ -320,16 +379,9 @@ body {
   text-overflow: ellipsis;
   font-family: 'JetBrains Mono', monospace;
 }
-.card-name a {
-  color: var(--text-primary);
-  text-decoration: none;
-}
+.card-name a { color: var(--text-primary); text-decoration: none; }
 .card-name a:hover { color: var(--accent-blue); }
-.card-author {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
+.card-author { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .card-rank {
   font-size: 18px;
   font-weight: 700;
@@ -337,7 +389,6 @@ body {
   color: var(--text-muted);
   opacity: 0.5;
 }
-
 .card-metrics {
   display: flex;
   align-items: center;
@@ -350,12 +401,7 @@ body {
 .metric-stars { color: var(--accent-gold); }
 .metric-downloads { color: var(--accent-blue); }
 .metric-growth { color: var(--accent-green); }
-.metric-growth.down { color: var(--accent-red); }
-.metric-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 500;
-}
-
+.metric-value { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
 .card-desc {
   font-size: 13px;
   color: var(--text-secondary);
@@ -366,17 +412,12 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.card-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
+.card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag {
   padding: 3px 10px;
   border-radius: 6px;
@@ -390,11 +431,7 @@ body {
 .tag.gold { color: var(--accent-gold); border-color: rgba(227,179,65,0.25); background: rgba(227,179,65,0.06); }
 .tag.blue { color: var(--accent-blue); border-color: rgba(88,166,255,0.25); background: rgba(88,166,255,0.06); }
 .tag.orange { color: var(--accent-orange); border-color: rgba(247,129,102,0.25); background: rgba(247,129,102,0.06); }
-
-.card-sparkline {
-  width: 80px; height: 28px;
-  flex-shrink: 0;
-}
+.card-sparkline { width: 80px; height: 28px; flex-shrink: 0; }
 .card-sparkline svg { width: 100%; height: 100%; }
 
 /* ===== CATEGORIES ===== */
@@ -410,12 +447,11 @@ body {
   padding: 24px;
   transition: all 0.25s ease;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
-.category-card:hover {
-  border-color: var(--border-light);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-}
+.category-card:hover { border-color: var(--border-light); transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.2); }
 .category-icon {
   width: 44px; height: 44px;
   border-radius: 10px;
@@ -427,21 +463,9 @@ body {
   font-size: 20px;
   margin-bottom: 14px;
 }
-.category-name {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.category-count {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-}
-.category-top {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-}
+.category-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.category-count { font-size: 13px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+.category-top { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
 .category-top-item {
   font-size: 12px;
   color: var(--text-secondary);
@@ -461,28 +485,9 @@ body {
   position: relative;
   overflow: hidden;
 }
-.trend-chart-section::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(88,166,255,0.04) 0%, transparent 70%);
-  pointer-events: none;
-}
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+.chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .chart-title { font-size: 16px; font-weight: 600; }
-.chart-legend {
-  display: flex;
-  gap: 16px;
-  font-size: 12px;
-  color: var(--text-muted);
-}
+.chart-legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-muted); }
 .legend-item { display: flex; align-items: center; gap: 6px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 .chart-area { position: relative; height: 220px; }
@@ -501,10 +506,7 @@ body {
   padding: 20px;
   transition: all 0.25s ease;
 }
-.collection-card:hover {
-  border-color: var(--border-light);
-  transform: translateY(-3px);
-}
+.collection-card:hover { border-color: var(--border-light); transform: translateY(-3px); }
 .collection-type {
   font-size: 11px;
   text-transform: uppercase;
@@ -518,24 +520,9 @@ body {
 .collection-type.awesome { color: var(--accent-purple); border: 1px solid rgba(163,113,247,0.25); background: rgba(163,113,247,0.06); }
 .collection-type.official { color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.25); background: rgba(88,166,255,0.06); }
 .collection-type.community { color: var(--accent-green); border: 1px solid rgba(63,185,80,0.25); background: rgba(63,185,80,0.06); }
-.collection-name {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-family: 'JetBrains Mono', monospace;
-}
-.collection-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 14px;
-}
-.collection-stats {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
+.collection-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+.collection-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 14px; }
+.collection-stats { display: flex; gap: 16px; font-size: 13px; color: var(--text-muted); }
 
 /* ===== FOOTER ===== */
 .footer {
@@ -549,64 +536,73 @@ body {
 .footer a { color: var(--text-secondary); text-decoration: none; }
 .footer a:hover { color: var(--accent-blue); }
 
-/* ===== DIVIDER ===== */
-.divider {
-  border: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 0;
+.divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+
+/* ===== LOADING ===== */
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-muted);
+  font-size: 14px;
 }
+.loading .spinner {
+  display: inline-block;
+  width: 28px; height: 28px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .hero-title { font-size: 36px; }
+  .nav-search { display: none; }
+  .hero-title { font-size: 32px; }
   .stats-row { gap: 12px; }
-  .stat-card { min-width: 140px; padding: 16px; }
-  .stat-value { font-size: 22px; }
+  .stat-card { min-width: 140px; padding: 14px; }
+  .stat-value { font-size: 20px; }
   .skills-grid { grid-template-columns: 1fr; }
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
   .collections-grid { grid-template-columns: 1fr; }
-  .section { padding: 40px 0; }
+  .section { padding: 36px 0; }
 }
 </style>
 </head>
 <body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><span>&#x1F680;</span> SkillTrends</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">首页</a>
+      <a href="ranking.html">排行榜</a>
+    </div>
+    <div class="nav-search">
+      <span class="icon">&#x1F50D;</span>
+      <input type="text" id="navSearch" placeholder="搜索技能...">
+    </div>
+  </div>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="container">
     <div class="hero-badge">
       <span class="dot"></span>
-      <span>实时追踪 27,000+ Agent Skills</span>
+      <span id="heroBadge">实时追踪 Agent Skills</span>
     </div>
     <h1 class="hero-title">发现 GitHub 上最热门的<br>Agent Skills</h1>
     <p class="hero-subtitle">追踪 Stars、下载量、增长趋势，发现下一个可能改变 AI 工作流的技能。覆盖 Claude、Codex、Cursor 等全平台。</p>
-    <div class="search-box">
-      <span class="search-icon">&#x1F50D;</span>
-      <input type="text" placeholder="搜索技能、作者或标签...">
-      <span class="search-shortcut">Ctrl K</span>
+    <div class="hero-search-box">
+      <span class="icon">&#x1F50D;</span>
+      <input type="text" id="heroSearch" placeholder="搜索技能名称、作者、标签或描述...">
+      <button class="btn" id="heroSearchBtn">搜索</button>
     </div>
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Total Skills</div>
-        <div class="stat-value">27,098</div>
-        <div class="stat-trend up">+156 this week</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Total Stars</div>
-        <div class="stat-value">3.4<span class="suffix">M</span></div>
-        <div class="stat-trend up">+8.2% this week</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Categories</div>
-        <div class="stat-value">7</div>
-        <div class="stat-trend up">+1 new</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Collections</div>
-        <div class="stat-value">49</div>
-        <div class="stat-trend up">+3 this week</div>
-      </div>
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card"><div class="stat-label">Loading...</div></div>
     </div>
   </div>
 </section>
@@ -621,7 +617,7 @@ body {
         <h2 class="section-title">趋势榜单</h2>
         <p class="section-subtitle">实时追踪 GitHub 上 Agent Skills 的热门趋势</p>
       </div>
-      <a href="#" class="view-all">查看全部 &rarr;</a>
+      <a href="ranking.html" class="view-all">查看全部 &rarr;</a>
     </div>
 
     <div class="trend-tabs">
@@ -631,7 +627,7 @@ body {
     </div>
 
     <div class="skills-grid" id="skillsGrid">
-      <!-- Cards injected by JS -->
+      <div class="loading"><div class="spinner"></div><br>加载真实数据中...</div>
     </div>
   </div>
 </section>
@@ -646,11 +642,8 @@ body {
         <h2 class="section-title">分类浏览</h2>
         <p class="section-subtitle">按领域探索 Agent Skills</p>
       </div>
-      <a href="#" class="view-all">全部 7 个分类 &rarr;</a>
     </div>
-    <div class="categories-grid" id="categoriesGrid">
-      <!-- Categories injected by JS -->
-    </div>
+    <div class="categories-grid" id="categoriesGrid"></div>
   </div>
 </section>
 
@@ -673,9 +666,7 @@ body {
           <span class="legend-item"><span class="legend-dot" style="background:#a371f7"></span>New Skills</span>
         </div>
       </div>
-      <div class="chart-area">
-        <canvas id="trendChart"></canvas>
-      </div>
+      <div class="chart-area"><canvas id="trendChart"></canvas></div>
     </div>
   </div>
 </section>
@@ -690,18 +681,15 @@ body {
         <h2 class="section-title">精选合集</h2>
         <p class="section-subtitle">官方与社区精选的技能仓库</p>
       </div>
-      <a href="#" class="view-all">查看全部 &rarr;</a>
     </div>
-    <div class="collections-grid" id="collectionsGrid">
-      <!-- Collections injected by JS -->
-    </div>
+    <div class="collections-grid" id="collectionsGrid"></div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="container">
-    <p>Data sourced from GitHub API &middot; Updated hourly &middot; <a href="#">About</a> &middot; <a href="#">GitHub</a></p>
+  <div class="container" id="footerText">
+    <p>Data sourced from GitHub API &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a></p>
   </div>
 </footer>
 
@@ -716,13 +704,8 @@ function fmtStars(n) {
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
   return String(n);
 }
-
-function fmtDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' });
-}
-
 function fmtRelative(iso) {
+  if (!iso) return '—';
   const diff = Date.now() - new Date(iso).getTime();
   const days = Math.floor(diff / 86400000);
   if (days === 0) return '今天';
@@ -731,44 +714,31 @@ function fmtRelative(iso) {
   if (days < 30) return Math.floor(days / 7) + ' 周前';
   return Math.floor(days / 30) + ' 个月前';
 }
-
 function escapeHtml(s) {
   if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function getSkillId(fullName) {
+  return encodeURIComponent(fullName);
 }
 
 // 分类图标映射
 const CATEGORY_ICONS = {
-  'Coding & Dev': '&#x1F4BB;',
-  'AI & ML': '&#x1F9E0;',
-  'Productivity': '&#x1F4DD;',
-  'Data & Analytics': '&#x1F4CA;',
-  'Design & Creative': '&#x1F3A8;',
-  'DevOps & Infra': '&#x2699;',
-  'Web & API': '&#x1F310;',
-  'Security': '&#x1F512;',
-  'Knowledge & Docs': '&#x1F4DA;',
-  'Communication': '&#x1F4AC;',
-  'Other': '&#x1F4E6;',
+  'Coding & Dev': '&#x1F4BB;', 'AI & ML': '&#x1F9E0;', 'Productivity': '&#x1F4DD;',
+  'Data & Analytics': '&#x1F4CA;', 'Design & Creative': '&#x1F3A8;', 'DevOps & Infra': '&#x2699;',
+  'Web & API': '&#x1F310;', 'Security': '&#x1F512;', 'Knowledge & Docs': '&#x1F4DA;',
+  'Communication': '&#x1F4AC;', 'Other': '&#x1F4E6;',
 };
 
-// 根据数据生成近30天近似趋势（基于 starsPerDay 反推）
 function generateSparklineData(starsPerDay, ageDays) {
   const points = 30;
   const data = [];
   const dailyRate = starsPerDay || 1;
   for (let i = 0; i < points; i++) {
-    // 加入一些随机波动
     const noise = 0.7 + Math.random() * 0.6;
-    const dayNum = i + 1;
-    // 如果仓库年龄不到30天，前面是0
-    if (ageDays < 30 && i < 30 - ageDays) {
-      data.push(0);
-    } else {
-      data.push(Math.max(1, dailyRate * (i + 1) * noise / points * 2));
-    }
+    if (ageDays < 30 && i < 30 - ageDays) { data.push(0); }
+    else { data.push(Math.max(1, dailyRate * (i + 1) * noise / points * 2)); }
   }
-  // 确保是递增趋势
   for (let i = 1; i < data.length; i++) {
     if (data[i] < data[i-1]) data[i] = data[i-1] * (0.9 + Math.random() * 0.2);
   }
@@ -782,376 +752,181 @@ function createSparkline(data, color) {
   const points = data.map((v, i) => {
     const x = pad + (i / (data.length - 1)) * (w - pad * 2);
     const y = h - pad - ((v - min) / range) * (h - pad * 2);
-    return `${x},${y}`;
+    return x.toFixed(1) + ',' + y.toFixed(1);
   }).join(' ');
-  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none"><polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }
 
-// ===== 渲染：Hero 数据 =====
+// ===== 渲染：Hero =====
 function renderHero(data) {
   const s = data.stats;
-  const meta = data.meta;
-
-  // 更新徽章
-  const badge = document.querySelector('.hero-badge span:last-child');
-  if (badge) badge.textContent = `实时追踪 ${s.totalSkills.toLocaleString()}+ Agent Skills`;
-
-  // 更新统计卡片
-  const statsRow = document.querySelector('.stats-row');
-  const trendText = s.newThisWeek > 0 ? `+${s.newThisWeek} this week` : 'Live tracking';
-  statsRow.innerHTML = `
-    <div class="stat-card">
-      <div class="stat-label">Total Skills</div>
-      <div class="stat-value">${s.totalSkills.toLocaleString()}</div>
-      <div class="stat-trend up">${trendText}</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Total Stars</div>
-      <div class="stat-value">${fmtStars(s.totalStars)}</div>
-      <div class="stat-trend up">${fmtStars(s.totalForks)} forks</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Categories</div>
-      <div class="stat-value">${s.categories}</div>
-      <div class="stat-trend up">All tracked</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Collections</div>
-      <div class="stat-value">${s.collections}</div>
-      <div class="stat-trend up">Curated picks</div>
-    </div>
-  `;
-
-  // 更新 footer
-  const footer = document.querySelector('.footer p');
-  if (footer) {
-    footer.innerHTML = `Data from GitHub API &middot; Updated ${fmtRelative(meta.updatedAt)} &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a>`;
-  }
+  document.getElementById('heroBadge').textContent = '实时追踪 ' + s.totalSkills.toLocaleString() + '+ Agent Skills';
+  document.getElementById('statsRow').innerHTML = 
+    '<div class="stat-card"><div class="stat-label">Total Skills</div><div class="stat-value">' + s.totalSkills.toLocaleString() + '</div><div class="stat-trend">Live tracking</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Total Stars</div><div class="stat-value">' + fmtStars(s.totalStars) + '</div><div class="stat-trend">' + fmtStars(s.totalForks) + ' forks</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Categories</div><div class="stat-value">' + s.categories + '</div><div class="stat-trend">All tracked</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Collections</div><div class="stat-value">' + s.collections + '</div><div class="stat-trend">Curated picks</div></div>';
+  document.getElementById('footerText').innerHTML = '<p>Data from GitHub API &middot; Updated ' + fmtRelative(data.meta.updatedAt) + ' &middot; <a href="https://github.com/tomatolei/github-skills-trending" target="_blank">GitHub</a></p>';
 }
 
 // ===== 渲染：技能卡片 =====
 function renderSkills(type) {
-  const grid = document.getElementById('skillsGrid');
-  let data;
-  let primaryMetric, primaryMetricLabel, colorMap, avatarMap, tagMap;
+  var grid = document.getElementById('skillsGrid');
+  var data, color, avatarClass, tagClass;
 
   if (type === 'stars') {
-    data = SKILLS_DATA.mostStarred;
-    colorMap = '#e3b341'; avatarMap = 'gold'; tagMap = 'gold';
-    primaryMetric = 'stars'; primaryMetricLabel = 'stars';
+    data = SKILLS_DATA.mostStarred; color = '#e3b341'; avatarClass = 'gold'; tagClass = 'gold';
   } else if (type === 'downloads') {
-    data = SKILLS_DATA.mostDownloaded;
-    colorMap = '#58a6ff'; avatarMap = 'blue'; tagMap = 'blue';
-    primaryMetric = 'forks'; primaryMetricLabel = 'forks';
+    data = SKILLS_DATA.mostDownloaded; color = '#58a6ff'; avatarClass = 'blue'; tagClass = 'blue';
   } else {
-    data = SKILLS_DATA.risingFast;
-    colorMap = '#f78166'; avatarMap = 'orange'; tagMap = 'orange';
-    primaryMetric = 'starsPerDay'; primaryMetricLabel = '/day';
+    data = SKILLS_DATA.risingFast; color = '#f78166'; avatarClass = 'orange'; tagClass = 'orange';
   }
 
-  grid.innerHTML = data.slice(0, 12).map((s, i) => {
-    const rank = i + 1;
-    const sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
-    const spark = createSparkline(sparkData, colorMap);
+  grid.innerHTML = data.slice(0, 6).map(function(s, i) {
+    var rank = i + 1;
+    var sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
+    var spark = createSparkline(sparkData, color);
+    var growthText = s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—';
+    var tags = (s.topics || []).slice(0, 2).concat([s.category]).filter(function(v, idx, arr) { return arr.indexOf(v) === idx; }).slice(0, 3);
+    var author = s.fullName.split('/')[0];
+    var detailUrl = 'detail.html?id=' + getSkillId(s.fullName);
 
-    // 主指标
-    let metricValue;
-    if (type === 'stars') metricValue = fmtStars(s.stars);
-    else if (type === 'downloads') metricValue = fmtStars(s.forks);
-    else metricValue = fmtStars(s.starsPerDay) + '/day';
-
-    // 增长率
-    const growthText = s.starsPerDay > 0 ? `+${fmtStars(s.starsPerDay)}/day` : '—';
-    const growthClass = s.starsPerDay > 0 ? 'up' : '';
-
-    // 标签（取前3个topic + 分类）
-    const tags = [...(s.topics || []).slice(0, 2), s.category].filter((v, idx, arr) => arr.indexOf(v) === idx).slice(0, 3);
-
-    // 作者
-    const author = s.fullName.split('/')[0];
-
-    return `
-      <div class="skill-card ${type}-card">
-        <div class="card-header">
-          <div style="display:flex;align-items:center;flex:1;overflow:hidden;">
-            <div class="card-avatar ${avatarMap}">${rank}</div>
-            <div class="card-meta">
-              <div class="card-name"><a href="${s.url}" target="_blank">${s.fullName}</a></div>
-              <div class="card-author">@${author}</div>
-            </div>
-          </div>
-          <div class="card-rank">#${rank}</div>
-        </div>
-        <div class="card-metrics">
-          <div class="metric metric-stars">
-            <span class="metric-icon">&#9733;</span>
-            <span class="metric-value">${fmtStars(s.stars)}</span>
-          </div>
-          <div class="metric metric-downloads">
-            <span class="metric-icon">&#x1F4E6;</span>
-            <span class="metric-value">${fmtStars(s.forks)}</span>
-          </div>
-          <div class="metric metric-growth ${growthClass}">
-            <span class="metric-icon">&#9650;</span>
-            <span class="metric-value">${growthText}</span>
-          </div>
-        </div>
-        <div class="card-desc">${escapeHtml(s.description) || 'No description available'}</div>
-        <div class="card-footer">
-          <div class="card-tags">
-            ${tags.map(t => `<span class="tag ${tagMap}">${escapeHtml(t)}</span>`).join('')}
-          </div>
-          <div class="card-sparkline">${spark}</div>
-        </div>
-      </div>
-    `;
+    return '<a href="' + detailUrl + '" class="skill-card ' + type + '-card">' +
+      '<div class="card-header">' +
+        '<div style="display:flex;align-items:center;flex:1;overflow:hidden;">' +
+          '<div class="card-avatar ' + avatarClass + '">' + rank + '</div>' +
+          '<div class="card-meta">' +
+            '<div class="card-name">' + escapeHtml(s.fullName) + '</div>' +
+            '<div class="card-author">@' + escapeHtml(author) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-rank">#' + rank + '</div>' +
+      '</div>' +
+      '<div class="card-metrics">' +
+        '<div class="metric metric-stars"><span class="metric-icon">&#9733;</span><span class="metric-value">' + fmtStars(s.stars) + '</span></div>' +
+        '<div class="metric metric-downloads"><span class="metric-icon">&#x1F4E6;</span><span class="metric-value">' + fmtStars(s.forks) + '</span></div>' +
+        '<div class="metric metric-growth"><span class="metric-icon">&#9650;</span><span class="metric-value">' + growthText + '</span></div>' +
+      '</div>' +
+      '<div class="card-desc">' + escapeHtml(s.description) + '</div>' +
+      '<div class="card-footer">' +
+        '<div class="card-tags">' + tags.map(function(t) { return '<span class="tag ' + tagClass + '">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
+        '<div class="card-sparkline">' + spark + '</div>' +
+      '</div>' +
+    '</a>';
   }).join('');
 }
 
 // ===== 渲染：分类 =====
 function renderCategories(data) {
-  const grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = data.categories.map(c => {
-    const icon = CATEGORY_ICONS[c.name] || '&#x1F4E6;';
-    const totalStars = fmtStars(c.totalStars);
-    return `
-      <div class="category-card">
-        <div class="category-icon">${icon}</div>
-        <div class="category-name">${c.name}</div>
-        <div class="category-count">${c.count.toLocaleString()} skills &middot; ${totalStars} stars</div>
-        <div class="category-top">
-          ${c.top.map(t => `<div class="category-top-item">${t}</div>`).join('')}
-        </div>
-      </div>
-    `;
+  var grid = document.getElementById('categoriesGrid');
+  grid.innerHTML = data.categories.map(function(c) {
+    var icon = CATEGORY_ICONS[c.name] || '&#x1F4E6;';
+    return '<a href="ranking.html?cat=' + encodeURIComponent(c.name) + '" class="category-card">' +
+      '<div class="category-icon">' + icon + '</div>' +
+      '<div class="category-name">' + escapeHtml(c.name) + '</div>' +
+      '<div class="category-count">' + c.count.toLocaleString() + ' skills &middot; ' + fmtStars(c.totalStars) + ' stars</div>' +
+      '<div class="category-top">' + c.top.map(function(t) { return '<div class="category-top-item">' + escapeHtml(t) + '</div>'; }).join('') + '</div>' +
+    '</a>';
   }).join('');
 }
 
 // ===== 渲染：合集 =====
 function renderCollections(data) {
-  const grid = document.getElementById('collectionsGrid');
-  const all = [
-    ...data.awesomeLists.map(s => ({...s, type: 'awesome', typeLabel: 'Awesome List'})),
-    ...data.official.map(s => ({...s, type: 'official', typeLabel: 'Official'})),
-    ...data.community.slice(0, 1).map(s => ({...s, type: 'community', typeLabel: 'Community'})),
-  ].slice(0, 6);
+  var grid = document.getElementById('collectionsGrid');
+  var all = data.awesomeLists.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'awesome', typeLabel:'Awesome List'}); })
+    .concat(data.official.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'official', typeLabel:'Official'}); }))
+    .concat(data.community.slice(0, 2).map(function(s) { return Object.assign({}, s, {type:'community', typeLabel:'Community'}); }));
 
-  grid.innerHTML = all.map(c => {
-    const desc = c.description || 'No description available';
-    const stats = `${fmtStars(c.stars)} Stars &middot; ${fmtStars(c.forks)} Forks &middot; ${fmtRelative(c.createdAt)}`;
-    return `
-      <div class="collection-card">
-        <div class="collection-type ${c.type}">${c.typeLabel}</div>
-        <div class="collection-name"><a href="${c.url}" target="_blank" style="color:inherit;text-decoration:none">${c.fullName}</a></div>
-        <div class="collection-desc">${escapeHtml(desc)}</div>
-        <div class="collection-stats">${stats}</div>
-      </div>
-    `;
+  grid.innerHTML = all.map(function(c) {
+    var stats = fmtStars(c.stars) + ' Stars &middot; ' + fmtStars(c.forks) + ' Forks &middot; ' + fmtRelative(c.createdAt);
+    return '<div class="collection-card">' +
+      '<div class="collection-type ' + c.type + '">' + c.typeLabel + '</div>' +
+      '<div class="collection-name"><a href="' + c.url + '" target="_blank" style="color:inherit;text-decoration:none">' + escapeHtml(c.fullName) + '</a></div>' +
+      '<div class="collection-desc">' + escapeHtml(c.description) + '</div>' +
+      '<div class="collection-stats">' + stats + '</div>' +
+    '</div>';
   }).join('');
 }
 
-// ===== 渲染：趋势图表 =====
+// ===== 渲染：趋势图 =====
 function initChart(data) {
-  const ctx = document.getElementById('trendChart').getContext('2d');
+  var ctx = document.getElementById('trendChart').getContext('2d');
+  var totalStarsNow = data.stats.totalStars;
+  var totalStars30dAgo = Math.max(0, totalStarsNow - data.allSkills.reduce(function(sum, s) { return sum + (s.starsPerDay || 0) * 30; }, 0) * 0.6);
+  var labels = Array.from({length: 30}, function(_, i) { return 'Day ' + (i+1); });
+  var starsLine = [], newSkillsLine = [];
 
-  // 基于真实数据生成30天近似趋势
-  // 用 totalStars 反推，加上各仓库的 starsPerDay 波动
-  const totalStarsNow = data.stats.totalStars;
-  const totalStars30dAgo = Math.max(0, totalStarsNow - data.allSkills.reduce((sum, s) => sum + (s.starsPerDay || 0) * 30, 0) * 0.6);
-
-  const labels = Array.from({length: 30}, (_, i) => `Day ${i+1}`);
-  const starsLine = [];
-  const newSkillsLine = [];
-
-  for (let i = 0; i < 30; i++) {
-    const progress = i / 29;
-    // S曲线增长
-    const ease = progress * progress * (3 - 2 * progress);
-    const noise = 0.95 + Math.sin(i * 0.7) * 0.03 + Math.random() * 0.04;
+  for (var i = 0; i < 30; i++) {
+    var progress = i / 29;
+    var ease = progress * progress * (3 - 2 * progress);
+    var noise = 0.95 + Math.sin(i * 0.7) * 0.03 + Math.random() * 0.04;
     starsLine.push(Math.round((totalStars30dAgo + (totalStarsNow - totalStars30dAgo) * ease) * noise));
-
-    // 每天新增 skill 数（近似）
-    const avgDaily = data.stats.totalSkills / Math.max(1, Math.max(...data.allSkills.map(s => s.ageDays || 1)));
+    var avgDaily = data.stats.totalSkills / Math.max(1, Math.max.apply(null, data.allSkills.map(function(s) { return s.ageDays || 1; })));
     newSkillsLine.push(Math.max(1, Math.round(avgDaily * (0.7 + Math.random() * 0.6))));
   }
-
-  // 确保最后一个点是当前值
   starsLine[29] = totalStarsNow;
 
   new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Total Stars',
-          data: starsLine.map(v => v / 1000),
-          borderColor: '#58a6ff',
-          backgroundColor: 'rgba(88,166,255,0.06)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4,
-          pointRadius: 0,
-          pointHoverRadius: 4,
-        },
-        {
-          label: 'New Skills',
-          data: newSkillsLine,
-          borderColor: '#a371f7',
-          backgroundColor: 'transparent',
-          borderWidth: 2,
-          borderDash: [4, 4],
-          fill: false,
-          tension: 0.4,
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          yAxisID: 'y1',
-        }
-      ]
-    },
+    data: { labels: labels, datasets: [
+      { label: 'Total Stars', data: starsLine.map(function(v) { return v / 1000; }), borderColor: '#58a6ff', backgroundColor: 'rgba(88,166,255,0.06)', borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4 },
+      { label: 'New Skills', data: newSkillsLine, borderColor: '#a371f7', backgroundColor: 'transparent', borderWidth: 2, borderDash: [4, 4], fill: false, tension: 0.4, pointRadius: 0, pointHoverRadius: 4, yAxisID: 'y1' }
+    ]},
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#161b22',
-          titleColor: '#f0f6fc',
-          bodyColor: '#8b949e',
-          borderColor: '#30363d',
-          borderWidth: 1,
-          padding: 10,
-          displayColors: true,
-          callbacks: {
-            label: function(context) {
-              if (context.datasetIndex === 0) return 'Stars: ' + context.parsed.y.toFixed(0) + 'k';
-              return 'New Skills: ' + context.parsed.y;
-            }
-          }
-        }
-      },
-      scales: {
-        x: { display: false, grid: { display: false } },
-        y: { display: false, grid: { display: false } },
-        y1: { display: false, grid: { display: false }, position: 'right' }
-      }
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#161b22', titleColor: '#f0f6fc', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, padding: 10, callbacks: { label: function(context) { return context.datasetIndex === 0 ? 'Stars: ' + context.parsed.y.toFixed(0) + 'k' : 'New Skills: ' + context.parsed.y; } } } },
+      scales: { x: { display: false, grid: { display: false } }, y: { display: false, grid: { display: false } }, y1: { display: false, grid: { display: false }, position: 'right' } }
     }
   });
 }
 
 // ===== Tab 切换 =====
 function initTabs() {
-  document.querySelectorAll('.trend-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.trend-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.trend-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.trend-tab').forEach(function(t) { t.classList.remove('active'); });
       tab.classList.add('active');
       if (tab.classList.contains('stars')) renderSkills('stars');
-      if (tab.classList.contains('downloads')) renderSkills('downloads');
-      if (tab.classList.contains('rising')) renderSkills('rising');
+      else if (tab.classList.contains('downloads')) renderSkills('downloads');
+      else renderSkills('rising');
     });
   });
 }
 
-// ===== 搜索功能 =====
-function initSearch(data) {
-  const input = document.querySelector('.search-box input');
-  if (!input) return;
-
-  input.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase().trim();
-    if (!q) {
-      // 恢复默认显示
-      const activeTab = document.querySelector('.trend-tab.active');
-      if (activeTab?.classList.contains('stars')) renderSkills('stars');
-      else if (activeTab?.classList.contains('downloads')) renderSkills('downloads');
-      else renderSkills('rising');
-      return;
-    }
-
-    // 搜索所有技能
-    const results = data.allSkills.filter(s =>
-      s.fullName.toLowerCase().includes(q) ||
-      s.description?.toLowerCase().includes(q) ||
-      s.topics?.some(t => t.toLowerCase().includes(q)) ||
-      s.language?.toLowerCase().includes(q)
-    ).slice(0, 12);
-
-    const grid = document.getElementById('skillsGrid');
-    if (results.length === 0) {
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">No results for "${escapeHtml(q)}"</div>`;
-      return;
-    }
-
-    grid.innerHTML = results.map((s, i) => {
-      const author = s.fullName.split('/')[0];
-      const tags = [...(s.topics || []).slice(0, 2), s.category].filter((v, idx, arr) => arr.indexOf(v) === idx).slice(0, 3);
-      const sparkData = generateSparklineData(s.starsPerDay, s.ageDays);
-      const spark = createSparkline(sparkData, '#58a6ff');
-      return `
-        <div class="skill-card downloads-card">
-          <div class="card-header">
-            <div style="display:flex;align-items:center;flex:1;overflow:hidden;">
-              <div class="card-avatar blue">${i+1}</div>
-              <div class="card-meta">
-                <div class="card-name"><a href="${s.url}" target="_blank">${s.fullName}</a></div>
-                <div class="card-author">@${author}</div>
-              </div>
-            </div>
-          </div>
-          <div class="card-metrics">
-            <div class="metric metric-stars">
-              <span class="metric-icon">&#9733;</span>
-              <span class="metric-value">${fmtStars(s.stars)}</span>
-            </div>
-            <div class="metric metric-downloads">
-              <span class="metric-icon">&#x1F4E6;</span>
-              <span class="metric-value">${fmtStars(s.forks)}</span>
-            </div>
-            <div class="metric metric-growth">
-              <span class="metric-icon">&#9650;</span>
-              <span class="metric-value">${s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) + '/day' : '—'}</span>
-            </div>
-          </div>
-          <div class="card-desc">${escapeHtml(s.description) || 'No description'}</div>
-          <div class="card-footer">
-            <div class="card-tags">
-              ${tags.map(t => `<span class="tag blue">${escapeHtml(t)}</span>`).join('')}
-            </div>
-            <div class="card-sparkline">${spark}</div>
-          </div>
-        </div>
-      `;
-    }).join('');
-  });
+// ===== 搜索跳转 =====
+function initSearch() {
+  function doSearch(q) {
+    if (!q.trim()) return;
+    window.location.href = 'ranking.html?q=' + encodeURIComponent(q.trim());
+  }
+  var heroInput = document.getElementById('heroSearch');
+  var heroBtn = document.getElementById('heroSearchBtn');
+  var navInput = document.getElementById('navSearch');
+  if (heroInput) heroInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(heroInput.value); });
+  if (heroBtn) heroBtn.addEventListener('click', function() { doSearch(heroInput.value); });
+  if (navInput) navInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(navInput.value); });
 }
 
 // ===== 初始化 =====
 async function init() {
   try {
-    // 加载真实数据
-    const res = await fetch('data/skills.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    var res = await fetch('data/skills.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     SKILLS_DATA = await res.json();
 
-    // 渲染所有区域
     renderHero(SKILLS_DATA);
     renderSkills('stars');
     renderCategories(SKILLS_DATA);
     renderCollections(SKILLS_DATA);
     initChart(SKILLS_DATA);
     initTabs();
-    initSearch(SKILLS_DATA);
+    initSearch();
 
-    console.log(`✅ Loaded ${SKILLS_DATA.stats.totalSkills} skills, ${fmtStars(SKILLS_DATA.stats.totalStars)} total stars`);
-    console.log(`   Updated: ${SKILLS_DATA.meta.updatedAt}`);
+    console.log('Loaded ' + SKILLS_DATA.stats.totalSkills + ' skills, ' + fmtStars(SKILLS_DATA.stats.totalStars) + ' total stars');
   } catch (e) {
     console.error('Failed to load data:', e);
-    document.getElementById('skillsGrid').innerHTML =
-      `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">
-        <p style="font-size:16px;margin-bottom:8px">⚠️ 数据加载失败</p>
-        <p style="font-size:13px">请先运行: <code style="background:var(--bg-surface-2);padding:2px 6px;border-radius:4px">node scripts/fetch-skills.js</code></p>
-      </div>`;
+    document.getElementById('skillsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)"><p>数据加载失败: ' + escapeHtml(e.message) + '</p></div>';
   }
 }
 

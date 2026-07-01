@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Details — SkillTrends</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0d1117; --bg-surface: #161b22; --bg-surface-2: #1c2128;
+  --border: #30363d; --border-light: #484f58;
+  --text-primary: #f0f6fc; --text-secondary: #8b949e; --text-muted: #6e7681;
+  --accent-blue: #58a6ff; --accent-gold: #e3b341; --accent-orange: #f78166;
+  --accent-green: #3fb950; --accent-red: #f85149; --accent-purple: #a371f7;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary); color: var(--text-primary); line-height: 1.6;
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+/* ===== NAV ===== */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 0; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.nav-logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #f0f6fc 0%, #58a6ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; color: var(--text-secondary); text-decoration: none; transition: all 0.15s; }
+.nav-links a:hover { color: var(--text-primary); background: var(--bg-surface); }
+
+/* ===== BACK ===== */
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text-secondary); text-decoration: none; margin-bottom: 24px; transition: color 0.15s; }
+.back-link:hover { color: var(--accent-blue); }
+
+/* ===== HEADER ===== */
+.detail-header {
+  padding: 28px; border: 1px solid var(--border); border-radius: 16px;
+  background: var(--bg-surface); margin-bottom: 20px;
+}
+.detail-name {
+  font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 8px; word-break: break-all;
+}
+.detail-desc {
+  font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+  margin-bottom: 20px; max-width: 700px;
+}
+.detail-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: all 0.15s; cursor: pointer;
+  font-family: inherit; border: 1px solid var(--border);
+  background: var(--bg-surface-2); color: var(--text-primary);
+}
+.btn:hover { border-color: var(--border-light); }
+.btn-primary { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+.btn-primary:hover { background: #79b8ff; }
+
+/* ===== METRICS ===== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.metric-card {
+  padding: 18px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--bg-surface); text-align: center;
+}
+.metric-card-value {
+  font-size: 24px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+}
+.metric-card-value.stars { color: var(--accent-gold); }
+.metric-card-value.forks { color: var(--accent-blue); }
+.metric-card-value.growth { color: var(--accent-green); }
+.metric-card-label {
+  font-size: 12px; color: var(--text-muted); margin-top: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* ===== INFO TABLE ===== */
+.info-section {
+  padding: 24px; border: 1px solid var(--border); border-radius: 16px;
+  background: var(--bg-surface); margin-bottom: 20px;
+}
+.info-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.info-row {
+  display: flex; justify-content: space-between; padding: 10px 0;
+  border-bottom: 1px solid var(--border); font-size: 14px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { color: var(--text-muted); }
+.info-value { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+.info-value a { color: var(--accent-blue); text-decoration: none; }
+.info-value a:hover { text-decoration: underline; }
+
+/* Tags */
+.tag-list { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+.tag {
+  padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
+  border: 1px solid var(--border); background: var(--bg-surface-2);
+  color: var(--accent-blue); font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== CHART ===== */
+.chart-section {
+  padding: 24px; border: 1px solid var(--border); border-radius: 16px;
+  background: var(--bg-surface); margin-bottom: 20px;
+}
+.chart-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+.chart-area { position: relative; height: 280px; }
+.chart-area canvas { width: 100% !important; height: 100% !important; }
+
+/* ===== RELATED ===== */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.related-card {
+  padding: 16px; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--bg-surface); cursor: pointer; text-decoration: none;
+  color: inherit; transition: all 0.2s; display: block;
+}
+.related-card:hover { border-color: var(--border-light); background: var(--bg-surface-2); }
+.related-card-name {
+  font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.related-card-desc {
+  font-size: 12px; color: var(--text-muted); line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin-bottom: 8px;
+}
+.related-card-stats {
+  display: flex; gap: 14px; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+}
+.related-card-stars { color: var(--accent-gold); }
+.related-card-forks { color: var(--text-muted); }
+
+/* ===== LOADING / ERROR ===== */
+.state-msg { text-align: center; padding: 60px; color: var(--text-muted); }
+.state-msg .spinner { display: inline-block; width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+  .detail-name { font-size: 20px; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">&#x1F680; SkillTrends</a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="ranking.html">排行榜</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:32px;padding-bottom:64px;">
+  <a href="ranking.html" class="back-link">&larr; 返回排行榜</a>
+
+  <!-- Dynamic content -->
+  <div id="detailContent">
+    <div class="state-msg"><div class="spinner"></div><br>加载技能数据...</div>
+  </div>
+
+  <!-- RELATED -->
+  <div style="margin-top:32px;" id="relatedSection">
+    <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;" id="relatedTitle">同类技能推荐</h3>
+    <div class="related-grid" id="relatedGrid"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+var SKILLS_DATA = null;
+var currentSkill = null;
+
+function fmtStars(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
+  return String(n);
+}
+function fmtNumber(n) { return Number(n).toLocaleString(); }
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtRelative(iso) {
+  if (!iso) return '—';
+  var diff = Date.now() - new Date(iso).getTime();
+  var days = Math.floor(diff / 86400000);
+  if (days === 0) return '今天';
+  if (days === 1) return '昨天';
+  if (days < 7) return days + ' 天前';
+  if (days < 30) return Math.floor(days / 7) + ' 周前';
+  return Math.floor(days / 30) + ' 个月前';
+}
+
+function renderSkill(s) {
+  var author = s.fullName.split('/')[0];
+  var desc = s.description || 'No description available.';
+  var lang = s.language && s.language !== 'N/A' ? s.language : 'N/A';
+  var license = s.license && s.license !== 'N/A' ? s.license : 'N/A';
+  var homepage = s.homepage && s.homepage !== 'N/A' ? s.homepage : '';
+  var ageText = s.ageDays ? s.ageDays + ' days' : '—';
+  var tags = (s.topics || []).slice(0, 8);
+
+  document.getElementById('detailContent').innerHTML =
+    '<div class="detail-header">' +
+      '<div class="detail-name">' + escapeHtml(s.fullName) + '</div>' +
+      '<div class="detail-desc">' + escapeHtml(desc) + '</div>' +
+      '<div class="detail-actions">' +
+        '<a href="' + s.url + '" target="_blank" class="btn btn-primary">&#9733; GitHub</a>' +
+        (homepage ? '<a href="' + homepage + '" target="_blank" class="btn">&#x1F310; Homepage</a>' : '') +
+        '<a href="ranking.html" class="btn">&#x1F50D; Back to Rankings</a>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="metrics-grid">' +
+      '<div class="metric-card"><div class="metric-card-value stars">' + fmtStars(s.stars) + '</div><div class="metric-card-label">Stars</div></div>' +
+      '<div class="metric-card"><div class="metric-card-value forks">' + fmtStars(s.forks) + '</div><div class="metric-card-label">Forks</div></div>' +
+      '<div class="metric-card"><div class="metric-card-value growth">' + (s.starsPerDay > 0 ? '+' + fmtStars(s.starsPerDay) : '—') + '</div><div class="metric-card-label">Stars/Day</div></div>' +
+      '<div class="metric-card"><div class="metric-card-value">' + escapeHtml(ageText) + '</div><div class="metric-card-label">Repository Age</div></div>' +
+    '</div>' +
+
+    '<div class="info-section">' +
+      '<div class="info-title">Repository Info</div>' +
+      '<div class="info-row"><span class="info-label">Author</span><span class="info-value">@' + escapeHtml(author) + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Language</span><span class="info-value">' + escapeHtml(lang) + '</span></div>' +
+      '<div class="info-row"><span class="info-label">License</span><span class="info-value">' + escapeHtml(license) + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Category</span><span class="info-value">' + escapeHtml(s.category || 'N/A') + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Created</span><span class="info-value">' + (s.createdAt ? new Date(s.createdAt).toLocaleDateString('zh-CN') : 'N/A') + '</span></div>' +
+      '<div class="info-row"><span class="info-label">Updated</span><span class="info-value">' + (s.updatedAt ? fmtRelative(s.updatedAt) : 'N/A') + '</span></div>' +
+      '<div class="tag-list">' + tags.map(function(t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>' +
+    '</div>' +
+
+    '<div class="chart-section">' +
+      '<div class="chart-title">Stars 增长趋势（30天估算）</div>' +
+      '<div class="chart-area"><canvas id="detailChart"></canvas></div>' +
+    '</div>';
+
+  // init chart
+  var ctx = document.getElementById('detailChart').getContext('2d');
+  var points = 30;
+  var starsLine = [];
+  var dailyRate = Math.max(1, s.starsPerDay || 1);
+  var age = s.ageDays || 30;
+  for (var i = 0; i < points; i++) {
+    var progress = i / (points - 1);
+    var noise = 0.92 + Math.random() * 0.16;
+    if (age < 30 && i < 30 - age) {
+      starsLine.push(0);
+    } else {
+      starsLine.push(Math.round(dailyRate * (i + 1) * noise));
+    }
+  }
+  for (var j = 1; j < starsLine.length; j++) {
+    if (starsLine[j] < starsLine[j-1]) starsLine[j] = Math.round(starsLine[j-1] * (0.95 + Math.random() * 0.1));
+  }
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length:30}, function(_,i){return 'Day '+(i+1);}),
+      datasets: [{
+        label: 'Stars', data: starsLine,
+        borderColor: '#e3b341', backgroundColor: 'rgba(227,179,65,0.08)',
+        borderWidth: 2, fill: true, tension: 0.4, pointRadius: 0, pointHoverRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: {display:false}, tooltip: { backgroundColor:'#161b22', titleColor:'#f0f6fc', bodyColor:'#8b949e', borderColor:'#30363d', borderWidth:1, padding:10 } },
+      scales: { x: {grid:{color:'#21262d'},ticks:{color:'#8b949e',font:{size:11}}}, y: {grid:{color:'#21262d'},ticks:{color:'#8b949e',font:{size:11},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'k':v;}}} }
+    }
+  });
+}
+
+function renderRelated() {
+  if (!currentSkill) return;
+  var category = currentSkill.category;
+  var related = SKILLS_DATA.allSkills.filter(function(s) {
+    return s.fullName !== currentSkill.fullName && s.category === category;
+  }).slice(0, 6);
+
+  if (related.length === 0) {
+    document.getElementById('relatedGrid').innerHTML = '<p style="color:var(--text-muted)">暂无同类技能数据</p>';
+    return;
+  }
+
+  document.getElementById('relatedTitle').textContent = '同类技能推荐 (' + escapeHtml(category) + ')';
+  document.getElementById('relatedGrid').innerHTML = related.map(function(r) {
+    var desc = (r.description || '').slice(0, 100);
+    return '<a href="detail.html?id=' + encodeURIComponent(r.fullName) + '" class="related-card">' +
+      '<div class="related-card-name">' + escapeHtml(r.fullName) + '</div>' +
+      '<div class="related-card-desc">' + escapeHtml(desc) + '</div>' +
+      '<div class="related-card-stats">' +
+        '<span class="related-card-stars">&#9733; ' + fmtStars(r.stars) + '</span>' +
+        '<span class="related-card-forks">' + fmtStars(r.forks) + ' forks</span>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+}
+
+async function init() {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var skillId = params.get('id');
+    if (!skillId) {
+      document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p style="font-size:16px;margin-bottom:8px">未指定技能 ID</p><p style="font-size:13px">请从排行榜页面选择一个技能查看</p><a href="ranking.html" class="btn" style="margin-top:16px">前往排行榜</a></div>';
+      return;
+    }
+
+    var res = await fetch('data/skills.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    SKILLS_DATA = await res.json();
+
+    var fullName = decodeURIComponent(skillId);
+    currentSkill = SKILLS_DATA.allSkills.find(function(s) { return s.fullName === fullName; });
+
+    if (!currentSkill) {
+      document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p style="font-size:16px;margin-bottom:8px">未找到技能: ' + escapeHtml(fullName) + '</p><a href="ranking.html" class="btn" style="margin-top:16px">前往排行榜</a></div>';
+      return;
+    }
+
+    document.title = escapeHtml(currentSkill.fullName) + ' — SkillTrends';
+    renderSkill(currentSkill);
+    renderRelated();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('detailContent').innerHTML = '<div class="state-msg"><p>加载失败: ' + escapeHtml(e.message) + '</p></div>';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
