@@ -147,6 +147,38 @@ body {
 
 footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; color: var(--text-muted); font-size: 13px; }
 
+.readme-section { margin-top: 12px; }
+.readme-content {
+  background: var(--bg-surface-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 20px;
+  color: var(--text-secondary); font-size: 14px; line-height: 1.7; overflow-x: auto;
+}
+.readme-content h1, .readme-content h2, .readme-content h3 {
+  color: var(--text-primary); margin-top: 16px; margin-bottom: 8px;
+  font-weight: 600; border-bottom: 1px solid var(--border); padding-bottom: 6px;
+}
+.readme-content h1 { font-size: 20px; }
+.readme-content h2 { font-size: 17px; }
+.readme-content h3 { font-size: 15px; border-bottom: none; padding-bottom: 0; }
+.readme-content a { color: var(--accent-blue); text-decoration: none; }
+.readme-content a:hover { text-decoration: underline; }
+.readme-content code {
+  background: rgba(88,166,255,0.1); color: var(--accent-blue);
+  padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: var(--font-mono);
+}
+.readme-content pre {
+  background: #010409; border: 1px solid var(--border);
+  border-radius: 6px; padding: 12px; overflow-x: auto; margin: 8px 0; line-height: 1.5;
+}
+.readme-content pre code { background: transparent; color: var(--text-primary); padding: 0; border-radius: 0; font-size: 13px; }
+.readme-content ul, .readme-content ol { padding-left: 20px; margin: 6px 0; }
+.readme-content li { margin-bottom: 4px; }
+.readme-content blockquote { border-left: 3px solid var(--accent-purple); padding-left: 12px; color: var(--text-muted); margin: 8px 0; }
+.readme-content table { border-collapse: collapse; width: 100%; margin: 8px 0; }
+.readme-content th, .readme-content td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; font-size: 13px; }
+.readme-content th { background: var(--bg-surface); color: var(--text-primary); }
+.readme-content img { max-width: 100%; border-radius: 6px; }
+.readme-content hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 @media (max-width: 600px) {
   .repo-title { font-size: 20px; }
   .repo-header { flex-direction: column; }
@@ -207,6 +239,7 @@ var I18N = {
     metricAge: '仓库年龄', metricAgeSub: '创建至今',
     metricSday: 'Stars / 天', metricSdaySub: '日均 Stars',
     metricLang: '语言', metricLangSub: '主要语言',
+    readmeTitle: 'README', readmeNA: 'README 不可用',
   },
   en: {
     detailTitle: 'Skill Detail — SkillTrends',
@@ -229,6 +262,7 @@ var I18N = {
     metricAge: 'Repo Age', metricAgeSub: 'Days since creation',
     metricSday: 'Stars / Day', metricSdaySub: 'Average daily stars',
     metricLang: 'Language', metricLangSub: 'Primary language',
+    readmeTitle: 'README', readmeNA: 'README unavailable',
   }
 };
 
@@ -331,6 +365,9 @@ function renderAll(skill) {
     '<div class="chart-canvas-wrap"><canvas id="detailChart"></canvas></div>' +
   '</div></div>';
 
+  // README section
+  html += '<div class="readme-section"><h3 class="section-title" data-i18n="readmeTitle">README</h3><div id="readmeContent" class="readme-content"><div class="loading-state"><div class="spinner"></div><p data-i18n="loading">加载中...</p></div></div></div>';
+
   // Similar
   var similar = findSimilar(skill);
   if (similar.length > 0) {
@@ -351,8 +388,8 @@ function renderAll(skill) {
 
   document.getElementById('content').innerHTML = html;
 
-  // Draw chart after DOM update
-  setTimeout(function() { drawDetailChart(skill); }, 80);
+  // Draw chart + fetch README after DOM update
+  setTimeout(function() { drawDetailChart(skill); fetchReadme(skill); }, 80);
   applyI18n();
 }
 
@@ -364,6 +401,34 @@ function findSimilar(skill) {
     if (s.topics && skill.topics && s.topics.some(function(t2) { return skill.topics.indexOf(t2) >= 0; })) return true;
     return false;
   }).sort(function(a, b) { return b.stars - a.stars; }).slice(0, 6);
+}
+
+// ============================================================
+// Fetch README from GitHub API (browser-side)
+// ============================================================
+function fetchReadme(skill) {
+  var el = document.getElementById('readmeContent');
+  if (!el) return;
+  var apiUrl = 'https://api.github.com/repos/' + skill.fullName + '/readme';
+  fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github.v3.html+json', 'User-Agent': 'SkillTrends' } })
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(function(html) {
+      el.innerHTML = html;
+    })
+    .catch(function() {
+      // Fallback: try to get description + topics
+      var fallback = '';
+      if (skill.description) fallback += '<p>' + esc(skill.description) + '</p>';
+      if (skill.homepage) fallback += '<p><a href="' + esc(skill.homepage) + '" target="_blank">Homepage</a></p>';
+      if (skill.topics && skill.topics.length > 0) {
+        fallback += '<p>Topics: ' + skill.topics.map(function(t2) { return '<code>' + esc(t2) + '</code>'; }).join(' ') + '</p>';
+      }
+      el.innerHTML = fallback || '<p data-i18n="readmeNA">README unavailable</p>';
+      applyI18n();
+    });
 }
 
 // ============================================================

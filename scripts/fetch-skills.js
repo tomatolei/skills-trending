@@ -86,6 +86,20 @@ async function getRepo(owner, repo) {
   return res.json();
 }
 
+async function getReadmeSummary(owner, repo) {
+  try {
+    const url = `https://api.github.com/repos/${owner}/${repo}/readme`;
+    const res = await fetch(url, { headers: { ...getHeaders(), Accept: "application/vnd.github.v3+json" } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    // content is base64 encoded
+    const content = Buffer.from(data.content || "", "base64").toString("utf-8");
+    return content.slice(0, 800).replace(/\n+/g, " ").trim();
+  } catch {
+    return null;
+  }
+}
+
 // ============================================================
 // 1. 搜索发现仓库
 // ============================================================
@@ -391,6 +405,7 @@ function formatSkill(s) {
     updatedAt: s.updatedAt,
     license: s.license,
     homepage: s.homepage,
+    readmeApiUrl: `https://api.github.com/repos/${s.fullName}/readme`,
   };
 }
 
