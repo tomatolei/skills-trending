@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const FILES = [
-  path.join(__dirname, '..', 'public/data/skills.json'),
+  path.join(__dirname, '..', 'docs/data/skills.json'),
   path.join(__dirname, '..', 'data/skills.json'),
 ];
 

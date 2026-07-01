@@ -379,11 +379,11 @@ function generateOutput(skills) {
   fs.writeFileSync(path.join(HISTORY_DIR, `${today}.json`), JSON.stringify(snapshot, null, 2));
   console.log(`  ✓ data/history/${today}.json`);
 
-  // 也写一份到 public/ 供前端直接 fetch
-  const publicDataDir = path.join(ROOT, "public", "data");
-  if (!fs.existsSync(publicDataDir)) fs.mkdirSync(publicDataDir, { recursive: true });
-  fs.writeFileSync(path.join(publicDataDir, "skills.json"), JSON.stringify(summary, null, 2));
-  console.log(`  ✓ public/data/skills.json`);
+  // 也写一份到 docs/ 供前端直接 fetch
+  const docsDataDir = path.join(ROOT, "docs", "data");
+  if (!fs.existsSync(docsDataDir)) fs.mkdirSync(docsDataDir, { recursive: true });
+  fs.writeFileSync(path.join(docsDataDir, "skills.json"), JSON.stringify(summary, null, 2));
+  console.log(`  ✓ docs/data/skills.json`);
 
   return summary;
 }

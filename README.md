@@ -45,15 +45,15 @@ cd skills-trending
 node scripts/fetch-skills.js
 
 # 启动本地预览（任意静态服务器均可）
-npx serve public
+npx serve docs
 # 或
-python3 -m http.server 3000 -d public
+python3 -m http.server 3000 -d docs
 ```
 
 ### 数据结构
 
 ```
-public/data/skills.json
+docs/data/skills.json
 {
   "meta": { "updatedAt": "...", "version": "1.0" },
   "stats": { "totalSkills": 450, "totalStars": 4788595, ... },
@@ -76,15 +76,15 @@ public/data/skills.json
 #### Vercel（推荐）
 
 1. 导入仓库 `tomatolei/skills-trending`
-2. 设置 **Output Directory** 为 `public`
+2. 设置 **Output Directory** 为 `docs`
 3. 点击 Deploy
 
 #### GitHub Pages
 
-```bash
-# 将 public/ 目录推送到 gh-pages 分支
-git subtree push --prefix public origin gh-pages
-```
+1. 进入仓库 **Settings** → **Pages**
+2. **Source**: Deploy from a branch
+3. **Branch**: `main`，目录选 `/docs`
+4. 保存后访问 `https://tomatolei.github.io/skills-trending`
 
 ---
 
@@ -126,15 +126,15 @@ cd skills-trending
 node scripts/fetch-skills.js
 
 # Start local preview (any static server works)
-npx serve public
+npx serve docs
 # or
-python3 -m http.server 3000 -d public
+python3 -m http.server 3000 -d docs
 ```
 
 ### Data Structure
 
 ```
-public/data/skills.json
+docs/data/skills.json
 {
   "meta": { "updatedAt": "...", "version": "1.0" },
   "stats": { "totalSkills": 450, "totalStars": 4788595, ... },
@@ -157,14 +157,15 @@ Manual trigger: Go to **Actions** tab → select **Fetch Skills Data** → **Run
 #### Vercel (Recommended)
 
 1. Import repo `tomatolei/skills-trending`
-2. Set **Output Directory** to `public`
+2. Set **Output Directory** to `docs`
 3. Click Deploy
 
 #### GitHub Pages
 
-```bash
-git subtree push --prefix public origin gh-pages
-```
+1. Go to repo **Settings** → **Pages**
+2. **Source**: Deploy from a branch
+3. **Branch**: `main`, select `/docs` folder
+4. Save, then visit `https://tomatolei.github.io/skills-trending`
 
 ---
 
@@ -172,7 +173,7 @@ git subtree push --prefix public origin gh-pages
 
 ```
 skills-trending/
-├── public/
+├── docs/
 │   ├── index.html          # 首页 / Home
 │   ├── ranking.html        # 排行榜 / Rankings
 │   ├── detail.html        # 仓库详情 / Repository Detail
@@ -183,7 +184,7 @@ skills-trending/
 │   ├── fetch-skills.js   # 数据采集脚本 / Data Collection Script
 │   └── inject-superpowers.cjs  # 手动注入脚本 / Manual Injection Script
 ├── data/
-│   ├── skills.json        # 源数据（同 public/data/）/ Source Data
+│   ├── skills.json        # 源数据（同 docs/data/）/ Source Data
 │   └── history/         # 每日快照 / Daily Snapshots
 └── .github/
     └── workflows/
