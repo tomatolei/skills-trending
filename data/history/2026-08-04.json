@@ -1,0 +1,2738 @@
+[
+  {
+    "fullName": "thedotmack/claude-mem",
+    "stars": 89443,
+    "forks": 7794,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Egonex-AI/Understand-Anything",
+    "stars": 77353,
+    "forks": 6487,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "code-yeongyu/oh-my-openagent",
+    "stars": 67159,
+    "forks": 5481,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "K-Dense-AI/scientific-agent-skills",
+    "stars": 32525,
+    "forks": 3222,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nanocoai/nanoclaw",
+    "stars": 30422,
+    "forks": 12868,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "VoltAgent/awesome-agent-skills",
+    "stars": 29503,
+    "forks": 3174,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "OthmanAdi/planning-with-files",
+    "stars": 25950,
+    "forks": 2176,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JimLiu/baoyu-skills",
+    "stars": 24521,
+    "forks": 2738,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alirezarezvani/claude-skills",
+    "stars": 23743,
+    "forks": 3329,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "teng-lin/notebooklm-py",
+    "stars": 18440,
+    "forks": 2477,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ayghri/i-have-adhd",
+    "stars": 16318,
+    "forks": 919,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "yusufkaraaslan/Skill_Seekers",
+    "stars": 14687,
+    "forks": 1488,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "travisvn/awesome-claude-skills",
+    "stars": 14490,
+    "forks": 1794,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "NevaMind-AI/memU",
+    "stars": 14245,
+    "forks": 1056,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Orchestra-Research/AI-Research-SKILLs",
+    "stars": 11367,
+    "forks": 833,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nidhinjs/prompt-master",
+    "stars": 11004,
+    "forks": 1308,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Jeffallan/claude-skills",
+    "stars": 10863,
+    "forks": 1010,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nexu-io/html-anything",
+    "stars": 8075,
+    "forks": 789,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Agents365-ai/drawio-skill",
+    "stars": 7106,
+    "forks": 526,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "deanpeters/Product-Manager-Skills",
+    "stars": 6232,
+    "forks": 758,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ikaijua/Awesome-AITools",
+    "stars": 6122,
+    "forks": 710,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "gosom/google-maps-scraper",
+    "stars": 5406,
+    "forks": 844,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "browser-act/skills",
+    "stars": 5138,
+    "forks": 243,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "WenyuChiou/awesome-agentic-ai-zh",
+    "stars": 5035,
+    "forks": 669,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "worldwonderer/oh-story-claudecode",
+    "stars": 4976,
+    "forks": 760,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "anbeime/skill",
+    "stars": 4665,
+    "forks": 451,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "parcadei/Continuous-Claude-v3",
+    "stars": 3880,
+    "forks": 299,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "glitternetwork/pinme",
+    "stars": 3732,
+    "forks": 272,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Vincentwei1021/video-shotcraft",
+    "stars": 3435,
+    "forks": 288,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "geekjourneyx/md2wechat-skill",
+    "stars": 3407,
+    "forks": 386,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nowork-studio/NotFair",
+    "stars": 3313,
+    "forks": 409,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "elementalsouls/Claude-BugHunter",
+    "stars": 3286,
+    "forks": 500,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "davepoon/buildwithclaude",
+    "stars": 3249,
+    "forks": 446,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "codeaashu/claude-code",
+    "stars": 3192,
+    "forks": 3628,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "lackeyjb/playwright-skill",
+    "stars": 2972,
+    "forks": 219,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "SnailSploit/Claude-Red",
+    "stars": 2807,
+    "forks": 458,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "KhazP/vibe-coding-prompt-template",
+    "stars": 2806,
+    "forks": 353,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "rohitg00/pro-workflow",
+    "stars": 2757,
+    "forks": 266,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "addyosmani/web-quality-skills",
+    "stars": 2577,
+    "forks": 234,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "aaron-he-zhu/aaron-marketing-skills",
+    "stars": 2501,
+    "forks": 340,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wesammustafa/Claude-Code-Everything-You-Need-to-Know",
+    "stars": 2445,
+    "forks": 279,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "romainsimon/paperasse",
+    "stars": 2304,
+    "forks": 169,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "antonbabenko/terraform-skill",
+    "stars": 2238,
+    "forks": 199,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Natively-AI-assistant/natively-cluely-ai-assistant",
+    "stars": 2109,
+    "forks": 483,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "composio-community/awesome-claude-plugins",
+    "stars": 1857,
+    "forks": 533,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wondelai/skills",
+    "stars": 1831,
+    "forks": 187,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "timescale/pg-aiguide",
+    "stars": 1805,
+    "forks": 102,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "maxritter/pilot-shell",
+    "stars": 1797,
+    "forks": 153,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "a5c-ai/babysitter",
+    "stars": 1639,
+    "forks": 95,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "feiskyer/claude-code-settings",
+    "stars": 1620,
+    "forks": 244,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "activeloopai/hivemind",
+    "stars": 1529,
+    "forks": 97,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Kaelio/ktx",
+    "stars": 1525,
+    "forks": 99,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "OpenRaiser/NanoResearch",
+    "stars": 1480,
+    "forks": 105,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Prat011/awesome-llm-skills",
+    "stars": 1432,
+    "forks": 254,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Klotzkette/claude-fuer-deutsches-recht",
+    "stars": 1416,
+    "forks": 177,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "hesamsheikh/octogent",
+    "stars": 1386,
+    "forks": 239,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "BayramAnnakov/claude-reflect",
+    "stars": 1282,
+    "forks": 110,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mohitagw15856/pm-claude-skills",
+    "stars": 1251,
+    "forks": 226,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "minsight-ai-info/AI-Search-Hub",
+    "stars": 1229,
+    "forks": 109,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zanwei/design-dna",
+    "stars": 1225,
+    "forks": 62,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "conorluddy/ios-simulator-skill",
+    "stars": 1198,
+    "forks": 83,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "itsmostafa/aws-agent-skills",
+    "stars": 1139,
+    "forks": 445,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "gooseworks-ai/goose-skills",
+    "stars": 1087,
+    "forks": 198,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bevibing/tutor-skills",
+    "stars": 1071,
+    "forks": 92,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "huangjia2019/claude-code-engineering",
+    "stars": 1038,
+    "forks": 371,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "fcakyon/claude-codex-settings",
+    "stars": 956,
+    "forks": 83,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jezweb/claude-skills",
+    "stars": 954,
+    "forks": 98,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "rohitg00/awesome-claude-design",
+    "stars": 950,
+    "forks": 127,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bawadou/claude-engineer",
+    "stars": 892,
+    "forks": 56,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "instavm/coderunner",
+    "stars": 878,
+    "forks": 41,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "hoangsonww/Claude-Code-Agent-Monitor",
+    "stars": 867,
+    "forks": 193,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bitjaru/styleseed",
+    "stars": 866,
+    "forks": 76,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tripleyak/SkillForge",
+    "stars": 847,
+    "forks": 87,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alirezarezvani/claude-code-skill-factory",
+    "stars": 839,
+    "forks": 168,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Bhanunamikaze/Agentic-SEO-Skill",
+    "stars": 813,
+    "forks": 130,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Shanyin-ai/shanyin-screenwriting-master",
+    "stars": 807,
+    "forks": 134,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Sushegaad/Claude-Skills-Governance-Risk-and-Compliance",
+    "stars": 799,
+    "forks": 168,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Gabberflast/academic-pptx-skill",
+    "stars": 735,
+    "forks": 91,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "laolaoshiren/claude-code-skills-zh",
+    "stars": 722,
+    "forks": 74,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "indranilbanerjee/digital-marketing-pro",
+    "stars": 695,
+    "forks": 118,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dongshuyan/compass-skills",
+    "stars": 676,
+    "forks": 56,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "staruhub/ClaudeSkills",
+    "stars": 658,
+    "forks": 123,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mhattingpete/claude-skills-marketplace",
+    "stars": 656,
+    "forks": 94,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "aeonfun/soul.md",
+    "stars": 633,
+    "forks": 69,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Ar9av/PaperOrchestra",
+    "stars": 626,
+    "forks": 88,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "evanca/flutter-ai-rules",
+    "stars": 604,
+    "forks": 60,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "24kchengYe/human-skill-tree",
+    "stars": 601,
+    "forks": 26,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "anombyte93/prd-taskmaster",
+    "stars": 585,
+    "forks": 58,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0xwilliamortiz/ponytail-improved",
+    "stars": 585,
+    "forks": 130,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Arindam200/cc-lens",
+    "stars": 580,
+    "forks": 77,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "XiaoMaColtAI/math-modeling-skill",
+    "stars": 580,
+    "forks": 32,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ferdinandobons/startup-skill",
+    "stars": 573,
+    "forks": 88,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nexscope-ai/eCommerce-Skills",
+    "stars": 572,
+    "forks": 84,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0xwilliamortiz/humanizer-cli",
+    "stars": 558,
+    "forks": 70,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zscole/adversarial-spec",
+    "stars": 553,
+    "forks": 48,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "avidevelops/claude-architect-exam-prep",
+    "stars": 549,
+    "forks": 122,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "worldwonderer/novel-to-game",
+    "stars": 546,
+    "forks": 84,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "memvid/claude-brain",
+    "stars": 533,
+    "forks": 58,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "axtonliu/smart-illustrator",
+    "stars": 530,
+    "forks": 81,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Austin1serb/Anthropic-Leaked-Source-Code",
+    "stars": 522,
+    "forks": 749,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "anthropics/skills",
+    "stars": 166043,
+    "forks": 19762,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "DietrichGebert/ponytail",
+    "stars": 95000,
+    "forks": 5228,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nexu-io/open-design",
+    "stars": 83424,
+    "forks": 9680,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "addyosmani/agent-skills",
+    "stars": 81467,
+    "forks": 8779,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ComposioHQ/awesome-claude-skills",
+    "stars": 71703,
+    "forks": 8088,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "VoltAgent/awesome-openclaw-skills",
+    "stars": 51722,
+    "forks": 4987,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "hesreallyhim/awesome-claude-code",
+    "stars": 51595,
+    "forks": 4495,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "CherryHQ/cherry-studio",
+    "stars": 49365,
+    "forks": 4690,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sickn33/agentic-awesome-skills",
+    "stars": 44376,
+    "forks": 6524,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wshobson/agents",
+    "stars": 38466,
+    "forks": 4116,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "github/awesome-copilot",
+    "stars": 37403,
+    "forks": 4701,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "blader/humanizer",
+    "stars": 32967,
+    "forks": 3004,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "googleworkspace/cli",
+    "stars": 30181,
+    "forks": 1764,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "topoteretes/cognee",
+    "stars": 29735,
+    "forks": 2875,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "phuryn/pm-skills",
+    "stars": 24825,
+    "forks": 2642,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "agentskills/agentskills",
+    "stars": 23803,
+    "forks": 1701,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "KKKKhazix/khazix-skills",
+    "stars": 18999,
+    "forks": 2099,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alibaba/open-code-review",
+    "stars": 18459,
+    "forks": 1243,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "kubesphere/kubesphere",
+    "stars": 17017,
+    "forks": 2749,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "microsoft/SkillOpt",
+    "stars": 15551,
+    "forks": 1434,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alibaba/zvec",
+    "stars": 15370,
+    "forks": 972,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "eigent-ai/eigent",
+    "stars": 14728,
+    "forks": 1743,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "aden-hive/hive",
+    "stars": 10841,
+    "forks": 5672,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AgriciDaniel/claude-obsidian",
+    "stars": 10341,
+    "forks": 1201,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tt-a1i/archify",
+    "stars": 8862,
+    "forks": 719,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "xixu-me/xget",
+    "stars": 8177,
+    "forks": 1295,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "citrolabs/ego-lite",
+    "stars": 8046,
+    "forks": 394,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AgriciDaniel/claude-ads",
+    "stars": 7803,
+    "forks": 1158,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "refly-ai/refly",
+    "stars": 7471,
+    "forks": 722,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jnMetaCode/superpowers-zh",
+    "stars": 7433,
+    "forks": 718,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "trailofbits/skills",
+    "stars": 6420,
+    "forks": 555,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "htmlstreamofficial/preline",
+    "stars": 6375,
+    "forks": 414,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ThinkInAIXYZ/deepchat",
+    "stars": 6188,
+    "forks": 708,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "heilcheng/awesome-agent-skills",
+    "stars": 6050,
+    "forks": 605,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "antfu/skills",
+    "stars": 5703,
+    "forks": 315,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "breaking-brake/cc-wf-studio",
+    "stars": 5341,
+    "forks": 570,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "metalbear-co/mirrord",
+    "stars": 5245,
+    "forks": 209,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0xNyk/awesome-hermes-agent",
+    "stars": 5165,
+    "forks": 365,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tinyplex/tinybase",
+    "stars": 5137,
+    "forks": 130,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dotnet/skills",
+    "stars": 4905,
+    "forks": 363,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "OpenSenseNova/SenseNova-Skills",
+    "stars": 4852,
+    "forks": 334,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "xixu-me/awesome-persona-distill-skills",
+    "stars": 4633,
+    "forks": 504,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ningzimu/codex-ppt-skill",
+    "stars": 4476,
+    "forks": 222,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wuyoscar/GPT-Image2-Skill",
+    "stars": 4132,
+    "forks": 356,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "SamurAIGPT/Generative-Media-Skills",
+    "stars": 3970,
+    "forks": 448,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "evalstate/fast-agent",
+    "stars": 3880,
+    "forks": 424,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "eugeniughelbur/obsidian-second-brain",
+    "stars": 3816,
+    "forks": 475,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "muxuuu/serenity-skill",
+    "stars": 3686,
+    "forks": 577,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0x0funky/agent-sprite-forge",
+    "stars": 3603,
+    "forks": 352,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "gotalab/cc-sdd",
+    "stars": 3599,
+    "forks": 275,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "inkeep/open-knowledge",
+    "stars": 3271,
+    "forks": 206,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "brycewang-stanford/Auto-Empirical-Research-Skills",
+    "stars": 3232,
+    "forks": 426,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "taishi-i/awesome-ChatGPT-repositories",
+    "stars": 3185,
+    "forks": 436,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "himself65/finance-skills",
+    "stars": 3110,
+    "forks": 359,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Ar9av/obsidian-wiki",
+    "stars": 3106,
+    "forks": 315,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JimLiu/baoyu-design",
+    "stars": 3018,
+    "forks": 221,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Forward-Future/loopy",
+    "stars": 2955,
+    "forks": 267,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ljagiello/ctf-skills",
+    "stars": 2909,
+    "forks": 342,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "open-gitagent/opengap",
+    "stars": 2908,
+    "forks": 343,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "microsoft/skills",
+    "stars": 2857,
+    "forks": 323,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MARKTECHPOST-AI-MEDIA-INC/AI-Agents-Projects-Tutorials",
+    "stars": 2848,
+    "forks": 617,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "samber/cc-skills-golang",
+    "stars": 2840,
+    "forks": 187,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "NVIDIA/skills",
+    "stars": 2780,
+    "forks": 322,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "RKiding/Awesome-finance-skills",
+    "stars": 2747,
+    "forks": 363,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jeremylongshore/claude-code-plugins-plus-skills",
+    "stars": 2595,
+    "forks": 376,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "foryourhealth111-pixel/Vibe-Skills",
+    "stars": 2589,
+    "forks": 196,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "heshengtao/super-agent-party",
+    "stars": 2544,
+    "forks": 272,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "glincker/thesvg",
+    "stars": 2529,
+    "forks": 194,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "cisco-ai-defense/skill-scanner",
+    "stars": 2393,
+    "forks": 299,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ciembor/agent-rules-books",
+    "stars": 2367,
+    "forks": 407,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "kevinluosl/deepbot",
+    "stars": 2364,
+    "forks": 186,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "datopian/portaljs",
+    "stars": 2337,
+    "forks": 333,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "softaworks/agent-toolkit",
+    "stars": 2272,
+    "forks": 216,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dstackai/dstack",
+    "stars": 2203,
+    "forks": 243,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "DenisSergeevitch/agents-best-practices",
+    "stars": 2188,
+    "forks": 196,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "yaojingang/yao-meta-skill",
+    "stars": 2170,
+    "forks": 210,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bergside/awesome-design-skills",
+    "stars": 2153,
+    "forks": 195,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Sahir619/fable-method",
+    "stars": 2108,
+    "forks": 307,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JuneYaooo/nihaisha-nishi-tcm",
+    "stars": 1869,
+    "forks": 415,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bergside/typeui",
+    "stars": 1696,
+    "forks": 128,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AvdLee/Swift-Concurrency-Agent-Skill",
+    "stars": 1606,
+    "forks": 98,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "codeaholicguy/ai-devkit",
+    "stars": 1571,
+    "forks": 243,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "NarratorAI-Studio/narrator-ai-cli-skill",
+    "stars": 1568,
+    "forks": 220,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "n8n-io/n8n",
+    "stars": 199235,
+    "forks": 59882,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "google-gemini/gemini-cli",
+    "stars": 106342,
+    "forks": 14376,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "koala73/worldmonitor",
+    "stars": 78501,
+    "forks": 11726,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "D4Vinci/Scrapling",
+    "stars": 72378,
+    "forks": 7189,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ruvnet/ruflo",
+    "stars": 66959,
+    "forks": 7989,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sansan0/TrendRadar",
+    "stars": 61121,
+    "forks": 24841,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "upstash/context7",
+    "stars": 60209,
+    "forks": 2886,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ChromeDevTools/chrome-devtools-mcp",
+    "stars": 48477,
+    "forks": 3346,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bytedance/UI-TARS-desktop",
+    "stars": 38416,
+    "forks": 3867,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "DeusData/codebase-memory-mcp",
+    "stars": 37307,
+    "forks": 2958,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "github/github-mcp-server",
+    "stars": 31933,
+    "forks": 4711,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "assafelovic/gpt-researcher",
+    "stars": 28805,
+    "forks": 3885,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "oraios/serena",
+    "stars": 27491,
+    "forks": 1824,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/python-sdk",
+    "stars": 23869,
+    "forks": 3735,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "activepieces/activepieces",
+    "stars": 23566,
+    "forks": 3995,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "czlonkowski/n8n-mcp",
+    "stars": 22541,
+    "forks": 3593,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "1Panel-dev/MaxKB",
+    "stars": 22383,
+    "forks": 3060,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelscope/FunASR",
+    "stars": 19620,
+    "forks": 1969,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mksglu/context-mode",
+    "stars": 19603,
+    "forks": 1401,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nukeop/nuclear",
+    "stars": 18185,
+    "forks": 1308,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "microsoft/mcp-for-beginners",
+    "stars": 16901,
+    "forks": 5509,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "triggerdotdev/trigger.dev",
+    "stars": 15881,
+    "forks": 1389,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "xpzouying/xiaohongshu-mcp",
+    "stars": 15055,
+    "forks": 2211,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "open-metadata/OpenMetadata",
+    "stars": 14636,
+    "forks": 2276,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wanshuiyin/Auto-claude-code-research-in-sleep",
+    "stars": 14185,
+    "forks": 1260,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/typescript-sdk",
+    "stars": 13053,
+    "forks": 2046,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JoeanAmier/XHS-Downloader",
+    "stars": 12216,
+    "forks": 1804,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tadata-org/fastapi_mcp",
+    "stars": 11976,
+    "forks": 955,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0xJacky/nginx-ui",
+    "stars": 11367,
+    "forks": 851,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mrexodia/ida-pro-mcp",
+    "stars": 11053,
+    "forks": 1305,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "0x4m4/hexstrike-ai",
+    "stars": 10779,
+    "forks": 2246,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mcp-use/mcp-use",
+    "stars": 10443,
+    "forks": 1392,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "OpenByteInc/QuantDinger",
+    "stars": 10225,
+    "forks": 2144,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "xinnan-tech/xiaozhi-esp32-server",
+    "stars": 10217,
+    "forks": 3475,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "awslabs/mcp",
+    "stars": 9544,
+    "forks": 1682,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "openstatusHQ/openstatus",
+    "stars": 8941,
+    "forks": 726,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "firerpa/lamda",
+    "stars": 8076,
+    "forks": 1078,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "yzfly/Awesome-MCP-ZH",
+    "stars": 7511,
+    "forks": 670,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "osaurus-ai/osaurus",
+    "stars": 7496,
+    "forks": 427,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AgentDeskAI/browser-tools-mcp",
+    "stars": 7281,
+    "forks": 521,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "firecrawl/firecrawl-mcp-server",
+    "stars": 7119,
+    "forks": 835,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Zipstack/unstract",
+    "stars": 7113,
+    "forks": 686,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "maximhq/bifrost",
+    "stars": 7020,
+    "forks": 989,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "BrowserMCP/mcp",
+    "stars": 6925,
+    "forks": 540,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "getsentry/XcodeBuildMCP",
+    "stars": 6184,
+    "forks": 303,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MinishLab/semble",
+    "stars": 5812,
+    "forks": 244,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Klavis-AI/klavis",
+    "stars": 5785,
+    "forks": 550,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "FunnyWolf/Viper",
+    "stars": 5243,
+    "forks": 692,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "lemonade-sdk/lemonade",
+    "stars": 5218,
+    "forks": 436,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JerBouma/FinanceToolkit",
+    "stars": 5186,
+    "forks": 600,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "clidey/whodb",
+    "stars": 4941,
+    "forks": 226,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "exa-labs/exa-mcp-server",
+    "stars": 4812,
+    "forks": 363,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "u14app/deep-research",
+    "stars": 4683,
+    "forks": 1062,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wgpsec/ENScan_GO",
+    "stars": 4607,
+    "forks": 433,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/csharp-sdk",
+    "stars": 4446,
+    "forks": 766,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "open-webui/mcpo",
+    "stars": 4334,
+    "forks": 474,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "httprunner/httprunner",
+    "stars": 4291,
+    "forks": 1282,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "antvis/mcp-server-chart",
+    "stars": 4276,
+    "forks": 408,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "txn2/kubefwd",
+    "stars": 4157,
+    "forks": 229,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "KnockOutEZ/wigolo",
+    "stars": 4124,
+    "forks": 278,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "archestra-ai/archestra",
+    "stars": 4090,
+    "forks": 1156,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "haris-musa/excel-mcp-server",
+    "stars": 4089,
+    "forks": 448,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "TabularisDB/tabularis",
+    "stars": 4010,
+    "forks": 268,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "IvanMurzak/Unity-MCP",
+    "stars": 3791,
+    "forks": 344,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "atilaahmettaner/tradingview-mcp",
+    "stars": 3780,
+    "forks": 823,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/rust-sdk",
+    "stars": 3743,
+    "forks": 580,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dagucloud/dagu",
+    "stars": 3693,
+    "forks": 297,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/java-sdk",
+    "stars": 3634,
+    "forks": 1099,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "liaokongVFX/MCP-Chinese-Getting-Started-Guide",
+    "stars": 3552,
+    "forks": 220,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "yvgude/lean-ctx",
+    "stars": 3486,
+    "forks": 313,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "huangjunsen0406/py-xiaozhi",
+    "stars": 3430,
+    "forks": 716,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "microsoft/flint-chart",
+    "stars": 3355,
+    "forks": 166,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bytebase/dbhub",
+    "stars": 3275,
+    "forks": 280,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "neomjs/neo",
+    "stars": 3250,
+    "forks": 227,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bethington/ghidra-mcp",
+    "stars": 3127,
+    "forks": 82,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "punitarani/fli",
+    "stars": 3079,
+    "forks": 374,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "blazickjp/arxiv-mcp-server",
+    "stars": 3018,
+    "forks": 241,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "stickerdaniel/linkedin-mcp-server",
+    "stars": 3009,
+    "forks": 515,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "taylorwilsdon/google_workspace_mcp",
+    "stars": 2961,
+    "forks": 918,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "deedy5/ddgs",
+    "stars": 2864,
+    "forks": 269,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "opensolon/solon",
+    "stars": 2761,
+    "forks": 262,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "rusq/slackdump",
+    "stars": 2724,
+    "forks": 146,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "skyhook-io/radar",
+    "stars": 2716,
+    "forks": 154,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sparfenyuk/mcp-proxy",
+    "stars": 2694,
+    "forks": 249,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "go-nunu/nunu",
+    "stars": 2594,
+    "forks": 204,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zinja-coder/jadx-ai-mcp",
+    "stars": 2592,
+    "forks": 236,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "metatool-ai/metamcp",
+    "stars": 2577,
+    "forks": 397,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "brightdata/brightdata-mcp",
+    "stars": 2556,
+    "forks": 318,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "nitrocloudofficial/nitrostack",
+    "stars": 2534,
+    "forks": 1460,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "vitali87/code-graph-rag",
+    "stars": 2498,
+    "forks": 410,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jgravelle/jcodemunch-mcp",
+    "stars": 2493,
+    "forks": 333,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "apify/apify-mcp-server",
+    "stars": 2483,
+    "forks": 207,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zhizhuodemao/js-reverse-mcp",
+    "stars": 2382,
+    "forks": 320,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "chrisryugj/korean-law-mcp",
+    "stars": 2364,
+    "forks": 463,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "openags/paper-search-mcp",
+    "stars": 2327,
+    "forks": 224,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "crbnos/carbon",
+    "stars": 2307,
+    "forks": 327,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "affaan-m/ECC",
+    "stars": 237343,
+    "forks": 36085,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "multica-ai/andrej-karpathy-skills",
+    "stars": 199163,
+    "forks": 20494,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Graphify-Labs/graphify",
+    "stars": 101877,
+    "forks": 9897,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JuliusBrussee/caveman",
+    "stars": 95544,
+    "forks": 5484,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "coreyhaines31/marketingskills",
+    "stars": 42886,
+    "forks": 6760,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Imbad0202/academic-research-skills",
+    "stars": 40738,
+    "forks": 3256,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mukul975/Anthropic-Cybersecurity-Skills",
+    "stars": 27234,
+    "forks": 3297,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Donchitos/Claude-Code-Game-Studios",
+    "stars": 23577,
+    "forks": 3376,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alchaincyf/huashu-design",
+    "stars": 22398,
+    "forks": 2636,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Nutlope/hallmark",
+    "stars": 21246,
+    "forks": 1073,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "liyupi/ai-guide",
+    "stars": 17978,
+    "forks": 2038,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "virgiliojr94/book-to-skill",
+    "stars": 15944,
+    "forks": 1705,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zhaoxuya520/reverse-skill",
+    "stars": 15904,
+    "forks": 2239,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "wasp-lang/open-saas",
+    "stars": 15136,
+    "forks": 1808,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "op7418/Humanizer-zh",
+    "stars": 14464,
+    "forks": 997,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "NanmiCoder/cc-haha",
+    "stars": 13889,
+    "forks": 8523,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AgriciDaniel/claude-seo",
+    "stars": 13219,
+    "forks": 1932,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "diet103/claude-code-infrastructure-showcase",
+    "stars": 9984,
+    "forks": 1229,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "BehiSecc/awesome-claude-skills",
+    "stars": 9886,
+    "forks": 1389,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ykdojo/claude-code-tips",
+    "stars": 9534,
+    "forks": 755,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zubair-trabzada/geo-seo-claude",
+    "stars": 9210,
+    "forks": 1464,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "eze-is/web-access",
+    "stars": 8512,
+    "forks": 604,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "google-labs-code/stitch-skills",
+    "stars": 7907,
+    "forks": 1047,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "PleasePrompto/notebooklm-skill",
+    "stars": 7558,
+    "forks": 854,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Cocoon-AI/architecture-diagram-generator",
+    "stars": 6790,
+    "forks": 526,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tw93/Waza",
+    "stars": 6753,
+    "forks": 400,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "SimoneAvogadro/android-reverse-engineering-skill",
+    "stars": 6660,
+    "forks": 733,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "SawyerHood/dev-browser",
+    "stars": 6502,
+    "forks": 425,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ChrisWiles/claude-code-showcase",
+    "stars": 6013,
+    "forks": 565,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "czlonkowski/n8n-skills",
+    "stars": 5968,
+    "forks": 996,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "op7418/guizang-social-card-skill",
+    "stars": 5843,
+    "forks": 472,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Master-cai/Research-Paper-Writing-Skills",
+    "stars": 5769,
+    "forks": 283,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "uditgoenka/autoresearch",
+    "stars": 5704,
+    "forks": 430,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "joeseesun/qiaomu-anything-to-notebooklm",
+    "stars": 5665,
+    "forks": 624,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "FlorianBruniaux/claude-code-ultimate-guide",
+    "stars": 5649,
+    "forks": 742,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zarazhangrui/codebase-to-course",
+    "stars": 5323,
+    "forks": 540,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "alchaincyf/darwin-skill",
+    "stars": 5317,
+    "forks": 568,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tech-leads-club/agent-skills",
+    "stars": 4981,
+    "forks": 450,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zebbern/claude-code-guide",
+    "stars": 4461,
+    "forks": 448,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "twostraws/SwiftUI-Agent-Skill",
+    "stars": 4403,
+    "forks": 159,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "coleam00/excalidraw-diagram-skill",
+    "stars": 4296,
+    "forks": 492,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MengTo/Skills",
+    "stars": 4074,
+    "forks": 485,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "xingkongliang/skills-manager",
+    "stars": 3488,
+    "forks": 308,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "gadievron/raptor",
+    "stars": 3478,
+    "forks": 553,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "axtonliu/axton-obsidian-visual-skills",
+    "stars": 3268,
+    "forks": 295,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "UditAkhourii/adhd",
+    "stars": 3166,
+    "forks": 233,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "op7418/Claude-to-IM-skill",
+    "stars": 2843,
+    "forks": 317,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Agentchengfeng/chengfeng-videocut-skills",
+    "stars": 2796,
+    "forks": 376,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "conorbronsdon/avoid-ai-writing",
+    "stars": 2780,
+    "forks": 255,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dominikmartn/nothing-design-skill",
+    "stars": 2687,
+    "forks": 160,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tradermonty/claude-trading-skills",
+    "stars": 2558,
+    "forks": 596,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jherrodthomas/automotive-skills-suite",
+    "stars": 2534,
+    "forks": 105,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zLanqing/codex-claude-academic-skills",
+    "stars": 2527,
+    "forks": 160,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "runkids/skillshare",
+    "stars": 2514,
+    "forks": 154,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "rohitg00/awesome-claude-code-toolkit",
+    "stars": 2437,
+    "forks": 866,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "DrCatHicks/learning-opportunities",
+    "stars": 2319,
+    "forks": 83,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "badlogic/pi-skills",
+    "stars": 2310,
+    "forks": 207,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zubair-trabzada/ai-marketing-claude",
+    "stars": 2263,
+    "forks": 660,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "yctimlin/mcp_excalidraw",
+    "stars": 2242,
+    "forks": 243,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "codejunkie99/agentic-stack",
+    "stars": 2211,
+    "forks": 271,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "elementalsouls/Claude-OSINT",
+    "stars": 2193,
+    "forks": 407,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mrgoonie/claudekit-skills",
+    "stars": 2188,
+    "forks": 423,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "vercel-labs/agent-skills",
+    "stars": 29721,
+    "forks": 2666,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "muratcankoylan/Agent-Skills-for-Context-Engineering",
+    "stars": 17573,
+    "forks": 1448,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "libukai/awesome-agent-skills",
+    "stars": 4909,
+    "forks": 378,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AvdLee/SwiftUI-Agent-Skill",
+    "stars": 3361,
+    "forks": 154,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "supabase/agent-skills",
+    "stars": 2470,
+    "forks": 179,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "twostraws/Swift-Agent-Skills",
+    "stars": 2402,
+    "forks": 88,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "apify/agent-skills",
+    "stars": 2318,
+    "forks": 249,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "FrancyJGLisboa/agent-skill-creator",
+    "stars": 2128,
+    "forks": 247,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "WordPress/agent-skills",
+    "stars": 1963,
+    "forks": 291,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "callstackincubator/agent-skills",
+    "stars": 1575,
+    "forks": 115,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "datawhalechina/agent-skills-with-anthropic",
+    "stars": 1436,
+    "forks": 192,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "https-deeplearning-ai/sc-agent-skills-files",
+    "stars": 1335,
+    "forks": 585,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AvdLee/Xcode-Build-Optimization-Agent-Skill",
+    "stars": 1193,
+    "forks": 47,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MoizIbnYousaf/Ai-Agent-Skills",
+    "stars": 1114,
+    "forks": 127,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "openclaw/agent-skills",
+    "stars": 1034,
+    "forks": 80,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Kotlin/kotlin-agent-skills",
+    "stars": 979,
+    "forks": 38,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "new-silvermoon/awesome-android-agent-skills",
+    "stars": 910,
+    "forks": 88,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sunbigfly/ppt-agent-skills",
+    "stars": 871,
+    "forks": 88,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ast-grep/agent-skill",
+    "stars": 825,
+    "forks": 33,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "hashicorp/agent-skills",
+    "stars": 776,
+    "forks": 115,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "laravel/agent-skills",
+    "stars": 685,
+    "forks": 29,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MicrosoftDocs/Agent-Skills",
+    "stars": 681,
+    "forks": 106,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "darkrishabh/agent-skills-eval",
+    "stars": 652,
+    "forks": 36,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dbt-labs/dbt-agent-skills",
+    "stars": 648,
+    "forks": 59,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "skillmatic-ai/awesome-agent-skills",
+    "stars": 644,
+    "forks": 148,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JimLiu/Illustrated-Agent-Skills",
+    "stars": 618,
+    "forks": 84,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "JackyST0/awesome-agent-skills",
+    "stars": 611,
+    "forks": 94,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ynulihao/AgentSkillOS",
+    "stars": 563,
+    "forks": 70,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "elastic/agent-skills",
+    "stars": 546,
+    "forks": 44,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "HoangNguyen0403/agent-skills-standard",
+    "stars": 536,
+    "forks": 155,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "scottstts/Threejs-Awesome-Graphics-Agent-Skills",
+    "stars": 529,
+    "forks": 64,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "GarethManning/education-agent-skills",
+    "stars": 528,
+    "forks": 89,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ClickHouse/agent-skills",
+    "stars": 508,
+    "forks": 33,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Dokhacgiakhoa/Agent-Skills-4-Vibe-Coding-CLI",
+    "stars": 505,
+    "forks": 146,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "twostraws/Swift-Concurrency-Agent-Skill",
+    "stars": 498,
+    "forks": 20,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "chenjin-cmd/agent-skills-launch-pack_",
+    "stars": 494,
+    "forks": 69,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sleekdotdesign/agent-skills",
+    "stars": 483,
+    "forks": 42,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "plugin87/ux-ui-agent-skills",
+    "stars": 482,
+    "forks": 41,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "thedivergentai/GD-Agentic-Skills",
+    "stars": 452,
+    "forks": 33,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AvdLee/Swift-Testing-Agent-Skill",
+    "stars": 433,
+    "forks": 20,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "gamedev-skills/awesome-gamedev-agent-skills",
+    "stars": 403,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "twostraws/Swift-Testing-Agent-Skill",
+    "stars": 400,
+    "forks": 16,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "firebase/agent-skills",
+    "stars": 396,
+    "forks": 79,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "twostraws/SwiftData-Agent-Skill",
+    "stars": 383,
+    "forks": 17,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "bruc3van/agent-skills-guard",
+    "stars": 380,
+    "forks": 33,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "disler/agent-sandbox-skill",
+    "stars": 378,
+    "forks": 95,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "oxylabs/agent-skills",
+    "stars": 374,
+    "forks": 1,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "cosmicstack-labs/mercury-agent-skills",
+    "stars": 365,
+    "forks": 53,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "LambdaTest/agent-skills",
+    "stars": 343,
+    "forks": 69,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "TheQtCompanyRnD/agent-skills",
+    "stars": 343,
+    "forks": 36,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "arpitg1304/robotics-agent-skills",
+    "stars": 331,
+    "forks": 45,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "cloudflare/agent-skills-discovery-rfc",
+    "stars": 331,
+    "forks": 17,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "zhuyansen/agent-skills-hub",
+    "stars": 319,
+    "forks": 37,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "keli-wen/agentic-harness-patterns-skill",
+    "stars": 300,
+    "forks": 49,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jaechang-hits/SciAgent-Skills",
+    "stars": 295,
+    "forks": 27,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "chrlsio/agent-skills",
+    "stars": 293,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "AvdLee/Core-Data-Agent-Skill",
+    "stars": 290,
+    "forks": 15,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "intellectronica/agent-skills",
+    "stars": 281,
+    "forks": 25,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "njzjz/nsfc-agent-skills",
+    "stars": 277,
+    "forks": 39,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "intertwine/dspy-agent-skills",
+    "stars": 267,
+    "forks": 25,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction",
+    "stars": 264,
+    "forks": 68,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "hoodini/ai-agents-skills",
+    "stars": 262,
+    "forks": 59,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "lingzhi227/agent-research-skills",
+    "stars": 256,
+    "forks": 28,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "niaka3dayo/agent-skills-vrc-udon",
+    "stars": 254,
+    "forks": 4,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "NanmiCoder/skills-agent-proto",
+    "stars": 253,
+    "forks": 60,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "joshuadavidthomas/opencode-agent-skills",
+    "stars": 253,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "cafe3310/public-agent-skills",
+    "stars": 249,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "jdrhyne/agent-skills",
+    "stars": 239,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Kadajett/agent-nestjs-skills",
+    "stars": 238,
+    "forks": 26,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "databricks/databricks-agent-skills",
+    "stars": 236,
+    "forks": 68,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "futantan/agent-skills.md",
+    "stars": 236,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "streamlit/agent-skills",
+    "stars": 224,
+    "forks": 23,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Misaka-Mikoto-Tech/agent-skills",
+    "stars": 213,
+    "forks": 8,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "agent-ecosystem/skill-validator",
+    "stars": 212,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "fugazi/test-automation-skills-agents",
+    "stars": 210,
+    "forks": 37,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Automattic/agent-skills",
+    "stars": 209,
+    "forks": 36,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "golbin/agent-skills",
+    "stars": 208,
+    "forks": 27,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "medusajs/medusa-agent-skills",
+    "stars": 207,
+    "forks": 26,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ferdinandobons/AWSBedrockAgentCoreSkill",
+    "stars": 205,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "DeckardGer/tanstack-agent-skills",
+    "stars": 205,
+    "forks": 18,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Kyure-A/agent-skills-nix",
+    "stars": 203,
+    "forks": 14,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "fluxcd/agent-skills",
+    "stars": 202,
+    "forks": 9,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "dean9703111/ai-agent-skill-for-video-workflow",
+    "stars": 200,
+    "forks": 47,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "thomast1906/github-copilot-agent-skills",
+    "stars": 192,
+    "forks": 54,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "agent37-platform/agent37-skills-collection",
+    "stars": 185,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Polymarket/agent-skills",
+    "stars": 180,
+    "forks": 23,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ZhanlinCui/Agent-Skills-Hunter",
+    "stars": 176,
+    "forks": 22,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Karanjot786/agent-skills-cli",
+    "stars": 174,
+    "forks": 18,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "itgoyo/awesome-agent-skills",
+    "stars": 171,
+    "forks": 28,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mongodb/agent-skills",
+    "stars": 165,
+    "forks": 30,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "langgptai/awesome-claude-prompts",
+    "stars": 5383,
+    "forks": 604,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sergebulaev/linkedin-skills",
+    "stars": 473,
+    "forks": 69,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "croffasia/cc-blueprint-toolkit",
+    "stars": 192,
+    "forks": 26,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ai-for-developers/awesome-claude",
+    "stars": 81,
+    "forks": 28,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "MetcalfSolutions/Satori",
+    "stars": 52,
+    "forks": 7,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "tjqscott/dory",
+    "stars": 44,
+    "forks": 0,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ConsciousML/prompt-engineering-hub",
+    "stars": 27,
+    "forks": 4,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "sandipan1/awesome-claude-skills",
+    "stars": 20,
+    "forks": 19,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "TaplioOfficial/taplio-linkedin-claude-skills",
+    "stars": 5,
+    "forks": 0,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "TheSamMan123/Claude-Pro",
+    "stars": 5,
+    "forks": 1,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "linny006/claude-code-plugin-tracker",
+    "stars": 4,
+    "forks": 1,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Smaiil/awesome-claude-agents",
+    "stars": 2,
+    "forks": 2,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "leefufufufufu-rgb/claude-personas",
+    "stars": 1,
+    "forks": 0,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "ajayfastfooted329/claude-linkedin-post-creator",
+    "stars": 1,
+    "forks": 1,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "mustafayilmazart/kesif-claude-skills",
+    "stars": 0,
+    "forks": 0,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "modelcontextprotocol/servers",
+    "stars": 89165,
+    "forks": 11369,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "cline/cline",
+    "stars": 65571,
+    "forks": 7036,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "continuedev/continue",
+    "stars": 35305,
+    "forks": 5174,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "Aider-AI/aider",
+    "stars": 47913,
+    "forks": 4811,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "browser-use/browser-use",
+    "stars": 107759,
+    "forks": 11841,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "firecrawl/firecrawl",
+    "stars": 160132,
+    "forks": 9077,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "langchain-ai/langgraph",
+    "stars": 38792,
+    "forks": 6541,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "crewAIInc/crewAI",
+    "stars": 56585,
+    "forks": 8055,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "microsoft/autogen",
+    "stars": 60201,
+    "forks": 9071,
+    "fetchedAt": "2026-08-04"
+  },
+  {
+    "fullName": "obra/superpowers",
+    "stars": 265753,
+    "forks": 23768,
+    "fetchedAt": "2026-08-04"
+  }
+]
